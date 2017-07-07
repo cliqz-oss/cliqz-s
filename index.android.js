@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import Search from './Search';
+import Browser from './Browser';
 
-AppRegistry.registerComponent('CliqzS', () => Search);
+AppRegistry.registerComponent('CliqzS', () => Browser);

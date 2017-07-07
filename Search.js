@@ -28,7 +28,6 @@ export default class extends Component {
   }
 
   searchResults(query) {
-    console.log('xxx', query);
     this.setState({ query, result: this.state.result });
     console.log(this.state);
     if (!this.autocomplete) {

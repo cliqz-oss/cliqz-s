@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, View } from 'react-native';
-import Search from './Search';
+import Browser from './Browser';
 
 const styles = function () {
   return StyleSheet.create({
@@ -21,4 +21,4 @@ function AppContainer(App) {
   );
 }
 
-AppRegistry.registerComponent('CliqzS', () => AppContainer(Search));
+AppRegistry.registerComponent('CliqzS', () => AppContainer(Browser));
