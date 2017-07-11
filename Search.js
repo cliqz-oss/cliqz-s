@@ -15,7 +15,7 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: 'test',
+      query: '',
       result: null,
     }
   }
@@ -46,12 +46,13 @@ export default class extends Component {
 
   render() {
     const onChange = this.searchResults.bind(this);
+    const { openUrl } = this.props;
     return (
       <View style={styles.container}>
         <TextInput autoFocus={true} placeholder='Search!'
           onChangeText={onChange} style={{ height: 50 }}/>
         <View style={{ height: 400 }}>
-          <CardList result={this.state.result} />
+          <CardList result={this.state.result} openLink={openUrl}/>
         </View>
       </View>
     );
