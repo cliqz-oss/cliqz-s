@@ -21,17 +21,16 @@ const openUrl = (navigation, url) => {
   navigation.navigate('Tab', {url});
 }
 
+const getReminders = () => {
+  return Promise.resolve([]);
+}
+
 class SearchScreen extends Component {
 
   render() {
     const navigation = this.props.navigation;
     const openSearchResult = openUrl.bind(null, navigation);
     return <View style={{flex: 1, backgroundColor:'#FFFFFF'}}>
-      <TopBar
-        queryCliqz={navigation.dispatch.bind(NavigationActions.back())}
-        navigation={navigation}
-        navigateTo='Home'
-      />
       <Search navigation={navigation} openUrl={openSearchResult}/>
     </View>
   }
@@ -67,5 +66,8 @@ export default function() {
     Search: { screen: SearchScreen },
     Tab: { screen: Tab }
   }
-  return <ConversationUI extraScreens={screens} queryCliqz={queryCliqz} openUrl={openUrl}/>
+  return <ConversationUI extraScreens={screens}
+                         queryCliqz={queryCliqz}
+                         openUrl={openUrl}
+                         getReminders={getReminders} />
 }
