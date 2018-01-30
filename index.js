@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppRegistry, StyleSheet, View } from 'react-native';
+import { AppRegistry, StyleSheet, View, Web } from 'react-native';
 import Browser from './Browser';
 
 const styles = function () {
@@ -7,10 +7,12 @@ const styles = function () {
     container: {
       flex: 1,
       paddingTop: 20,
-      backgroundColor: '#FFFFFF'
+      backgroundColor: '#FFFFFF',
     },
   });
 };
+
+
 
 // wrapper for a component to add top padding on iOS
 function AppContainer(App) {
