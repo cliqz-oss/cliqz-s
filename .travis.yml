@@ -1,48 +1,46 @@
 language: node_js
 
-node_js:
-  - 8
-
 sudo: false
 
 cache:
-  directories:
-    - $HOME/.yarn-cache
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  yarn: true
 
 env:
   - NODE_ENV='test'
-
-script:
-  - npm run bundle:ios
 
 matrix:
   include:
     - language: objective-c
       os: osx
-      osx_image: xcode8.2
+      osx_image: xcode9.0
       node_js: false
       before_install:
         - nvm install 8
         - node --version
-        - travis_retry npm install -g yarn
+        - npm install -g yarn
         - yarn -version
       install:
-        - travis_retry gem install xcpretty
-        - travis_retry yarn
+        - yarn
+        - gem install xcpretty
       xcode_project: ios/CliqzS.xcodeproj
       xcode_scheme: ios/CliqzSTests
       script:
+        - ./node_modules/.bin/react-native link react-native-sqlite-2
+        - npm run bundle:ios
         - cd ios
         - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
-        - travis_retry xctool run-tests -scheme CliqzS -sdk iphonesimulator -launch-timeout 90  ONLY_ACTIVE_ARCH=NO
     - language: android
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
       before_install:
         - nvm install 8
         - node --version
+        - npm install -g yarn
+        - yarn -version
       install:
-        - npm install
+        - yarn
       android:
         components:
           - build-tools-23.0.1
