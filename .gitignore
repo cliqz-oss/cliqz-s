@@ -51,3 +51,7 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
+# ios bundles
+ios/CliqzS/main.jsbundle
+ios/CliqzS/main.jsbundle.meta
