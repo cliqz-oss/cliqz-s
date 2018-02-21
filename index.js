@@ -1,3 +1,4 @@
+import 'react-native/Libraries/Core/InitializeCore';
 import React from 'react';
 import { AppRegistry, StyleSheet, View, Web } from 'react-native';
 import Browser from './Browser';

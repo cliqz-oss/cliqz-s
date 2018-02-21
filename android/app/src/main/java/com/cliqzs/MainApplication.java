@@ -26,7 +26,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNSqlite2Package(),
-            new RNFSPackage()
+            new RNFSPackage(),
+            new CliqzSPackage()
       );
     }
 
