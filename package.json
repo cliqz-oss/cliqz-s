@@ -9,9 +9,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "browser-core": "https://s3.amazonaws.com/cdncliqz/update/edge/react-native/master/latest.tgz",
+    "browser-core": "https://s3.amazonaws.com/cdncliqz/update/edge/cliqzs/master/1.25.0.1b205.tgz",
     "buffer": "5.0.7",
     "https-browserify": "1.0.0",
+    "number-to-locale-string": "^1.2.0",
     "path-browserify": "0.0.0",
     "pouchdb-adapter-react-native-sqlite": "1.0.3",
     "pouchdb-react-native": "6.3.4",
@@ -24,8 +25,8 @@
     "react-native-snap-carousel": "3.3.4",
     "react-native-sqlite-2": "1.5.0",
     "react-native-view-shot": "2.2.0",
-    "react-native-windows": "0.51.0-rc.0",
     "react-native-webrtc": "1.58.3",
+    "react-native-windows": "0.51.0-rc.0",
     "react-navigation": "^1.0.0-beta.23",
     "rnpm-plugin-windows": "^0.2.6",
     "stream-browserify": "2.0.1",
