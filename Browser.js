@@ -11,6 +11,7 @@ import {
 import { startup, components } from 'browser-core';
 import CardList from 'browser-core/build/modules/mobile-cards/components/CardList';
 import inject from 'browser-core/build/modules/core/kord/inject';
+import events from 'browser-core/build/modules/core/events';
 
 class QueryBar extends Component {
 
@@ -58,7 +59,14 @@ class SearchResults extends Component {
   componentWillMount() {
     startup.then(() => {
       this.searchResults(this.props.query);
+      this.openListener = events.subscribe('mobile-search:openUrl', (url) => {
+        this.props.openLink(url);
+      })
     });
+  }
+
+  componentWillUnmount() {
+    this.openListener.unsubscribe();
   }
 
   searchResults(query) {
