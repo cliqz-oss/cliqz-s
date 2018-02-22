@@ -30,12 +30,12 @@ matrix:
         - cd ios
         - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
       deploy:
+        provider: script
+        script:
+          - cd ios && fastlane alpha
         on:
           branch: master
           repo: cliqz-oss/cliqz-s
-          provider: script
-          script:
-            - cd ios && fastlane alpha
     - language: android
       cache:
         directories:
