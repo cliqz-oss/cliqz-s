@@ -6,6 +6,7 @@
 #     https://docs.fastlane.tools/advanced/#appfile
 for_platform :ios do
   # for all iOS related things
+  apple_id ENV["ITUNES_USER"]
   for_lane :alpha do
     app_identifier 'org.reactjs.native.example.CliqzS'
   end
