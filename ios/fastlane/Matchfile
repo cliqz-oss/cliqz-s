@@ -1,6 +1,6 @@
 login = ""
 if ENV["GITHUB_USERNAME"]
-	login = ENV["GITHUB_USERNAME"] + ':' ENV["GITHUB_PASSWORD"] + '@'
+	login = ENV["GITHUB_USERNAME"] + ':' + ENV["GITHUB_PASSWORD"] + '@'
 end
 git_url "https://#{login}github.com/cliqz/ios-certs"
 

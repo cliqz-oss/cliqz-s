@@ -29,13 +29,7 @@ matrix:
         - npm run bundle:ios
         - cd ios
         - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
-      deploy:
-        provider: script
-        script:
-          - cd ios && fastlane alpha
-        on:
-          branch: master
-          repo: cliqz-oss/cliqz-s
+        - if [ "$TRAVIS_BRANCH" == "master" ]; then fastlane alpha; fi
     - language: android
       cache:
         directories:
