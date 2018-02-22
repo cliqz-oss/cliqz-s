@@ -21,7 +21,7 @@ matrix:
         - yarn -version
       install:
         - yarn
-        - gem install xcpretty
+        - gem install xcpretty fastlane
       xcode_project: ios/CliqzS.xcodeproj
       xcode_scheme: ios/CliqzSTests
       script:
@@ -29,6 +29,13 @@ matrix:
         - npm run bundle:ios
         - cd ios
         - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
+      deploy:
+        on:
+          branch: master
+          repo: cliqz-oss/cliqz-s
+          provider: script
+          script:
+            - cd ios && fastlane alpha
     - language: android
       cache:
         directories:
