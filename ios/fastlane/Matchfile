@@ -1,4 +1,8 @@
-git_url "https://github.com/cliqz/ios-certs"
+login = ""
+if ENV["GITHUB_USERNAME"]
+	login = ENV["GITHUB_USERNAME"] + ':' ENV["GITHUB_PASSWORD"] + '@'
+end
+git_url "https://#{login}github.com/cliqz/ios-certs"
 
 type "appstore" # The default type, can be: appstore, adhoc, enterprise or development
 
