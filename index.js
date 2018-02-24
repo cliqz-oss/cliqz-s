@@ -1,7 +1,7 @@
 import 'react-native/Libraries/Core/InitializeCore';
 import React from 'react';
 import { AppRegistry, StyleSheet, View, Web } from 'react-native';
-import Browser from './Browser';
+import Router from './app/config/router';
 
 const styles = function () {
   return StyleSheet.create({
@@ -13,8 +13,6 @@ const styles = function () {
   });
 };
 
-
-
 // wrapper for a component to add top padding on iOS
 function AppContainer(App) {
   return () => (
@@ -24,4 +22,4 @@ function AppContainer(App) {
   );
 }
 
-AppRegistry.registerComponent('CliqzS', () => AppContainer(Browser));
+AppRegistry.registerComponent('CliqzS', () => AppContainer(Router));
