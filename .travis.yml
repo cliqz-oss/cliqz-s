@@ -30,7 +30,7 @@ matrix:
         - npm run bundle:ios
         - cd ios
         - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
-        - if [ "$TRAVIS_BRANCH" == "master" ]; then fastlane alpha; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then fastlane alpha; fi
     - language: android
       cache:
         directories:
