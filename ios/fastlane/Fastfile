@@ -1,22 +1,18 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :alpha do
-    # add actions here: https://docs.fastlane.tools/actions
+  lane :build do
    	sh 'cd .. && npm run bundle:ios'
 
+    increment_build_number(build_number: latest_testflight_build_number + 1)
+
+    gym(
+        configuration: "Release",
+        scheme: "CliqzS"
+       )
+  end
+
+  lane :alpha do
     create_keychain(
         name: ENV["MATCH_KEYCHAIN_NAME"],
         password: ENV["MATCH_PASSWORD"],
@@ -34,18 +30,11 @@ platform :ios do
         verbose: "true"
         )
 
-    increment_build_number(build_number: latest_testflight_build_number + 1)
-
-    gym(
-  		configuration: "Release",
-    	scheme: "CliqzS"
-   	)
-
    	upload_to_testflight(
-  		changelog: "Nightly build",
-  		demo_account_required: "false",
-  		skip_waiting_for_build_processing: "true"
-  	)
+        changelog: "Nightly build",
+        demo_account_required: "false",
+        skip_waiting_for_build_processing: "true"
+        )
   end
 
 end

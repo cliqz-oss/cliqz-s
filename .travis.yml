@@ -22,14 +22,15 @@ matrix:
         - yarn -version
       install:
         - yarn
-        - gem install xcpretty fastlane
+        - cd ios
+        - bundle
       xcode_project: ios/CliqzS.xcodeproj
       xcode_scheme: ios/CliqzSTests
       script:
         - ./node_modules/.bin/react-native link react-native-sqlite-2
         - npm run bundle:ios
         - cd ios
-        - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
+        - fastlane build
         - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then fastlane alpha; fi
     - language: android
       cache:
