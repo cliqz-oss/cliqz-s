@@ -1,3 +1,5 @@
+# vim: ft=ruby
+
 login = ""
 if ENV["GITHUB_USERNAME"]
 	login = ENV["GITHUB_USERNAME"] + ':' + ENV["GITHUB_PASSWORD"] + '@'
