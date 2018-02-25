@@ -22,15 +22,17 @@ matrix:
         - yarn -version
       install:
         - yarn
-        - gem install xcpretty fastlane
+        - cd ios
+        - bundle
       xcode_project: ios/CliqzS.xcodeproj
       xcode_scheme: ios/CliqzSTests
       script:
-        - ./node_modules/.bin/react-native link react-native-sqlite-2
-        - npm run bundle:ios
-        - cd ios
-        - xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
+        - fastlane build
         - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then fastlane alpha; fi
+      deploy:
+        provider: script
+        script:
+          - echo "test deploy in the matrix"
     - language: android
       cache:
         directories:
@@ -55,3 +57,10 @@ matrix:
           - addon-google_apis-google-16
       script:
         - cd android && ./gradlew assembleRelease
+deploy:
+  skip_cleanup: true
+  provider: script
+  script:
+    - echo "test deploy"
+  on:
+    branch: master

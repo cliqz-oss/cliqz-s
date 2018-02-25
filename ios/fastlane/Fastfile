@@ -1,51 +1,57 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+# vim: ft=ruby
 
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :alpha do
-    # add actions here: https://docs.fastlane.tools/actions
-   	sh 'cd .. && npm run bundle:ios'
+  lane :build do
+    sh 'cd .. && npm run bundle:ios'
 
+    # existance of MATCH_PASSWORD env variable indicates this is a branch
+    # build that will result in TestFlight upload
+    if ENV["MATCH_PASSWORD"]
+      increment_build_number(build_number: latest_testflight_build_number + 1)
+
+      gym(
+        configuration: "Release",
+        scheme: "CliqzS",
+      )
+    else
+      sh 'xcodebuild -scheme CliqzS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty'
+      # The following does not work as it tries to build for Darwin,
+      # probably to implicitly set `destination` xcodebuild param
+      #gym(
+      #  configuration: "Debug",
+      #  scheme: "CliqzS",
+      #  xcargs: "ONLY_ACTIVE_ARCH=NO",
+      #  sdk: "iphonesimulator",
+      #)
+    end
+
+  end
+
+  lane :alpha do
     create_keychain(
-        name: ENV["MATCH_KEYCHAIN_NAME"],
-        password: ENV["MATCH_PASSWORD"],
-        default_keychain: true,
-        unlock: true,
-        timeout: 3600,
-        add_to_search_list: true
-        )
+      name: ENV["MATCH_KEYCHAIN_NAME"],
+      password: ENV["MATCH_PASSWORD"],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      add_to_search_list: true,
+    )
 
     match(
-        keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
-        keychain_password: ENV["MATCH_PASSWORD"],
-        git_branch: "cliqzs",
-        readonly: "true",
-        verbose: "true"
-        )
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_PASSWORD"],
+      git_branch: "cliqzs",
+      readonly: "true",
+      verbose: "true",
+    )
 
-    increment_build_number(build_number: latest_testflight_build_number + 1)
-
-    gym(
-  		configuration: "Release",
-    	scheme: "CliqzS"
-   	)
-
-   	upload_to_testflight(
-  		changelog: "Nightly build",
-  		demo_account_required: "false",
-  		skip_waiting_for_build_processing: "true"
-  	)
+    upload_to_testflight(
+      changelog: "Nightly build",
+      demo_account_required: "false",
+      skip_waiting_for_build_processing: "true",
+    )
   end
 
 end
