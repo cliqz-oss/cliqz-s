@@ -19,8 +19,8 @@ matrix:
         - cd ..
       script:
         - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run bundle:ios; fi
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run test:e2e:build; fi
-        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run test:e2e; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run test:ios:e2e:build; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run test:ios:e2e; fi
         - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then cd ios; fastlane alpha; fi
     - language: android
       cache:
@@ -36,17 +36,22 @@ matrix:
         - npm install
       android:
         components:
-          - build-tools-23.0.1
+          - android-22
           - android-23
-          - build-tools-26.0.2
+          - android-24
           - android-26
+          - build-tools-23.0.1
+          - build-tools-26.0.2
           - extra-android-m2repository
           - extra-google-google_play_services
           - extra-google-m2repository
           - addon-google_apis-google-16
+          - sys-img-armeabi-v7a-android-22
+      before_script:
+        - echo no | android create avd --force -n Nexus_5X_API_22 -t android-22 --abi armeabi-v7a
       script:
-        - cd android && ./gradlew assembleRelease
-
+        - npm run test:android:e2e:build
+        - npm run test:android:e2e
     - language: node_js
       node_js: 8.9
       install:
