@@ -4,6 +4,8 @@
   "license": "MPL-2.0",
   "private": true,
   "scripts": {
+    "test:e2e": "detox test -c ios.sim.release --debug-synchronization 10000 --platform ios",
+    "test:e2e:build": "detox build --configuration ios.sim.release",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "bundle:ios": "node ./node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file index.js --bundle-output ios/CliqzS/main.jsbundle --dev=false --verbose",
     "test": "jest"
@@ -36,10 +38,29 @@
   "devDependencies": {
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "2.0.0",
-    "jest": "20.0.4",
+    "detox": "^7.1.0",
+    "jest": "^22.4.2",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "runner-config": "e2e/config.json",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CliqzS.app",
+        "build": "xcodebuild -project ios/CliqzS.xcodeproj -scheme CliqzS -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build ONLY_ACTIVE_ARCH=NO | xcpretty",
+        "type": "ios.simulator",
+        "name": "iPhone 7"
+      },
+      "ios.sim.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/CliqzS.app",
+        "build": "set -o pipefail && export CODE_SIGNING_REQUIRED=NO && export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project ios/CliqzS.xcodeproj -scheme CliqzS -configuration Release -sdk iphonesimulator -derivedDataPath ios/build ONLY_ACTIVE_ARCH=NO | xcpretty",
+        "type": "ios.simulator",
+        "name": "iPhone 8 Plus"
+      }
+    }
   }
 }

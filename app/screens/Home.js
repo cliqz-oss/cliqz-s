@@ -17,7 +17,9 @@ class QueryBar extends Component {
 
   render() {
     return (<View style={styles.topContainer}>
-      <TextInput autoFocus={true}
+      <TextInput
+        testID='UrlBar'
+        autoFocus={true}
         placeholder='Search!'
         onChangeText={this.props.onChange}
         style={styles.cliqz}
