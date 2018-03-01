@@ -19,7 +19,7 @@ class QueryBar extends Component {
     return (<View style={styles.topContainer}>
       <TextInput
         testID='UrlBar'
-        autoFocus={true}
+        autoFocus={false}
         placeholder='Search!'
         onChangeText={this.props.onChange}
         style={styles.cliqz}
@@ -132,6 +132,10 @@ export default class extends Component {
       stack: [],
       index: 0
     };
+  }
+
+  componentWillMount() {
+    this.props.navigation.navigate('DrawerOpen');
   }
 
   pushHistory() {
