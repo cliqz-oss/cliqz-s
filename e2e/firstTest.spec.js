@@ -3,7 +3,7 @@ describe('Example', () => {
     await device.reloadReactNative();
   });
 
-  it('should have urlbar', async () => {
-    await expect(element(by.id('UrlBar'))).toBeVisible();
+  it('should render first screen', async () => {
+    await expect(element(by.id('Drawer'))).toBeVisible();
   });
 })
