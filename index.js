@@ -1,7 +1,10 @@
 import 'react-native/Libraries/Core/InitializeCore';
-import React from 'react';
-import { AppRegistry, StyleSheet, View, Web, Platform } from 'react-native';
+import { startup } from 'browser-core';
+import React, { Component } from 'react';
+import { AppRegistry, StyleSheet, View, Web, Text, Platform } from 'react-native';
 import Router from './app/config/router';
+
+console.disableYellowBox = true;
 
 const styles = function () {
   return StyleSheet.create({
@@ -14,12 +17,29 @@ const styles = function () {
 };
 
 // wrapper for a component to add top padding on iOS
-function AppContainer(App) {
-  return () => (
-    <View style={styles().container}>
-      <App />
-    </View>
-  );
+class AppContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isCliqzLoaded: false,
+    };
+  }
+
+  componentWillMount() {
+    startup.then(() => this.setState({ isCliqzLoaded: true }));
+  }
+
+  render() {
+    return (
+      <View style={styles().container}>
+        {this.state.isCliqzLoaded ?
+          <Router />
+          :
+          <Text>Loading</Text>
+        }
+      </View>
+    );
+  };
 }
 
-AppRegistry.registerComponent('CliqzS', () => AppContainer(Router));
+AppRegistry.registerComponent('CliqzS', () => AppContainer);
