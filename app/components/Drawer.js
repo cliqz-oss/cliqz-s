@@ -35,8 +35,8 @@ const data = [
 
 export default function (props) {
   return (
-      <SafeAreaView testID='Drawer' style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
-          <FlatList style={styles.list}
+      <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
+          <FlatList testID='Drawer' style={styles.list}
             data={data}
             renderItem={({ item }) => (
               <ListItem
