@@ -13,7 +13,6 @@
   "dependencies": {
     "browser-core": "https://s3.amazonaws.com/cdncliqz/update/edge/cliqzs/master/1.25.0.1b205.tgz",
     "buffer": "5.0.7",
-    "cliqz-logo-database": "^0.1.2",
     "https-browserify": "1.0.0",
     "number-to-locale-string": "^1.2.0",
     "path-browserify": "0.0.0",

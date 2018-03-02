@@ -1746,12 +1746,6 @@ clipboardy@^1.2.2:
   version "1.0.5"
   resolved "https://github.com/cliqz-oss/cliqz-history/releases/download/1.0.5/cliqz-history-1.0.5.tgz#7e94dcac359c43f19f2cfec9625e4261d9895333"
 
-cliqz-logo-database@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/cliqz-logo-database/-/cliqz-logo-database-0.1.2.tgz#687b9802f4d01e51162956a67be19eab7f4b4830"
-  dependencies:
-    tldjs "^2.0.0"
-
 cliui@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-2.1.0.tgz#4b475760ff80264c762c3a1719032e91c7fea0d1"
@@ -7861,7 +7855,7 @@ tldjs@2.2.0:
   dependencies:
     punycode "^1.4.1"
 
-tldjs@2.3.1, tldjs@^2.0.0:
+tldjs@2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tldjs/-/tldjs-2.3.1.tgz#cf09c3eb5d7403a9e214b7d65f3cf9651c0ab039"
   dependencies:

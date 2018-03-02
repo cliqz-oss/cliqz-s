@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import { DrawerItems, SafeAreaView } from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
-import getLogo from 'cliqz-logo-database';
-import NativeDrawable, { normalizeUrl } from 'browser-core/build/modules/platform/components/NativeDrawable';
+import Icon from 'browser-core/build/modules/mobile-cards/components/partials/Icon';
 
 const data = [
   {
@@ -43,10 +42,7 @@ export default function (props) {
                 title={item.domain}
                 subtitle={item.lastVisisted}
                 avatar={
-                  <NativeDrawable
-                    source={normalizeUrl(getLogo(item.baseUrl).logoUrl)}
-                    style={{ width: 40, height: 40, backgroundColor: 'black' }}
-                  />
+                  <Icon url='https://cliqz.com' />
                 }
               />
             )}
