@@ -20,16 +20,10 @@ matrix:
         - bundle
         - cd ..
       script:
-        - npm run bundle:ios
-        - npm run test:e2e:build
-        - npm run test:e2e
-      deploy:
-        on:
-          branch: master
-        provider: script
-        script:
-          - cd ios
-          - fastlane alpha
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run bundle:ios; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run test:e2e:build; fi
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm run test:e2e; fi
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then cd ..; fastlane alpha; fi
     - language: android
       cache:
         directories:
