@@ -1,7 +1,6 @@
-import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import { ListItem } from 'react-native-elements';
 import Icon from 'browser-core/build/modules/mobile-cards/components/partials/Icon';
 
 const data = [
@@ -39,24 +38,42 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
   },
+  row: {
+    padding: 10,
+    flexDirection: 'row',
+  },
+  rowText: {
+    marginLeft: 10,
+    flex: 1,
+    justifyContent: 'center',
+  },
 });
 
-export default function Drawer() {
-  return (
-    <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
-      <FlatList testID='Drawer' style={styles.list}
-        data={data}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.domain}
-            subtitle={item.lastVisisted}
-            avatar={
-              <Icon url='https://cliqz.com' />
-            }
-          />
-        )}
-        inverted
-      />
-    </SafeAreaView>
+export default class Drawer extends Component {
+  renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.row}>
+      <Icon url='https://cliqz.com' />
+      <View style={styles.rowText}>
+        <Text>{item.domain}</Text>
+        <Text>{item.lastVisisted}</Text>
+      </View>
+    </TouchableOpacity>
   );
+
+  render() {
+    return (
+      <SafeAreaView
+        style={styles.container}
+        forceInset={{ top: 'always', horizontal: 'never' }}
+      >
+        <FlatList
+          data={data}
+          inverted
+          renderItem={this.renderItem}
+          style={styles.list}
+          testID='Drawer'
+        />
+      </SafeAreaView>
+    );
+  }
 }
