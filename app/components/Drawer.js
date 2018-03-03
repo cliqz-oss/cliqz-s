@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import Icon from 'browser-core/build/modules/mobile-cards/components/partials/Icon';
+import { Logo } from '../cliqz';
 
 const data = [
   {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 export default class Drawer extends Component {
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.row}>
-      <Icon url='https://cliqz.com' />
+      <Logo url='https://cliqz.com' />
       <View style={styles.rowText}>
         <Text>{item.domain}</Text>
         <Text>{item.lastVisisted}</Text>
