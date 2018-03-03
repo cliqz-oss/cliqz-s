@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import inject from 'browser-core/build/modules/core/kord/inject';
-import { startup } from 'browser-core';
-import CardList from 'browser-core/build/modules/mobile-cards/components/CardList';
-import events from 'browser-core/build/modules/core/events';
+import {
+  startup,
+  CardList,
+  events,
+  inject,
+} from '../cliqz';
 
 const styles = StyleSheet.create({
   search: {

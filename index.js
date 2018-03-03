@@ -1,8 +1,8 @@
 import 'react-native/Libraries/Core/InitializeCore';
-import { startup } from 'browser-core';
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, View, Text, Platform } from 'react-native';
 import Router from './app/config/router';
+import { startup } from './app/cliqz';
 
 /* eslint-disable */
 console.disableYellowBox = true;
