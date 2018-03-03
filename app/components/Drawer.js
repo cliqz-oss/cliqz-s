@@ -2,34 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { Logo } from '../cliqz';
-
-const data = [
-  {
-    domain: 'cliqz.com',
-    baseUrl: 'https://cliqz.com',
-    lastVisisted: '2 hours ago',
-  },
-  {
-    domain: 'cliqz.com',
-    baseUrl: 'https://cliqz.com',
-    lastVisisted: '2 hours ago',
-  },
-  {
-    domain: 'cliqz.com',
-    baseUrl: 'https://cliqz.com',
-    lastVisisted: '2 hours ago',
-  },
-  {
-    domain: 'cliqz.com',
-    baseUrl: 'https://cliqz.com',
-    lastVisisted: '2 hours ago',
-  },
-  {
-    domain: 'cliqz.com',
-    baseUrl: 'https://cliqz.com',
-    lastVisisted: '2 hours ago',
-  },
-];
+import data from '../config/data';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,7 +25,7 @@ const styles = StyleSheet.create({
 export default class Drawer extends Component {
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.row}>
-      <Logo url='https://cliqz.com' />
+      <Logo url={item.baseUrl}/>
       <View style={styles.rowText}>
         <Text>{item.domain}</Text>
         <Text>{item.lastVisisted}</Text>
@@ -67,7 +40,7 @@ export default class Drawer extends Component {
         forceInset={{ top: 'always', horizontal: 'never' }}
       >
         <FlatList
-          data={data}
+          data={data.domains}
           inverted
           renderItem={this.renderItem}
           style={styles.list}
