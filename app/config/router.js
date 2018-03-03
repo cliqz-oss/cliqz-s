@@ -8,5 +8,5 @@ export default DrawerNavigator({
     screen: Home,
   },
 }, {
-  contentComponent: Drawer
+  contentComponent: Drawer,
 });

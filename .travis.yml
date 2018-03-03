@@ -48,3 +48,10 @@ matrix:
           - addon-google_apis-google-16
       script:
         - cd android && ./gradlew assembleRelease
+
+    - language: node_js
+      node_js: 8
+      install:
+        - yarn
+      script:
+        - npm run eslint
