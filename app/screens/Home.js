@@ -6,109 +6,15 @@ import {
   View,
   WebView,
 } from 'react-native';
-import { startup } from 'browser-core';
-import CardList from 'browser-core/build/modules/mobile-cards/components/CardList';
-import inject from 'browser-core/build/modules/core/kord/inject';
-import events from 'browser-core/build/modules/core/events';
 import UrlBar from '../components/UrlBar';
+import SearchResults from '../components/SearchResults';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  search: {
-    backgroundColor: '#E7ECEE',
-    flex: 1,
-    flexDirection: 'column',
-  },
-  cliqz: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    color: '#909090',
-    fontSize: 15,
-    paddingTop: 14,
-    paddingLeft: 20,
-    paddingBottom: 11,
-  },
-  urlBar: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    color: '#909090',
-    fontSize: 15,
-    paddingTop: 14,
-    paddingLeft: 20,
-    paddingBottom: 11,
-    borderStyle: 'solid',
-    backgroundColor: '#222',
-  },
-  topContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
-    height: 44,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E6E6E6',
-    borderStyle: 'solid',
-  },
-  home: {
-    marginTop: 0,
-    marginRight: 0,
-    width: 40,
-    height: 40,
-  },
 });
-
-class SearchResults extends Component {
-  constructor(props) {
-    super(props);
-    this.autocomplete = inject.module('autocomplete');
-    this.state = {
-      query: '',
-      result: null,
-    };
-  }
-
-  componentWillReceiveProps(props) {
-    this.searchResults(props.query);
-  }
-
-  componentWillMount() {
-    startup.then(() => {
-      this.searchResults(this.props.query);
-      this.openListener = events.subscribe('mobile-search:openUrl', (url) => {
-        this.props.openLink(url);
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.openListener.unsubscribe();
-  }
-
-  searchResults(query) {
-    if (!this.autocomplete) {
-      return Promise.reject();
-    }
-    return this.autocomplete.action('search', query, (result) => {
-      if (this.props.query !== query) {
-        // there is already a new query ready
-        return;
-      }
-      this.setState({ query, result });
-    }).catch();
-  }
-
-  render() {
-    return (
-      <View style={styles.search}>
-        <CardList result={this.state.result} openLink={this.props.openLink}/>
-      </View>
-    );
-  }
-}
-
-const WEBVIEW_REF = 'webview';
 
 export default class Home extends Component {
   constructor(props) {
@@ -139,8 +45,8 @@ export default class Home extends Component {
   }
 
   goBack() {
-    if (this.state.webCanGoBack && this.refs[WEBVIEW_REF]) {
-      this.refs[WEBVIEW_REF].goBack();
+    if (this.state.webCanGoBack && this.webView) {
+      this.webView.goBack();
     } else {
       // stash current state
       if (this.history.index === this.history.stack.length) {
@@ -152,8 +58,8 @@ export default class Home extends Component {
   }
 
   goForward() {
-    if (this.state.webCanGoForward && this.refs[WEBVIEW_REF]) {
-      this.refs[WEBVIEW_REF].goForward();
+    if (this.state.webCanGoForward && this.webView) {
+      this.webView.goForward();
     } else {
       this.history.index += 1;
       this.setState(this.history.stack[this.history.index]);
@@ -196,7 +102,7 @@ export default class Home extends Component {
         }
         {mode === 'visit' &&
           <WebView
-            ref={WEBVIEW_REF}
+            ref={(el) => { this.webView = el; }}
             source={{ uri: this.state.url }}
             onNavigationStateChange={this.onNavigationStateChange}
           />
