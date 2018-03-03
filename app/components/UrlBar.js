@@ -9,15 +9,6 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-  search: {
-    backgroundColor: '#E7ECEE',
-    flex: 1,
-    flexDirection: 'column',
-  },
   cliqz: {
     flex: 1,
     alignSelf: 'flex-start',
@@ -46,12 +37,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E6E6E6',
     borderStyle: 'solid',
-  },
-  home: {
-    marginTop: 0,
-    marginRight: 0,
-    width: 40,
-    height: 40,
   },
 });
 
