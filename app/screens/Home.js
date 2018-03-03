@@ -2,18 +2,15 @@
 
 import React, { Component } from 'react';
 import {
-  Button,
   StyleSheet,
   View,
-  TextInput,
-  Text,
-  TouchableHighlight,
   WebView,
 } from 'react-native';
 import { startup } from 'browser-core';
 import CardList from 'browser-core/build/modules/mobile-cards/components/CardList';
 import inject from 'browser-core/build/modules/core/kord/inject';
 import events from 'browser-core/build/modules/core/events';
+import UrlBar from '../components/UrlBar';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,36 +58,6 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-
-class QueryBar extends Component {
-  render() {
-    return (
-      <View style={styles.topContainer}>
-        <TextInput
-          testID='UrlBar'
-          autoFocus={false}
-          placeholder='Search!'
-          onChangeText={this.props.onChange}
-          style={styles.cliqz}
-          value={this.props.query}
-        />
-      </View>
-    );
-  }
-}
-
-class UrlBar extends Component {
-  render() {
-    const { url, title, onTouch } = this.props;
-    return (
-      <TouchableHighlight onPress={onTouch}>
-        <View style={styles.topContainer}>
-            <Text style={styles.urlBar}>{title || url }</Text>
-        </View>
-      </TouchableHighlight>
-    );
-  }
-}
 
 class SearchResults extends Component {
   constructor(props) {
@@ -141,32 +108,6 @@ class SearchResults extends Component {
   }
 }
 
-class NavButtons extends Component {
-  render() {
-    const {
-      canGoBack,
-      onBack,
-      canGoForward,
-      onForward,
-    } = this.props;
-
-    return (
-    <View style={styles.topContainer}>
-      <Button
-        disabled={!canGoBack}
-        title={'Back'}
-        onPress={onBack}
-      />
-      <Button
-        disabled={!canGoForward}
-        title={'Forward'}
-        onPress={onForward}
-      />
-    </View>
-    );
-  }
-}
-
 const WEBVIEW_REF = 'webview';
 
 export default class Home extends Component {
@@ -175,6 +116,8 @@ export default class Home extends Component {
     this.state = {
       mode: 'search',
       query: '',
+      webCanGoBack: false,
+      webCanGoForward: false,
     };
     this.history = {
       stack: [],
@@ -182,9 +125,11 @@ export default class Home extends Component {
     };
   }
 
+  /*
   componentWillMount() {
     this.props.navigation.navigate('DrawerOpen');
   }
+  */
 
   pushHistory() {
     if (this.history.index < this.history.stack.length) {
@@ -215,6 +160,20 @@ export default class Home extends Component {
     }
   }
 
+  openLink = (url) => {
+    this.pushHistory();
+    this.setState({ mode: 'visit', url });
+  };
+
+  onNavigationStateChange = (state) => {
+    this.setState({
+      pageTitle: state.title,
+      url: state.url,
+      webCanGoBack: state.canGoBack,
+      webCanGoForward: state.canGoForward,
+    });
+  };
+
   render() {
     const {
       mode,
@@ -226,59 +185,35 @@ export default class Home extends Component {
     } = this.state;
     const canGoBack = webCanGoBack || this.history.index > 0;
     const canGoForward = webCanGoForward || this.history.index < this.history.stack.length;
-    if (mode === 'search') {
-      return (
-        <View style={styles.container}>
-          <QueryBar
-            onChange={q => this.setState({
-              query: q,
-              webCanGoBack: false,
-              webCanGoForward: false,
-            })}
-            query={query}
-          />
+
+    return (
+      <View style={styles.container}>
+        {mode === 'search' &&
           <SearchResults
-            query={this.state.query}
-            openLink={(_url) => {
-              this.pushHistory();
-              this.setState({ mode: 'visit', _url });
-            }}
+            query={query}
+            openLink={this.openLink}
           />
-          <NavButtons
-            canGoBack={!!canGoBack}
-            canGoForward={!!canGoForward}
-            onBack={() => this.goBack()}
-            onForward={() => this.goForward()}
-          />
-        </View>);
-    } else if (mode === 'visit') {
-      return (
-        <View style={styles.container}>
-          <UrlBar
-            url={url}
-            title={pageTitle}
-            onTouch={() => this.setState({ mode: 'search', query: this.state.url })}
-          />
+        }
+        {mode === 'visit' &&
           <WebView
             ref={WEBVIEW_REF}
             source={{ uri: this.state.url }}
-            onNavigationStateChange={state => this.setState({
-              pageTitle: state.title,
-              url: state.url,
-              webCanGoBack: state.canGoBack,
-              webCanGoForward: state.canGoForward,
-            })}
+            onNavigationStateChange={this.onNavigationStateChange}
           />
-          <NavButtons
-            canGoBack={!!canGoBack}
-            canGoForward={!!canGoForward}
-            onBack={() => this.goBack()}
-            onForward={() => this.goForward()}
-          />
-        </View>);
-    }
-    return (
-      <View style={styles.container}></View>
+        }
+        <UrlBar
+          query={query}
+          url={url}
+          pageTitle={pageTitle}
+          canGoBack={canGoBack}
+          canGoForward={canGoForward}
+          mode={mode}
+          setState={this.setState.bind(this)}
+          goBack={this.goBack.bind(this)}
+          goForward={this.goForward.bind(this)}
+          onTouch={() => this.setState({ mode: 'search', query: url })}
+        />
+      </View>
     );
   }
 }
