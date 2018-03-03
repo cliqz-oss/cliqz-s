@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView, FlatList } from 'react-native';
-import { DrawerItems, SafeAreaView } from 'react-navigation';
-import { List, ListItem } from 'react-native-elements';
+import { StyleSheet, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
+import { ListItem } from 'react-native-elements';
 import Icon from 'browser-core/build/modules/mobile-cards/components/partials/Icon';
 
 const data = [
@@ -32,26 +32,6 @@ const data = [
   },
 ];
 
-export default function (props) {
-  return (
-      <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
-          <FlatList testID='Drawer' style={styles.list}
-            data={data}
-            renderItem={({ item }) => (
-              <ListItem
-                title={item.domain}
-                subtitle={item.lastVisisted}
-                avatar={
-                  <Icon url='https://cliqz.com' />
-                }
-              />
-            )}
-            inverted
-          />
-      </SafeAreaView>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -60,3 +40,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default function Drawer() {
+  return (
+    <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
+      <FlatList testID='Drawer' style={styles.list}
+        data={data}
+        renderItem={({ item }) => (
+          <ListItem
+            title={item.domain}
+            subtitle={item.lastVisisted}
+            avatar={
+              <Icon url='https://cliqz.com' />
+            }
+          />
+        )}
+        inverted
+      />
+    </SafeAreaView>
+  );
+}

@@ -1,4 +1,4 @@
-export const history = {
+export default {
   visits: [
 
   ],

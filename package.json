@@ -4,6 +4,7 @@
   "license": "MPL-2.0",
   "private": true,
   "scripts": {
+    "eslint": "eslint app e2e index.js",
     "test:e2e": "detox test -c ios.sim.release --debug-synchronization 10000 --platform ios",
     "test:e2e:build": "detox build --configuration ios.sim.release",
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -38,9 +39,16 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.2",
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "2.0.0",
     "detox": "^7.1.0",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-detox": "^1.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react-native": "^3.2.1",
     "jest": "^22.4.2",
     "react-test-renderer": "16.0.0-alpha.12"
   },
