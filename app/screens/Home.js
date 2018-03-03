@@ -31,11 +31,9 @@ export default class Home extends Component {
     };
   }
 
-  /*
   componentWillMount() {
     this.props.navigation.navigate('DrawerOpen');
   }
-  */
 
   pushHistory() {
     if (this.history.index < this.history.stack.length) {

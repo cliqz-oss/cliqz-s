@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Button,
   StyleSheet,
@@ -9,94 +9,35 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  cliqz: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    color: '#909090',
-    fontSize: 15,
-    paddingTop: 14,
-    paddingLeft: 20,
-    paddingBottom: 11,
-  },
-  urlBar: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    color: '#909090',
-    fontSize: 15,
-    paddingTop: 14,
-    paddingLeft: 20,
-    paddingBottom: 11,
-    borderStyle: 'solid',
-    backgroundColor: '#222',
-  },
-  topContainer: {
+  visitModeContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
-    height: 44,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E6E6E6',
+    flex: 1,
+  },
+  urlbar: {
+    backgroundColor: '#00AEF0',
+    paddingTop: 2,
+    flexDirection: 'row',
+    height: 50,
+  },
+  domain: {
+    flex: 1,
+    color: 'black',
+    fontSize: 15,
+    paddingTop: 5,
+    paddingLeft: 5,
+  },
+  input: {
+    flex: 1,
+    margin: 5,
+    borderRadius: 7,
+    fontSize: 15,
+    color: 'black',
+    backgroundColor: 'white',
     borderStyle: 'solid',
   },
 });
 
-class NavButtons extends Component {
-  render() {
-    const {
-      canGoBack,
-      onBack,
-      canGoForward,
-      onForward,
-    } = this.props;
-
-    return (
-    <View style={styles.topContainer}>
-      <Button
-        disabled={!canGoBack}
-        title={'Back'}
-        onPress={onBack}
-      />
-      <Button
-        disabled={!canGoForward}
-        title={'Forward'}
-        onPress={onForward}
-      />
-    </View>
-    );
-  }
-}
-
-class QueryBar extends Component {
-  render() {
-    return (
-      <View style={styles.topContainer}>
-        <TextInput
-          testID='UrlBar'
-          autoFocus={false}
-          placeholder='Search!'
-          onChangeText={this.props.onChange}
-          style={styles.cliqz}
-          value={this.props.query}
-        />
-      </View>
-    );
-  }
-}
-
-class UrlBar extends Component {
-  render() {
-    const { url, title, onTouch } = this.props;
-    return (
-      <TouchableHighlight onPress={onTouch}>
-        <View style={styles.topContainer}>
-            <Text style={styles.urlBar}>{title || url }</Text>
-        </View>
-      </TouchableHighlight>
-    );
-  }
-}
-
-export default function URLBAR(props) {
+export default function UrlBar(props) {
   const {
     query,
     canGoBack,
@@ -107,29 +48,44 @@ export default function URLBAR(props) {
     pageTitle,
     goBack,
     goForward,
+    mode,
   } = props;
 
   return (
-    <View>
-      <QueryBar
-        onChange={q => setState({
-          query: q,
-          webCanGoBack: false,
-          webCanGoForward: false,
-        })}
-        query={query}
-      />
-      <UrlBar
-        url={url}
-        title={pageTitle}
-        onTouch={onTouch}
-      />
-      <NavButtons
-        canGoBack={!!canGoBack}
-        canGoForward={!!canGoForward}
-        onBack={goBack}
-        onForward={goForward}
-      />
+    <View style={styles.urlbar}>
+      {mode === 'search' &&
+        <TextInput
+          testID='UrlBar'
+          autoFocus={false}
+          placeholder='Search!'
+          onChangeText={q => setState({
+            query: q,
+            webCanGoBack: false,
+            webCanGoForward: false,
+          })}
+          style={styles.input}
+          value={query}
+        />
+      }
+      {mode === 'visit' &&
+        <View style={styles.visitModeContainer}>
+          <TouchableHighlight style={styles.domain} onPress={onTouch}>
+            <Text style={styles.domain}>{pageTitle || url }</Text>
+          </TouchableHighlight>
+          <Button
+            disabled={!canGoBack}
+            title={'Back'}
+            onPress={goBack}
+            style={styles.button}
+          />
+          <Button
+            disabled={!canGoForward}
+            title={'Forward'}
+            onPress={goForward}
+            style={styles.button}
+          />
+        </View>
+      }
     </View>
   );
 }
