@@ -3,6 +3,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   WebView,
+  Platform,
 } from 'react-native';
 import UrlBar from '../components/UrlBar';
 import SearchResults from '../components/SearchResults';
@@ -70,7 +71,7 @@ export default class Home extends Component {
   onNavigationStateChange = (state) => {
     this.setState({
       pageTitle: state.title,
-      url: state.url,
+      currentUrl: state.url,
       webCanGoBack: state.canGoBack,
       webCanGoForward: state.canGoForward,
     });
@@ -89,7 +90,10 @@ export default class Home extends Component {
     const canGoForward = webCanGoForward || this.history.index < this.history.stack.length;
 
     return (
-      <KeyboardAvoidingView style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'height' : false}
+      >
         {mode === 'search' &&
           <SearchResults
             query={query}
@@ -105,7 +109,7 @@ export default class Home extends Component {
         }
         <UrlBar
           query={query}
-          url={url}
+          url={this.state.currentUrl}
           pageTitle={pageTitle}
           canGoBack={canGoBack}
           canGoForward={canGoForward}

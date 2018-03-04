@@ -65,8 +65,11 @@ export default class UrlBar extends Component {
             testID='UrlBar'
             placeholder='Search!'
             underlineColorAndroid='white'
-            autoFocus={query.length > 0}
+            autoFocus={query && query.length > 0}
             selectTextOnFocus={true}
+            onBlur={() => setState({
+              mode: url ? 'visit' : 'search',
+            })}
             onChangeText={q => setState({
               query: q,
               webCanGoBack: false,
