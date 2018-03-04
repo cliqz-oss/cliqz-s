@@ -1,9 +1,7 @@
-/* eslint-disable react/no-string-refs */
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View,
+  KeyboardAvoidingView,
   WebView,
 } from 'react-native';
 import UrlBar from '../components/UrlBar';
@@ -91,7 +89,7 @@ export default class Home extends Component {
     const canGoForward = webCanGoForward || this.history.index < this.history.stack.length;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         {mode === 'search' &&
           <SearchResults
             query={query}
@@ -117,7 +115,7 @@ export default class Home extends Component {
           goForward={this.goForward.bind(this)}
           onTouch={() => this.setState({ mode: 'search', query: url })}
         />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
