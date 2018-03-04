@@ -1,6 +1,12 @@
 import 'react-native/Libraries/Core/InitializeCore';
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, View, Text, Platform } from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import Router from './app/config/router';
 import { startup } from './app/cliqz';
 
@@ -31,13 +37,16 @@ class AppContainer extends Component {
 
   render() {
     return (
-      <View style={styles().container}>
+      <KeyboardAvoidingView
+        style={styles().container}
+        behavior={Platform.OS === 'ios' ? 'height' : false}
+      >
         {this.state.isCliqzLoaded ?
           <Router />
           :
           <Text>Loading</Text>
         }
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
