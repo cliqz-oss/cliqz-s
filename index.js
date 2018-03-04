@@ -39,7 +39,7 @@ class AppContainer extends Component {
     return (
       <KeyboardAvoidingView
         style={styles().container}
-        behavior={Platform.OS === 'ios' ? 'height' : false}
+        behavior={Platform.OS === 'ios' ? 'padding' : false}
       >
         {this.state.isCliqzLoaded ?
           <Router />
