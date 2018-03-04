@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  KeyboardAvoidingView,
+  View,
   WebView,
-  Platform,
 } from 'react-native';
 import UrlBar from '../components/UrlBar';
 import SearchResults from '../components/SearchResults';
@@ -90,9 +89,8 @@ export default class Home extends Component {
     const canGoForward = webCanGoForward || this.history.index < this.history.stack.length;
 
     return (
-      <KeyboardAvoidingView
+      <View
         style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'height' : false}
       >
         {mode === 'search' &&
           <SearchResults
@@ -119,7 +117,7 @@ export default class Home extends Component {
           goForward={this.goForward.bind(this)}
           onTouch={() => this.setState({ mode: 'search', query: url })}
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
