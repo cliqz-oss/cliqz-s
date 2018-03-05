@@ -31,7 +31,15 @@ RCT_EXPORT_METHOD(registerForEvent:(NSString *)name)
 }
 
 - (void)notificationFired:(NSNotification*)notification {
-  NSDictionary* body = @{@"name": notification.name, @"info": notification.userInfo};
+
+  if ([@"WebHistoryItemsAddedNotification" isEqual: notification.name]) {
+    NSArray* items = [notification.userInfo valueForKey:@"WebHistoryItems"];
+    NSURL* url = [items.firstObject valueForKey:@"URL"];
+    [self sendEventWithName:@"NotificationEvent" body: @{@"name": notification.name, @"info": url.absoluteString}];
+    return;
+  }
+  
+  NSDictionary* body = @{@"name": notification.name, @"info": notification.object};
   [self sendEventWithName:@"NotificationEvent" body: body];
 }
 
