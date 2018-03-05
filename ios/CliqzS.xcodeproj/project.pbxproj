@@ -40,6 +40,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		958CE51E957C4F919C6B247F /* libRNSqlite2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 869EE32C214B4488A635880B /* libRNSqlite2.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		AFEC3DE7204D41040052C74E /* NotificationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = AFEC3DE6204D41040052C74E /* NotificationModule.m */; };
 		B3BA717E20051C6E00CB2BDD /* NativeDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = B3BA717D20051C6E00CB2BDD /* NativeDrawable.m */; };
 		F66F995D33B145FCBE90BC90 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C108B14AB4D4596923B9ED8 /* libRNFS.a */; };
 /* End PBXBuildFile section */
@@ -357,6 +358,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		869EE32C214B4488A635880B /* libRNSqlite2.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSqlite2.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		AFEC3DE6204D41040052C74E /* NotificationModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationModule.m; sourceTree = "<group>"; };
 		B3BA717D20051C6E00CB2BDD /* NativeDrawable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NativeDrawable.m; path = CliqzS/NativeDrawable.m; sourceTree = "<group>"; };
 		DB534208E55E4E59BC9DC86D /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -508,6 +510,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				B3BA717D20051C6E00CB2BDD /* NativeDrawable.m */,
+				AFEC3DE6204D41040052C74E /* NotificationModule.m */,
 			);
 			name = CliqzS;
 			sourceTree = "<group>";
@@ -1180,6 +1183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFEC3DE7204D41040052C74E /* NotificationModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B3BA717E20051C6E00CB2BDD /* NativeDrawable.m in Sources */,
