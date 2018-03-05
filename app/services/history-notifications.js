@@ -7,7 +7,7 @@ import EventEmitter from 'events';
 export default class extends EventEmitter {
   constructor() {
     super();
-    this.notificationsModule = NativeModules.NotificationModule || {
+    this.notificationsModule = NativeModules.NotificationModule ? new NativeEventEmitter(NativeModules.NotificationModule) : {
       registerForEvent() {},
       addListener() {},
     };
