@@ -6,8 +6,6 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
-  NativeModules,
-  NativeEventEmitter,
 } from 'react-native';
 import Router from './app/config/router';
 import HistoryNotification from './app/services/history-notifications';
