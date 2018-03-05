@@ -6,8 +6,11 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
+  NativeModules,
+  NativeEventEmitter,
 } from 'react-native';
 import Router from './app/config/router';
+import HistoryNotification from './app/services/history-notifications';
 import { startup } from './app/cliqz';
 
 /* eslint-disable */
@@ -26,12 +29,17 @@ const styles = () => StyleSheet.create({
 class AppContainer extends Component {
   constructor() {
     super();
+    this.historyNotification = new HistoryNotification();
+    this.historyNotification.on('history', () => {
+      // TODO: record history
+    });
     this.state = {
       isCliqzLoaded: false,
     };
   }
 
   componentWillMount() {
+    this.historyNotification.init();
     startup.then(() => this.setState({ isCliqzLoaded: true }));
   }
 
