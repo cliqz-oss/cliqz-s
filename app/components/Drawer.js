@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
+import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
-import data from '../config/data';
+import { openLink } from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,9 +23,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Drawer extends Component {
+class Drawer extends Component {
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.row}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() => this.props.openLink(item.baseUrl)}
+    >
       <Logo url={item.baseUrl}/>
       <View style={styles.rowText}>
         <Text>{item.domain}</Text>
@@ -40,7 +44,7 @@ export default class Drawer extends Component {
         forceInset={{ top: 'always', horizontal: 'never' }}
       >
         <FlatList
-          data={data.domains}
+          data={this.props.domains}
           inverted
           renderItem={this.renderItem}
           style={styles.list}
@@ -50,3 +54,16 @@ export default class Drawer extends Component {
     );
   }
 }
+
+const mapStateToProps = ({
+  domains,
+}) => ({
+  domains,
+});
+
+
+const mapDispatchToProps = dispatch => ({
+  openLink: url => dispatch(openLink(url)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drawer);

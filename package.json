@@ -30,6 +30,8 @@
     "react-native-view-shot": "2.2.0",
     "react-native-windows": "0.51.0-rc.0",
     "react-navigation": "^1.1.2",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
     "rnpm-plugin-windows": "^0.2.6",
     "stream-browserify": "2.0.1",
     "stream-http": "2.7.2",
