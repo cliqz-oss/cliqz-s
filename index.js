@@ -28,9 +28,8 @@ class AppContainer extends Component {
   constructor() {
     super();
     this.historyNotification = new HistoryNotification();
-    this.historyNotification.on('history', (...args) => {
+    this.historyNotification.on('history', (/* ...args */) => {
       // TODO: record history
-      console.log('Muahaha', args)
     });
     this.state = {
       isCliqzLoaded: false,
