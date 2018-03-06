@@ -7,9 +7,11 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
+import { Provider } from 'react-redux';
 import Router from './app/config/router';
 import HistoryNotification from './app/services/history-notifications';
 import { startup } from './app/cliqz';
+import configureStore from './app/store';
 
 /* eslint-disable */
 console.disableYellowBox = true;
@@ -22,6 +24,8 @@ const styles = () => StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 });
+
+const store = configureStore();
 
 // wrapper for a component to add top padding on iOS
 class AppContainer extends Component {
@@ -43,16 +47,18 @@ class AppContainer extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        style={styles().container}
-        behavior={Platform.OS === 'ios' ? 'padding' : false}
-      >
-        {this.state.isCliqzLoaded ?
-          <Router />
-          :
-          <Text>Loading</Text>
-        }
-      </KeyboardAvoidingView>
+      <Provider store={store}>
+        <KeyboardAvoidingView
+          style={styles().container}
+          behavior={Platform.OS === 'ios' ? 'padding' : false}
+        >
+          {this.state.isCliqzLoaded ?
+            <Router />
+            :
+            <Text>Loading</Text>
+          }
+        </KeyboardAvoidingView>
+      </Provider>
     );
   }
 }

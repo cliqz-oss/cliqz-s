@@ -7,6 +7,8 @@ import {
   Text,
   TouchableHighlight,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { urlBarBlur, updateUrlBar, urlBarQuery } from '../actions/index';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -39,23 +41,22 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class UrlBar extends Component {
-  onDomainPressed = () => {
-    this.props.onTouch();
-  };
-
+class UrlBar extends Component {
   render() {
     const {
       query,
-      canGoBack,
-      canGoForward,
-      setState,
       url,
+      webCanGoBack,
+      webCanGoForward,
       pageTitle,
       goBack,
       goForward,
       mode,
     } = this.props;
+
+    const canGoBack = webCanGoBack || this.props.history.index > 0;
+    const canGoForward = webCanGoForward ||
+      this.props.history.index < this.props.history.stack.length;
 
     return (
       <View style={styles.urlbar}>
@@ -67,21 +68,17 @@ export default class UrlBar extends Component {
             underlineColorAndroid='white'
             autoFocus={query && query.length > 0}
             selectTextOnFocus={true}
-            onBlur={() => setState({
-              mode: url ? 'visit' : 'search',
-            })}
-            onChangeText={q => setState({
-              query: q,
-              webCanGoBack: false,
-              webCanGoForward: false,
-            })}
+            onChangeText={this.props.urlBarQuery}
             style={styles.input}
             value={query}
           />
         }
         {mode === 'visit' &&
           <View style={styles.visitModeContainer}>
-            <TouchableHighlight style={styles.domain} onPress={this.onDomainPressed}>
+            <TouchableHighlight
+              style={styles.domain}
+              onPress={() => this.props.updateUrlBar(this.props.url)}
+            >
               <Text style={styles.domain}>{pageTitle || url }</Text>
             </TouchableHighlight>
             <Button
@@ -102,3 +99,31 @@ export default class UrlBar extends Component {
     );
   }
 }
+
+const mapStateToProps = ({
+  query,
+  url,
+  currentUrl,
+  pageTitle,
+  webCanGoBack,
+  webCanGoForward,
+  mode,
+  history,
+}) => ({
+  query,
+  url,
+  currentUrl,
+  pageTitle,
+  webCanGoBack,
+  webCanGoForward,
+  mode,
+  history,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateUrlBar: (...args) => dispatch(updateUrlBar(...args)),
+  urlBarBlur: url => dispatch(urlBarBlur(url)),
+  urlBarQuery: (...args) => dispatch(urlBarQuery(...args)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UrlBar);
