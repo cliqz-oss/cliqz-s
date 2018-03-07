@@ -71,7 +71,6 @@ class UrlBar extends Component {
     const canGoBack = webCanGoBack || this.props.history.index > 0;
     const canGoForward = webCanGoForward ||
       this.props.history.index < this.props.history.stack.length;
-    const urlbarValue = this.props.url || this.props.query;
 
     return (
       <View style={styles.urlbar}>
