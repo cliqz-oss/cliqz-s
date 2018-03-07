@@ -42,6 +42,20 @@ const styles = StyleSheet.create({
 });
 
 class UrlBar extends Component {
+  renderCancelButton() {
+    if (!this.props.query && !this.props.url) {
+      return null;
+    }
+    return (
+      <TouchableHighlight
+        style={{ justifyContent: 'center' }}
+        onPress={this.props.urlBarBlur}
+      >
+        <Text>Cancel</Text>
+      </TouchableHighlight>
+    );
+  }
+
   render() {
     const {
       query,
@@ -57,21 +71,25 @@ class UrlBar extends Component {
     const canGoBack = webCanGoBack || this.props.history.index > 0;
     const canGoForward = webCanGoForward ||
       this.props.history.index < this.props.history.stack.length;
+    const urlbarValue = this.props.url || this.props.query;
 
     return (
       <View style={styles.urlbar}>
         {mode === 'search' &&
-          <TextInput
-            ref={(el) => { this.input = el; }}
-            testID='UrlBar'
-            placeholder='Search!'
-            underlineColorAndroid='white'
-            autoFocus={query && query.length > 0}
-            selectTextOnFocus={true}
-            onChangeText={this.props.urlBarQuery}
-            style={styles.input}
-            value={query}
-          />
+          <View style={styles.visitModeContainer}>
+            <TextInput
+              ref={(el) => { this.input = el; }}
+              testID='UrlBar'
+              placeholder='Search!'
+              underlineColorAndroid='white'
+              autoFocus={query && query.length > 0}
+              selectTextOnFocus={true}
+              onChangeText={this.props.urlBarQuery}
+              style={styles.input}
+              value={query}
+            />
+            {this.renderCancelButton()}
+          </View>
         }
         {mode === 'visit' &&
           <View style={styles.visitModeContainer}>
