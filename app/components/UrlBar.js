@@ -60,17 +60,13 @@ class UrlBar extends Component {
     const {
       query,
       url,
-      webCanGoBack,
-      webCanGoForward,
+      webView,
       pageTitle,
       goBack,
       goForward,
       mode,
     } = this.props;
-
-    const canGoBack = webCanGoBack || this.props.history.index > 0;
-    const canGoForward = webCanGoForward ||
-      this.props.history.index < this.props.history.stack.length;
+    const { canGoBack, canGoForward } = webView;
 
     return (
       <View style={styles.urlbar}>
@@ -122,19 +118,15 @@ const mapStateToProps = ({
   url,
   currentUrl,
   pageTitle,
-  webCanGoBack,
-  webCanGoForward,
+  webView,
   mode,
-  history,
 }) => ({
   query,
   url,
   currentUrl,
   pageTitle,
-  webCanGoBack,
-  webCanGoForward,
+  webView,
   mode,
-  history,
 });
 
 const mapDispatchToProps = dispatch => ({
