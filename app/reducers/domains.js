@@ -1,9 +1,10 @@
 import moment from 'moment';
 import fixtures from '../config/data';
 import { parseURL } from '../cliqz';
+import { UPDATE_WEBVIEW } from '../constants/action-types';
 
 export default function domains(state = fixtures.domains, action) {
-  if (action.type === 'UPDATE_WEBVIEW') {
+  if (action.type === UPDATE_WEBVIEW) {
     const url = action.payload.currentUrl;
     const parsedUrl = parseURL(url);
 
