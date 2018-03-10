@@ -4,6 +4,9 @@ import {
   URLBAR_QUERY,
   URLBAR_BLUR,
   OPEN_LINK,
+  GO_BACK,
+  GO_FORWARD,
+  BACK_FORWARD_RECEIVED,
 } from '../constants/action-types';
 
 export const updateWebView = ({
@@ -47,4 +50,16 @@ export const openLink = url => ({
   payload: {
     url,
   },
+});
+
+export const goBack = () => ({
+  type: GO_BACK,
+});
+
+export const goForward = () => ({
+  type: GO_FORWARD,
+});
+
+export const backForwardReceiver = () => ({
+  type: BACK_FORWARD_RECEIVED,
 });
