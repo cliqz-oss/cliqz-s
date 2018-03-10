@@ -8,7 +8,11 @@ import {
 import { connect } from 'react-redux';
 import UrlBar from '../components/UrlBar';
 import SearchResults from '../components/SearchResults';
-import { updateWebView, openLink } from '../actions/index';
+import {
+  updateWebView,
+  openLink,
+  backForwardReceiver,
+} from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,6 +38,22 @@ class Home extends Component {
     return {
       height: this.props.mode === 'search' ? Dimensions.get('window').height : 0,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.webView) {
+      return;
+    }
+
+    if (nextProps.shouldGoBack) {
+      this.webView.goBack();
+      this.props.backForwardReceiver();
+    }
+
+    if (nextProps.shouldGoForward) {
+      this.webView.goForward();
+      this.props.backForwardReceiver();
+    }
   }
 
   render() {
@@ -67,15 +87,19 @@ const mapStateToProps = ({
   query,
   url,
   mode,
+  webView,
 }) => ({
   query,
   mode,
   url,
+  shouldGoBack: webView.shouldGoBack,
+  shouldGoForward: webView.shouldGoForward,
 });
 
 const mapDispatchToProps = dispatch => ({
   updateWebView: (...args) => dispatch(updateWebView(...args)),
   openLink: url => dispatch(openLink(url)),
+  backForwardReceiver: () => dispatch(backForwardReceiver()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

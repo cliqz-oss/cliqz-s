@@ -8,7 +8,13 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { urlBarBlur, updateUrlBar, urlBarQuery } from '../actions/index';
+import {
+  urlBarBlur,
+  updateUrlBar,
+  urlBarQuery,
+  goBack,
+  goForward,
+} from '../actions/index';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -62,8 +68,8 @@ class UrlBar extends Component {
       url,
       webView,
       pageTitle,
-      goBack,
-      goForward,
+      goBack: goBackAction,
+      goForward: goForwardAction,
       mode,
     } = this.props;
     const { canGoBack, canGoForward } = webView;
@@ -97,13 +103,13 @@ class UrlBar extends Component {
             <Button
               disabled={!canGoBack}
               title={'Back'}
-              onPress={goBack}
+              onPress={goBackAction}
               style={styles.button}
             />
             <Button
               disabled={!canGoForward}
               title={'Forward'}
-              onPress={goForward}
+              onPress={goForwardAction}
               style={styles.button}
             />
           </View>
@@ -133,6 +139,8 @@ const mapDispatchToProps = dispatch => ({
   updateUrlBar: (...args) => dispatch(updateUrlBar(...args)),
   urlBarBlur: url => dispatch(urlBarBlur(url)),
   urlBarQuery: (...args) => dispatch(urlBarQuery(...args)),
+  goBack: () => dispatch(goBack()),
+  goForward: () => dispatch(goForward()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlBar);
