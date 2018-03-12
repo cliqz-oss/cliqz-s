@@ -14,7 +14,10 @@ import {
   urlBarQuery,
   goBack,
   goForward,
+  openLink,
 } from '../actions/index';
+import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
+import { parseURL } from '../cliqz';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -48,6 +51,18 @@ const styles = StyleSheet.create({
 });
 
 class UrlBar extends Component {
+  onSubmit = () => {
+    const { query } = this.props;
+    let url = query;
+
+    if (!parseURL(query)) {
+      const encodedQuery = encodeURIComponent(query);
+      url = `${DEFAULT_SEARCH_ENGINE_URL}${encodedQuery}`;
+    }
+
+    this.props.openLink(url);
+  };
+
   renderCancelButton() {
     if (!this.props.query && !this.props.url) {
       return null;
@@ -86,6 +101,7 @@ class UrlBar extends Component {
               autoFocus={query && query.length > 0}
               selectTextOnFocus={true}
               onChangeText={this.props.urlBarQuery}
+              onSubmitEditing={this.onSubmit}
               style={styles.input}
               value={query}
             />
@@ -141,6 +157,7 @@ const mapDispatchToProps = dispatch => ({
   urlBarQuery: (...args) => dispatch(urlBarQuery(...args)),
   goBack: () => dispatch(goBack()),
   goForward: () => dispatch(goForward()),
+  openLink: url => dispatch(openLink(url)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlBar);
