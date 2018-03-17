@@ -33,6 +33,7 @@
     "react-navigation": "^1.1.2",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "rnpm-plugin-windows": "^0.2.6",
     "stream-browserify": "2.0.1",
     "stream-http": "2.7.2",

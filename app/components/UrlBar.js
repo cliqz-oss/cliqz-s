@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
   },
   domain: {
     flex: 1,
+    paddingTop: 5,
+    paddingLeft: 5,
+  },
+  domainText: {
+    flex: 1,
     color: 'black',
     fontSize: 15,
     paddingTop: 5,
@@ -98,7 +103,7 @@ class UrlBar extends Component {
               testID='UrlBar'
               placeholder='Search!'
               underlineColorAndroid='white'
-              autoFocus={query && query.length > 0}
+              autoFocus={Boolean(query && query.length > 0)}
               selectTextOnFocus={true}
               onChangeText={this.props.urlBarQuery}
               onSubmitEditing={this.onSubmit}
@@ -114,7 +119,7 @@ class UrlBar extends Component {
               style={styles.domain}
               onPress={() => this.props.updateUrlBar(this.props.url)}
             >
-              <Text style={styles.domain}>{pageTitle || url }</Text>
+              <Text style={styles.domainText}>{pageTitle || url }</Text>
             </TouchableHighlight>
             <Button
               disabled={!canGoBack}

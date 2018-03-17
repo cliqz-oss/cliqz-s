@@ -6,3 +6,4 @@ export const UPDATE_URLBAR = 'UPDATE_URLBAR';
 export const GO_BACK = 'GO_BACK';
 export const GO_FORWARD = 'GO_FORWARD';
 export const BACK_FORWARD_RECEIVED = 'BACK_FORWARD_RECEIVED';
+export const SET_HISTORY = 'SET_HISTORY';
