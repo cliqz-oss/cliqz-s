@@ -8,12 +8,11 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { Provider } from 'react-redux';
-import Router from './app/config/router';
+import AppWithNavigationState from './app/navigators/app-navigator';
 import HistoryNotification from './app/services/history-notifications';
 import { startup } from './app/cliqz';
 import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
-import { fetchHistory } from './app/actions/index';
 
 /* eslint-disable */
 // console.disableYellowBox = true;
@@ -32,14 +31,7 @@ const styles = () => StyleSheet.create({
 
 const store = configureStore();
 
-// wrapper for a component to add top padding on iOS
 class AppContainer extends Component {
-  handleNavigationState = (previous, next, action) => {
-    if (action.routeName === 'DrawerOpen') {
-      fetchHistory()(store.dispatch);
-    }
-  };
-
   constructor() {
     super();
     this.historyNotification = new HistoryNotification();
@@ -61,7 +53,7 @@ class AppContainer extends Component {
       isReady: () => Promise.resolve(),
       background: {
         actions: {
-          handleTelemetrySignal() {}
+          handleTelemetrySignal() {},
         },
       },
     };
@@ -81,7 +73,7 @@ class AppContainer extends Component {
           {...keyboardAvoidingViewOptions}
         >
           {this.state.isReady ?
-            <Router onNavigationStateChange={this.handleNavigationState} />
+            <AppWithNavigationState />
             :
             <Text>Loading</Text>
           }

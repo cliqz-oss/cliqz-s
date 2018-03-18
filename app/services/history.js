@@ -59,6 +59,7 @@ export async function fetchHistory() {
     LEFT JOIN ${TableHistory} ON ${TableHistory}.id = ${TableVisits}.siteID
     LEFT JOIN ${TableDomains} ON ${TableDomains}.id = ${TableHistory}.domain_id
     ORDER BY ${TableVisits}.date DESC
+    LIMIT 5
   `);
 
   return history.map(visit => ({
