@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment';
 import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -35,7 +36,12 @@ class Drawer extends Component {
       <Logo url={item.baseUrl}/>
       <View style={styles.rowText}>
         <Text>{item.domain}</Text>
-        <Text>{item.lastVisisted}</Text>
+        <Moment
+          element={Text}
+          fromNow
+        >
+          {item.lastVisisted / 1000}
+        </Moment>
       </View>
     </TouchableOpacity>
   );
