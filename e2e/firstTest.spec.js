@@ -6,6 +6,6 @@ describe('Example', () => {
   });
 
   it('should render first screen', async () => {
-    await expect(element(by.id('Drawer'))).toBeVisible();
+    await expect(element(by.id('UrlBar'))).toBeVisible();
   });
 });
