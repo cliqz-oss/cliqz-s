@@ -68,6 +68,7 @@ class Home extends Component {
             pageTitle: state.title,
             currentUrl: state.url,
             webCanGoBack: state.canGoBack,
+            isLoading: state.loading,
             webCanGoForward: state.canGoForward,
           })}
         />

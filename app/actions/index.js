@@ -1,4 +1,8 @@
 import {
+  fetchHistory as getHistory,
+  recordVisit,
+} from '../services/history';
+import {
   UPDATE_WEBVIEW,
   UPDATE_URLBAR,
   URLBAR_QUERY,
@@ -7,22 +11,40 @@ import {
   GO_BACK,
   GO_FORWARD,
   BACK_FORWARD_RECEIVED,
+  SET_HISTORY,
 } from '../constants/action-types';
+
+const setHistory = payload => ({
+  type: SET_HISTORY,
+  payload,
+});
+
+export const fetchHistory = () => async (dispatch) => {
+  const history = await getHistory();
+  dispatch(setHistory(history));
+};
 
 export const updateWebView = ({
   pageTitle,
   currentUrl,
   webCanGoBack,
   webCanGoForward,
-}) => ({
-  type: UPDATE_WEBVIEW,
-  payload: {
-    pageTitle,
-    currentUrl,
-    webCanGoBack,
-    webCanGoForward,
-  },
-});
+  isLoading,
+}) => async (dispatch) => {
+  dispatch({
+    type: UPDATE_WEBVIEW,
+    payload: {
+      pageTitle,
+      currentUrl,
+      webCanGoBack,
+      webCanGoForward,
+    },
+  });
+
+  if (isLoading) {
+    recordVisit(currentUrl, pageTitle);
+  }
+};
 
 export const urlBarBlur = url => ({
   type: URLBAR_BLUR,

@@ -12,9 +12,11 @@ import Router from './app/config/router';
 import HistoryNotification from './app/services/history-notifications';
 import { startup } from './app/cliqz';
 import configureStore from './app/store';
+import { initialize as startHistoryService } from './app/services/history';
+import { fetchHistory } from './app/actions/index';
 
 /* eslint-disable */
-console.disableYellowBox = true;
+// console.disableYellowBox = true;
 /* eslint-enable */
 
 const styles = () => StyleSheet.create({
@@ -29,6 +31,12 @@ const store = configureStore();
 
 // wrapper for a component to add top padding on iOS
 class AppContainer extends Component {
+  handleNavigationState = (previous, next, action) => {
+    if (action.routeName === 'DrawerOpen') {
+      fetchHistory()(store.dispatch);
+    }
+  };
+
   constructor() {
     super();
     this.historyNotification = new HistoryNotification();
@@ -36,24 +44,33 @@ class AppContainer extends Component {
       // TODO: record history
     });
     this.state = {
-      isCliqzLoaded: false,
+      isReady: false,
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     this.historyNotification.init();
-    startup.then(() => this.setState({ isCliqzLoaded: true }));
+    await Promise.all([
+      startup,
+      startHistoryService(),
+    ]);
+    this.setState({ isReady: true });
   }
 
   render() {
+    const keyboardAvoidingViewOptions = {};
+
+    if (Platform.OS === 'ios') {
+      keyboardAvoidingViewOptions.behavior = 'padding';
+    }
     return (
       <Provider store={store}>
         <KeyboardAvoidingView
           style={styles().container}
-          behavior={Platform.OS === 'ios' ? 'padding' : false}
+          {...keyboardAvoidingViewOptions}
         >
-          {this.state.isCliqzLoaded ?
-            <Router />
+          {this.state.isReady ?
+            <Router onNavigationStateChange={this.handleNavigationState} />
             :
             <Text>Loading</Text>
           }

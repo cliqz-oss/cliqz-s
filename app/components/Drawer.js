@@ -3,7 +3,10 @@ import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native
 import { SafeAreaView } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
-import { openLink } from '../actions/index';
+import {
+  openLink,
+  fetchHistory,
+} from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +40,10 @@ class Drawer extends Component {
     </TouchableOpacity>
   );
 
+  componentWillMount() {
+    this.props.fetchHistory();
+  }
+
   render() {
     return (
       <SafeAreaView
@@ -47,6 +54,7 @@ class Drawer extends Component {
           data={this.props.domains}
           inverted
           renderItem={this.renderItem}
+          keyExtractor={item => item.lastVisisted}
           style={styles.list}
           testID='Drawer'
         />
@@ -55,15 +63,8 @@ class Drawer extends Component {
   }
 }
 
-const mapStateToProps = ({
-  domains,
-}) => ({
-  domains,
+const mapStateToProps = state => ({
+  domains: state.domains,
 });
 
-
-const mapDispatchToProps = dispatch => ({
-  openLink: url => dispatch(openLink(url)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Drawer);
+export default connect(mapStateToProps, { openLink, fetchHistory })(Drawer);
