@@ -30,10 +30,6 @@ const styles = StyleSheet.create({
 });
 
 class Home extends Component {
-  componentWillMount() {
-    this.props.navigation.navigate('DrawerOpen');
-  }
-
   modalHeight() {
     return {
       height: this.props.mode === 'search' ? Dimensions.get('window').height : 0,

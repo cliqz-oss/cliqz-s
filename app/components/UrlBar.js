@@ -103,7 +103,7 @@ class UrlBar extends Component {
               testID='UrlBar'
               placeholder='Search!'
               underlineColorAndroid='white'
-              autoFocus={Boolean(query && query.length > 0)}
+              autoFocus={true}
               selectTextOnFocus={true}
               onChangeText={this.props.urlBarQuery}
               onSubmitEditing={this.onSubmit}
