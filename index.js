@@ -17,6 +17,9 @@ import { fetchHistory } from './app/actions/index';
 
 /* eslint-disable */
 // console.disableYellowBox = true;
+console.ignoredYellowBox = [
+  'Setting a timer'
+];
 /* eslint-enable */
 
 const styles = () => StyleSheet.create({
@@ -50,10 +53,18 @@ class AppContainer extends Component {
 
   async componentWillMount() {
     this.historyNotification.init();
-    await Promise.all([
+    const [app] = await Promise.all([
       startup,
       startHistoryService(),
     ]);
+    app.modules.anolysis = {
+      isReady: () => Promise.resolve(),
+      background: {
+        actions: {
+          handleTelemetrySignal() {}
+        },
+      },
+    };
     this.setState({ isReady: true });
   }
 

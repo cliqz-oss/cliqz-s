@@ -60,7 +60,7 @@ class Drawer extends Component {
           data={this.props.domains}
           inverted
           renderItem={this.renderItem}
-          keyExtractor={item => item.lastVisisted}
+          keyExtractor={item => item.lastVisisted.toString()}
           style={styles.list}
           testID='Drawer'
         />
