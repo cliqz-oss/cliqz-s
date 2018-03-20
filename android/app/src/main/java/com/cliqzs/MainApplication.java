@@ -3,7 +3,7 @@ package com.cliqzs;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.RNSqlite2Package;
+import dog.craftz.sqlite_2.RNSqlite2Package;
 import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
