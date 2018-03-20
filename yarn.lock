@@ -99,6 +99,14 @@
     uuid "^3.1.0"
     vuvuzela "1.0.3"
 
+"@cliqz-oss/react-native-sqlite-2@1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@cliqz-oss/react-native-sqlite-2/-/react-native-sqlite-2-1.5.3.tgz#27bd8a23225d80f76928d7b7608b9f3461102900"
+  dependencies:
+    lodash.map "^4.6.0"
+    lodash.zipobject "^4.1.3"
+    websql "^0.4.4"
+
 "@cliqz/adblocker@0.1.7":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@cliqz/adblocker/-/adblocker-0.1.7.tgz#78cf3e03a5663808df0c65f86b56275ee1198e2c"
@@ -6832,9 +6840,9 @@ react-native-snap-carousel@3.3.4:
     prop-types "^15.5.10"
     react-addons-shallow-compare "15.6.0"
 
-react-native-sqlite-2@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-sqlite-2/-/react-native-sqlite-2-1.5.0.tgz#e31230bae4bae520a6cb2fed1f29c20e79765a3a"
+react-native-sqlite-2@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-sqlite-2/-/react-native-sqlite-2-1.5.2.tgz#853571e09d38ad50068b5b594db9ec383752ad26"
   dependencies:
     lodash.map "^4.6.0"
     lodash.zipobject "^4.1.3"

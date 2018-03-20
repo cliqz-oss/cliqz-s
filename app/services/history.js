@@ -56,10 +56,10 @@ export async function fetchHistory() {
   const history = await db.query(`
     SELECT ${TableVisits}.date, ${TableHistory}.url, ${TableDomains}.domain
     FROM ${TableVisits}
-    LEFT JOIN ${TableHistory} ON ${TableHistory}.id = ${TableVisits}.siteID
-    LEFT JOIN ${TableDomains} ON ${TableDomains}.id = ${TableHistory}.domain_id
+    INNER JOIN ${TableHistory} ON ${TableHistory}.id = ${TableVisits}.siteID
+    INNER JOIN ${TableDomains} ON ${TableDomains}.id = ${TableHistory}.domain_id
     ORDER BY ${TableVisits}.date DESC
-    LIMIT 5
+    LIMIT 100
   `);
 
   return history.map(visit => ({
@@ -126,6 +126,7 @@ export async function recordVisit(url, title) {
 export function initialize() {
   db = new DB();
   return db.execTransaction((txn) => {
+    // txn.executeSql('DROP TABLE visits; DROP TABLE history; DROP TABLE domains;', []);
     txn.executeSql(createTableDomains, []);
     txn.executeSql(createTableHistory, []);
     txn.executeSql(createTableVisits, []);

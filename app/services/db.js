@@ -1,4 +1,4 @@
-import SQLite from 'react-native-sqlite-2';
+import SQLite from '@cliqz-oss/react-native-sqlite-2';
 
 export default class DB {
   constructor() {
