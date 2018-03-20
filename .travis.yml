@@ -1,6 +1,4 @@
 sudo: false
-cache:
-  yarn: true
 matrix:
   include:
     - language: objective-c
