@@ -13,7 +13,7 @@ matrix:
         - yarn global add detox-cli
         - brew tap wix/brew
         - brew install --HEAD applesimutils
-        - yarn
+        - npm install
         - cd ios
         - bundle
         - cd ..
@@ -33,7 +33,7 @@ matrix:
         - npm install -g yarn
         - yarn -version
       install:
-        - yarn
+        - npm install
       android:
         components:
           - build-tools-23.0.1
@@ -50,6 +50,6 @@ matrix:
     - language: node_js
       node_js: 8.9
       install:
-        - yarn
+        - npm install
       script:
         - npm run eslint
