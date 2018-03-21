@@ -29,7 +29,48 @@ const styles = StyleSheet.create({
   },
 });
 
+/* eslint-disable */
+const injectedJavaScript = `(${String(function() {
+  var pushState = window.history.pushState;
+  var replaceState = window.history.replaceState;
+
+  window.history.pushState = function (state, title, url) {
+    pushState.apply(this, arguments);
+    window.postMessage({
+      pushState: true,
+      state: state,
+      title: title,
+      url: url
+    }, '*');
+  };
+
+  window.history.replaceState = function (state, title, url) {
+    replaceState.apply(this, arguments);
+    window.postMessage({
+      replaceState: true,
+      state: state,
+      title: title,
+      url: url
+    }, '*');
+  };
+})})();`;
+/* eslint-enable */
+
 class Home extends Component {
+  onNavigationStateChange = (state) => {
+    this.props.updateWebView({
+      pageTitle: state.title,
+      currentUrl: state.url,
+      webCanGoBack: state.canGoBack,
+      isLoading: state.loading,
+      webCanGoForward: state.canGoForward,
+    });
+  };
+
+  onMessage = () => {
+    // existance of onMesasge breaks certain pages, eg. twitter.com
+  };
+
   modalHeight() {
     return {
       height: this.props.mode === 'search' ? Dimensions.get('window').height : 0,
@@ -60,13 +101,9 @@ class Home extends Component {
         <WebView
           ref={(el) => { this.webView = el; }}
           source={{ uri: this.props.url }}
-          onNavigationStateChange={state => this.props.updateWebView({
-            pageTitle: state.title,
-            currentUrl: state.url,
-            webCanGoBack: state.canGoBack,
-            isLoading: state.loading,
-            webCanGoForward: state.canGoForward,
-          })}
+          onNavigationStateChange={this.onNavigationStateChange}
+          injectedJavaScript={injectedJavaScript}
+          onMessage={this.onMessage}
         />
         <View style={[styles.modal, this.modalHeight()]}>
           <SearchResults
