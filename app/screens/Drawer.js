@@ -8,6 +8,7 @@ import { openLink } from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#444',
     flex: 1,
   },
   list: {
@@ -35,10 +36,13 @@ class DrawerItem extends PureComponent {
         style={styles.row}
         onPress={this.onPress}
       >
-        <Logo url={this.props.baseUrl}/>
+        <Logo
+          url={this.props.baseUrl}
+        />
         <View style={styles.rowText}>
-          <Text>{this.props.domain}</Text>
+          <Text style={{ color: 'white' }}>{this.props.domain}</Text>
           <Moment
+            style={{ color: 'white' }}
             element={Text}
             fromNow
           >
