@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
-  Button,
   StyleSheet,
   View,
   TextInput,
   Text,
+  TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -25,10 +25,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   urlbar: {
-    backgroundColor: '#00AEF0',
-    paddingTop: 2,
+    backgroundColor: '#444',
     flexDirection: 'row',
     height: 50,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
   },
   domain: {
     flex: 1,
@@ -37,13 +38,14 @@ const styles = StyleSheet.create({
   },
   domainText: {
     flex: 1,
-    color: 'black',
-    fontSize: 15,
-    paddingTop: 5,
+    color: 'white',
+    fontSize: 17,
+    paddingTop: 7,
     paddingLeft: 5,
   },
   input: {
     flex: 1,
+    paddingLeft: 5,
     margin: 5,
     borderRadius: 7,
     fontSize: 15,
@@ -53,7 +55,30 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     textDecorationLine: 'none',
   },
+  buttonContainer: {
+    flex: 0,
+    backgroundColor: '#444',
+    padding: 10,
+    marginRight: 7,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    flex: 1,
+  },
 });
+
+const Button = props => (
+  <TouchableOpacity
+    style={styles.buttonContainer}
+    onPress={props.onPress}
+  >
+    <Text style={[styles.buttonText, props.disabled ? ({ color: '#888' }) : null]}>
+      {props.title}
+    </Text>
+  </TouchableOpacity>
+);
 
 class UrlBar extends Component {
   onSubmit = () => {
@@ -77,7 +102,7 @@ class UrlBar extends Component {
         style={{ justifyContent: 'center' }}
         onPress={this.props.urlBarBlur}
       >
-        <Text>Cancel</Text>
+        <Text style={{ color: 'white', marginRight: 7 }}>Cancel</Text>
       </TouchableHighlight>
     );
   }
@@ -123,15 +148,13 @@ class UrlBar extends Component {
             </TouchableHighlight>
             <Button
               disabled={!canGoBack}
-              title={'Back'}
+              title={'<'}
               onPress={goBackAction}
-              style={styles.button}
             />
             <Button
               disabled={!canGoForward}
-              title={'Forward'}
+              title={'>'}
               onPress={goForwardAction}
-              style={styles.button}
             />
           </View>
         }
