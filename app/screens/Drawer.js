@@ -10,7 +10,7 @@ import {
 import { ScreenVisibilityListener } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
-import { openLink, fetchHistory } from '../actions/index';
+import { openLink, fetchDomains } from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +66,7 @@ class Drawer extends PureComponent {
     this.listener = new ScreenVisibilityListener({
       willAppear: ({ screen }) => {
         if (screen === 'cliqzs.Drawer') {
-          this.props.fetchHistory();
+          this.props.fetchDomains();
         }
       },
     });
@@ -114,4 +114,4 @@ const mapStateToProps = state => ({
   domains: state.domains,
 });
 
-export default connect(mapStateToProps, { openLink, fetchHistory })(Drawer);
+export default connect(mapStateToProps, { openLink, fetchDomains })(Drawer);
