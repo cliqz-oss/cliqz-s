@@ -1,5 +1,5 @@
 import {
-  fetchHistory as getHistory,
+  fetchDomains as getDomains,
   recordVisit,
 } from '../services/history';
 import {
@@ -19,8 +19,8 @@ const setHistory = payload => ({
   payload,
 });
 
-export const fetchHistory = () => async (dispatch) => {
-  const history = await getHistory();
+export const fetchDomains = () => async (dispatch) => {
+  const history = await getDomains();
   dispatch(setHistory(history));
 };
 
