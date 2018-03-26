@@ -52,13 +52,14 @@ INSERT OR IGNORE INTO ${TableVisits} (siteID, date, type, is_local) VALUES (
 
 const insertDomain = `INSERT OR IGNORE INTO ${TableDomains} (domain) VALUES (?)`;
 
-export async function fetchHistory() {
+export async function fetchDomains() {
   const history = await db.query(`
-    SELECT ${TableVisits}.date, ${TableHistory}.url, ${TableDomains}.domain
+    SELECT MAX(${TableVisits}.date) as date, ${TableHistory}.url, ${TableDomains}.domain
     FROM ${TableVisits}
     INNER JOIN ${TableHistory} ON ${TableHistory}.id = ${TableVisits}.siteID
     INNER JOIN ${TableDomains} ON ${TableDomains}.id = ${TableHistory}.domain_id
-    ORDER BY ${TableVisits}.date DESC
+    GROUP BY ${TableDomains}.domain
+    ORDER BY date DESC
     LIMIT 100
   `);
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { addListener } from '../utils/redux';
 import Home from '../screens/Home';
 import Drawer from '../screens/Drawer';
-import { fetchHistory } from '../actions/index';
+import { fetchDomains } from '../actions/index';
 
 export const AppNavigator = DrawerNavigator({
   Home: {
@@ -18,7 +18,7 @@ export const AppNavigator = DrawerNavigator({
 class AppWithNavigationState extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.nav.index === 1) {
-      this.props.dispatch(fetchHistory());
+      this.props.dispatch(fetchDomains());
     }
   }
 
