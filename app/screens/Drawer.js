@@ -1,10 +1,17 @@
 import React, { PureComponent } from 'react';
 import Moment from 'react-moment';
-import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import {
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+import { ScreenVisibilityListener } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
-import { openLink } from '../actions/index';
+import { openLink, fetchHistory } from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,9 +62,24 @@ class DrawerItem extends PureComponent {
 }
 
 class Drawer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.listener = new ScreenVisibilityListener({
+      willAppear: ({ screen }) => {
+        if (screen === 'cliqzs.Drawer') {
+          this.props.fetchHistory();
+        }
+      },
+    });
+  }
+
   onPressItem = (url) => {
     this.props.openLink(url);
-    this.props.navigation.navigate('DrawerClose');
+    this.props.navigator.toggleDrawer({
+      side: 'left',
+      animated: true,
+      to: 'close',
+    });
   };
 
   renderItem = ({ item }) => (
@@ -69,12 +91,14 @@ class Drawer extends PureComponent {
     />
   );
 
+  componentDidMount() {
+    this.listener.register();
+  }
+
   render() {
+    console.log(this.props.domains);
     return (
-      <SafeAreaView
-        style={styles.container}
-        forceInset={{ top: 'always', horizontal: 'never' }}
-      >
+      <View style={styles.container}>
         <FlatList
           data={this.props.domains}
           inverted
@@ -83,7 +107,7 @@ class Drawer extends PureComponent {
           style={styles.list}
           testID='Drawer'
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -92,4 +116,4 @@ const mapStateToProps = state => ({
   domains: state.domains,
 });
 
-export default connect(mapStateToProps, { openLink })(Drawer);
+export default connect(mapStateToProps, { openLink, fetchHistory })(Drawer);

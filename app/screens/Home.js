@@ -4,6 +4,8 @@ import {
   View,
   WebView,
   Dimensions,
+  Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import UrlBar from '../components/UrlBar';
@@ -18,6 +20,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 20 : 0,
+    backgroundColor: '#FFFFFF',
   },
   modal: {
     position: 'absolute',
@@ -53,7 +60,17 @@ class Home extends Component {
   }
 
   render() {
+    const keyboardAvoidingViewOptions = {};
+
+    if (Platform.OS === 'ios') {
+      keyboardAvoidingViewOptions.behavior = 'padding';
+    }
+
     return (
+    <KeyboardAvoidingView
+      style={styles.keyboardAvoidingView}
+      {...keyboardAvoidingViewOptions}
+    >
       <View
         style={styles.container}
       >
@@ -76,6 +93,7 @@ class Home extends Component {
         </View>
         <UrlBar />
       </View>
+    </KeyboardAvoidingView>
     );
   }
 }
