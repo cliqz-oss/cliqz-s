@@ -28,7 +28,7 @@ function startApp() {
         screen: 'cliqzs.Drawer',
         passProps: {},
         disableOpenGesture: false,
-        fixedWidth: 500,
+        fixedWidth: 1000,
       },
     },
     passProps: {},
