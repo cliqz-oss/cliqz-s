@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import Moment from 'react-moment';
 import { StyleSheet, FlatList, View, Text, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
 import { openLink } from '../actions/index';
@@ -71,19 +70,14 @@ class Drawer extends PureComponent {
 
   render() {
     return (
-      <SafeAreaView
-        style={styles.container}
-        forceInset={{ top: 'always', horizontal: 'never' }}
-      >
-        <FlatList
-          data={this.props.domains}
-          inverted
-          renderItem={this.renderItem}
-          keyExtractor={item => item.lastVisisted.toString()}
-          style={styles.list}
-          testID='Drawer'
-        />
-      </SafeAreaView>
+      <FlatList
+        data={this.props.domains}
+        inverted
+        renderItem={this.renderItem}
+        keyExtractor={item => item.lastVisisted.toString()}
+        style={styles.list}
+        testID='Drawer'
+      />
     );
   }
 }

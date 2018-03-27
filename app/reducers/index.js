@@ -6,7 +6,6 @@ import webView from './webView';
 import pageTitle from './pageTitle';
 import currentUrl from './currentUrl';
 import domains from './domains';
-import nav from './nav';
 
 export default combineReducers({
   mode,
@@ -16,6 +15,5 @@ export default combineReducers({
   pageTitle,
   currentUrl,
   domains,
-  nav,
 });
 
