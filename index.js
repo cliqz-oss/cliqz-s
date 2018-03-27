@@ -14,6 +14,11 @@ import { startup } from './app/cliqz';
 import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
 
+import { Navigation } from 'react-native-navigation';
+
+import { registerScreens } from './screens';
+
+
 /* eslint-disable */
 // console.disableYellowBox = true;
 console.ignoredYellowBox = [
@@ -31,35 +36,56 @@ const styles = () => StyleSheet.create({
 
 const store = configureStore();
 
+registerScreens(store, Provider); // this is where you register all of your app's screens
+
+// TODO: follow up this example https://github.com/wix/react-native-navigation/blob/master/old-example-redux/src/app.js
 class AppContainer extends Component {
   constructor() {
     super();
+    store.subscribe(this.onStoreUpdate.bind(this));
+    store.dispatch({
+      type: 'APP_START'
+    });
     this.historyNotification = new HistoryNotification();
     this.historyNotification.on('history', (/* ...args */) => {
       // TODO: record history
     });
-    this.state = {
-      isReady: false,
-    };
+
   }
 
-  async componentWillMount() {
-    this.historyNotification.init();
-    const [app] = await Promise.all([
-      startup,
-      startHistoryService(),
-    ]);
-    app.modules.anolysis = {
-      isReady: () => Promise.resolve(),
-      background: {
-        actions: {
-          handleTelemetrySignal() {},
+  async onStoreUpdate() {
+    if (!this.isStarted) {
+      this.isStarted = true;
+      const [app] = await Promise.all([
+        startup,
+        startHistoryService(),
+      ]);
+      app.modules.anolysis = {
+        isReady: () => Promise.resolve(),
+        background: {
+          actions: {
+            handleTelemetrySignal() {},
+          },
         },
-      },
-    };
-    this.setState({ isReady: true });
+      };
+      this.startApp();
+    }
   }
 
+
+  startApp(root) {
+    Navigation.startTabBasedApp({
+      tabs: [
+        {
+          label: 'Home',
+          screen: 'cliqzs.Home', // this is a registered name for a screen
+          title: 'Screen One'
+        },
+      ]
+    });
+  }
+
+/*
   render() {
     const keyboardAvoidingViewOptions = {};
 
@@ -81,6 +107,7 @@ class AppContainer extends Component {
       </Provider>
     );
   }
+  */
 }
 
-AppRegistry.registerComponent('CliqzS', () => AppContainer);
+const app = new AppContainer();
