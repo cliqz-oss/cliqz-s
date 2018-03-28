@@ -18,6 +18,9 @@ import {
 } from '../actions/index';
 import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
 import { parseURL } from '../cliqz';
+import {
+  DOMAIN_LIST_SCREEN,
+} from '../constants/screen-names';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -93,10 +96,16 @@ class UrlBar extends Component {
     this.props.openLink(url);
   };
 
-  renderCancelButton() {
-    if (!this.props.query && !this.props.url) {
-      return null;
+  goToDomainDetails = () => {
+    if (this.input) {
+      this.input.blur();
     }
+    this.props.navigator.resetTo({
+      screen: DOMAIN_LIST_SCREEN,
+    });
+  }
+
+  renderCancelButton() {
     return (
       <TouchableHighlight
         style={{ justifyContent: 'center' }}
@@ -104,6 +113,15 @@ class UrlBar extends Component {
       >
         <Text style={{ color: 'white', marginRight: 7 }}>Cancel</Text>
       </TouchableHighlight>
+    );
+  }
+
+  renderHomeButton() {
+    return (
+      <Button
+        title='&#9632;'
+        onPress={this.goToDomainDetails}
+      />
     );
   }
 
@@ -128,34 +146,38 @@ class UrlBar extends Component {
               testID='UrlBar'
               placeholder='Search!'
               underlineColorAndroid='white'
-              autoFocus={true}
               selectTextOnFocus={true}
+              autoCorrect={false}
               onChangeText={this.props.urlBarQuery}
               onSubmitEditing={this.onSubmit}
               style={styles.input}
               value={query}
             />
-            {this.renderCancelButton()}
+            {(!this.props.query && !this.props.url)
+                ? this.renderHomeButton()
+                : this.renderCancelButton()
+            }
           </View>
         }
         {mode === 'visit' &&
           <View style={styles.visitModeContainer}>
+            <Button
+              disabled={!canGoBack}
+              title='&#9664;'
+              onPress={goBackAction}
+            />
+            <Button
+              disabled={!canGoForward}
+              title='&#9654;'
+              onPress={goForwardAction}
+            />
             <TouchableHighlight
               style={styles.domain}
               onPress={() => this.props.updateUrlBar(this.props.url)}
             >
               <Text style={styles.domainText}>{pageTitle || url }</Text>
             </TouchableHighlight>
-            <Button
-              disabled={!canGoBack}
-              title={'<'}
-              onPress={goBackAction}
-            />
-            <Button
-              disabled={!canGoForward}
-              title={'>'}
-              onPress={goForwardAction}
-            />
+            {this.renderHomeButton()}
           </View>
         }
       </View>

@@ -5,12 +5,18 @@ import {
   FlatList,
   View,
   Text,
+  Button,
   TouchableOpacity,
 } from 'react-native';
 import { ScreenVisibilityListener } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
 import { openLink, fetchDomains } from '../actions/index';
+import {
+  HOME_SCREEN,
+  DOMAIN_LIST_SCREEN,
+  DOMAIN_DETAILS_SCREEN,
+} from '../constants/screen-names';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,23 +67,31 @@ class DrawerItem extends PureComponent {
 }
 
 class Drawer extends PureComponent {
+
+  static navigatorStyle = {
+    navBarHidden: true,
+  };
+
   constructor(props) {
     super(props);
     this.listener = new ScreenVisibilityListener({
       willAppear: ({ screen }) => {
-        if (screen === 'cliqzs.DomainList') {
+        if (screen === DOMAIN_LIST_SCREEN) {
           this.props.fetchDomains();
         }
       },
     });
   }
 
+  goToHome = () => {
+    this.props.navigator.resetTo({
+      screen: HOME_SCREEN,
+    });
+  };
+
   onPressItem = (url) => {
-    this.props.openLink(url);
-    this.props.navigator.toggleDrawer({
-      side: 'left',
-      animated: true,
-      to: 'close',
+    this.props.navigator.resetTo({
+      screen: DOMAIN_DETAILS_SCREEN,
     });
   };
 
@@ -105,6 +119,12 @@ class Drawer extends PureComponent {
           style={styles.list}
           testID='Drawer'
         />
+        <View>
+          <Button
+            title="back"
+            onPress={this.goToHome}
+          />
+        </View>
       </View>
     );
   }

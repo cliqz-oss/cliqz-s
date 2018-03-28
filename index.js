@@ -22,18 +22,7 @@ function startApp() {
   Navigation.startSingleScreenApp({
     screen: {
       screen: HOME_SCREEN,
-      navigatorStyle: {
-        navBarHidden: true,
-      },
       navigatorButtons: {},
-    },
-    drawer: {
-      left: {
-        screen: DOMAIN_LIST_SCREEN,
-        passProps: {},
-        disableOpenGesture: false,
-        fixedWidth: 1000,
-      },
     },
     passProps: {},
     animationType: 'slide-down',

@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
 });
 
 class Home extends Component {
+
+  static navigatorStyle = {
+    navBarHidden: true,
+  };
+
   modalHeight() {
     return {
       height: this.props.mode === 'search' ? Dimensions.get('window').height : 0,
@@ -91,7 +96,7 @@ class Home extends Component {
             openLink={this.props.openLink}
           />
         </View>
-        <UrlBar />
+        <UrlBar navigator={this.props.navigator} />
       </View>
     </KeyboardAvoidingView>
     );
