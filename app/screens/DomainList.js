@@ -65,7 +65,7 @@ class Drawer extends PureComponent {
     super(props);
     this.listener = new ScreenVisibilityListener({
       willAppear: ({ screen }) => {
-        if (screen === 'cliqzs.Drawer') {
+        if (screen === 'cliqzs.DomainList') {
           this.props.fetchDomains();
         }
       },

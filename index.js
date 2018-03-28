@@ -6,6 +6,10 @@ import { startup } from './app/cliqz';
 import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
 import registerScreens from './app/screens/index';
+import {
+  DOMAIN_LIST_SCREEN,
+  HOME_SCREEN,
+} from './app/constants/screen-names.js';
 
 /* eslint-disable */
 // console.disableYellowBox = true;
@@ -17,7 +21,7 @@ console.ignoredYellowBox = [
 function startApp() {
   Navigation.startSingleScreenApp({
     screen: {
-      screen: 'cliqzs.Home', // this is a registered name for a screen
+      screen: HOME_SCREEN,
       navigatorStyle: {
         navBarHidden: true,
       },
@@ -25,7 +29,7 @@ function startApp() {
     },
     drawer: {
       left: {
-        screen: 'cliqzs.Drawer',
+        screen: DOMAIN_LIST_SCREEN,
         passProps: {},
         disableOpenGesture: false,
         fixedWidth: 1000,
