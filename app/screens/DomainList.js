@@ -15,11 +15,7 @@ import {
   fetchDomains,
   openDomain,
 } from '../actions/index';
-import {
-  HOME_SCREEN,
-  DOMAIN_LIST_SCREEN,
-  DOMAIN_DETAILS_SCREEN,
-} from '../constants/screen-names';
+import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
 import HomeButton from '../components/HomeButton';
 
 const styles = StyleSheet.create({
@@ -71,7 +67,6 @@ class DrawerItem extends PureComponent {
 }
 
 class Drawer extends PureComponent {
-
   static navigatorStyle = {
     navBarHidden: true,
   };
@@ -87,7 +82,7 @@ class Drawer extends PureComponent {
     });
   }
 
-  onPressItem = domain => {
+  onPressItem = (domain) => {
     this.props.openDomain(domain);
   };
 
@@ -119,7 +114,7 @@ class Drawer extends PureComponent {
           height: 50,
           flexDirection: 'row',
         }}>
-          <View style={{flex: 1}} />
+          <View style={{ flex: 1 }} />
           <HomeButton />
         </View>
       </View>

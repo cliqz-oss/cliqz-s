@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  Text,
   View,
   StyleSheet,
 } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
 import { Logo } from '../cliqz';
-import { GiftedChat } from 'react-native-gifted-chat'
 import {
   changeScreen,
   openLink,
@@ -18,6 +17,21 @@ import {
 import Button from '../components/Button';
 import HomeButton from '../components/HomeButton';
 
+const prepareMessages = (visits) => {
+  const user = {
+    _id: -1,
+  };
+
+  return visits
+    .filter(visit => !!visit.title)
+    .map(visit => ({
+      _id: visit.visitedAt,
+      text: `${visit.title}\n${visit.url}`,
+      url: visit.url,
+      createdAt: new Date(visit.visitedAt / 1000),
+      user,
+    }));
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -45,16 +59,18 @@ class DomainDetails extends PureComponent {
 
   render() {
     const mainUrl = this.props.messages[0].url;
+    const messages = prepareMessages(this.props.messages);
+
     return (
       <View style={styles.container}>
         <View style={styles.list}>
           <GiftedChat
-            messages={this.props.messages}
+            messages={messages}
             renderComposer={() => {}}
-            renderAvatar={message => <Logo url={mainUrl} />}
+            renderAvatar={() => <Logo url={mainUrl} />}
             renderAvatarOnTop={true}
-            parsePatterns={(linkStyle) => [
-              {type: 'url', style: { color: 'rgb(26, 13, 171)', textDecorationLine: 'underline' }, onPress: this.handleUrlPress},
+            parsePatterns={() => [
+              { type: 'url', style: { color: 'rgb(26, 13, 171)', textDecorationLine: 'underline' }, onPress: this.handleUrlPress },
             ]}
           />
         </View>

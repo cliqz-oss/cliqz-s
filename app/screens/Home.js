@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
 });
 
 class Home extends Component {
-
   static navigatorStyle = {
     navBarHidden: true,
   };

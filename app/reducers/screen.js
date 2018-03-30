@@ -3,7 +3,7 @@ import {
   OPEN_DOMAIN_ACTION,
 } from '../constants/action-types';
 import {
-  DOMAIN_LIST_SCREEN as HOME_SCREEN,
+  HOME_SCREEN,
   DOMAIN_DETAILS_SCREEN,
 } from '../constants/screen-names';
 

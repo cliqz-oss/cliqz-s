@@ -70,6 +70,25 @@ export async function fetchDomains() {
   }));
 }
 
+export async function fetchMessages(domain) {
+  const history = await db.query(`
+    SELECT ${TableDomains}.domain, ${TableHistory}.url, ${TableHistory}.title, ${TableVisits}.date
+    FROM ${TableDomains}
+    INNER JOIN ${TableHistory} ON ${TableDomains}.id = ${TableHistory}.domain_id
+    INNER JOIN ${TableVisits} ON ${TableHistory}.id = ${TableVisits}.siteID
+    WHERE ${TableDomains}.domain = ?
+    ORDER BY ${TableVisits}.date DESC
+    LIMIT 100;
+  `, [domain]);
+
+  return history.map(visit => ({
+    domain: visit.domain,
+    url: visit.url,
+    title: visit.title,
+    visitedAt: visit.date,
+  }));
+}
+
 const updateSite = (url, title) => {
   const host = parseURL(url).hostname;
   const update = `

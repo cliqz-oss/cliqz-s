@@ -1,5 +1,6 @@
 import {
   fetchDomains as getDomains,
+  fetchMessages as getMessages,
   recordVisit,
 } from '../services/history';
 import {
@@ -27,27 +28,12 @@ const setMessages = payload => ({
   payload,
 });
 
-export const openDomain = (domain) => async (dispatch) => {
+export const openDomain = domain => async (dispatch) => {
   dispatch({
     type: OPEN_DOMAIN_ACTION,
   });
 
-  const messages = [
-    {
-      _id: 1,
-      text: `
-      Cliqz - No compromize Browser \n
-      https://cliqz.com/
-      `,
-      url: `https://${domain}/`,
-      createdAt: new Date(),
-      user: {
-        _id: 2,
-        name: domain,
-      },
-    },
-  ];
-
+  const messages = await getMessages(domain);
   dispatch(setMessages(messages));
 };
 
@@ -118,7 +104,7 @@ export const backForwardReceiver = () => ({
   type: BACK_FORWARD_RECEIVED,
 });
 
-export const changeScreen = (screen) => ({
+export const changeScreen = screen => ({
   type: SCREEN_CHANGED,
   payload: screen,
 });
