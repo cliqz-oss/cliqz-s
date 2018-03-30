@@ -2,11 +2,13 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
   Text,
-  Button,
   View,
   StyleSheet,
 } from 'react-native';
+import { changeScreen } from '../actions/index';
 import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
+import Button from '../components/Button';
+import HomeButton from '../components/HomeButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,9 +26,7 @@ class DomainDetails extends PureComponent {
   };
 
   onPress = () => {
-    this.props.navigator.resetTo({
-      screen: DOMAIN_LIST_SCREEN,
-    });
+    this.props.changeScreen(DOMAIN_LIST_SCREEN);
   };
 
   render() {
@@ -36,23 +36,22 @@ class DomainDetails extends PureComponent {
           <Text>TODO</Text>
         </View>
 
-        <View>
+        <View style={{
+          height: 50,
+          flexDirection: 'row',
+        }}>
           <Button
-            title="Back"
+            title="&#9664;"
             onPress={this.onPress}
           />
-          <Button
-            title="HOME"
-            onPress={this.onPress}
-          />
+          <View style={{ flex: 1 }} />
+          <HomeButton />
         </View>
       </View>
     );
   }
-};
+}
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({});
 
-});
-
-export default connect(mapStateToProps, {})(DomainDetails);
+export default connect(mapStateToProps, { changeScreen })(DomainDetails);

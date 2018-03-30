@@ -5,7 +5,6 @@ import {
   FlatList,
   View,
   Text,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import { ScreenVisibilityListener } from 'react-native-navigation';
@@ -21,6 +20,7 @@ import {
   DOMAIN_LIST_SCREEN,
   DOMAIN_DETAILS_SCREEN,
 } from '../constants/screen-names';
+import HomeButton from '../components/HomeButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -87,10 +87,6 @@ class Drawer extends PureComponent {
     });
   }
 
-  goToHome = () => {
-    this.props.changeScreen(HOME_SCREEN);
-  };
-
   onPressItem = (url) => {
     this.props.changeScreen(DOMAIN_DETAILS_SCREEN);
   };
@@ -119,11 +115,12 @@ class Drawer extends PureComponent {
           style={styles.list}
           testID='Drawer'
         />
-        <View>
-          <Button
-            title="back"
-            onPress={this.goToHome}
-          />
+        <View style={{
+          height: 50,
+          flexDirection: 'row',
+        }}>
+          <View style={{flex: 1}} />
+          <HomeButton />
         </View>
       </View>
     );

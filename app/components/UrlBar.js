@@ -135,7 +135,7 @@ class UrlBar extends Component {
             >
               <Text style={styles.domainText}>{pageTitle || url }</Text>
             </TouchableHighlight>
-            {this.renderHomeButton()}
+            <HomeButton />
           </View>
         }
       </View>

@@ -1,5 +1,5 @@
 import { SCREEN_CHANGED } from '../constants/action-types';
-import { HOME_SCREEN } from '../constants/screen-names';
+import { DOMAIN_LIST_SCREEN as HOME_SCREEN} from '../constants/screen-names';
 
 export default function screen(state = HOME_SCREEN, action) {
   if (action.type === SCREEN_CHANGED) {
