@@ -7,3 +7,4 @@ export const GO_BACK = 'GO_BACK';
 export const GO_FORWARD = 'GO_FORWARD';
 export const BACK_FORWARD_RECEIVED = 'BACK_FORWARD_RECEIVED';
 export const SET_HISTORY = 'SET_HISTORY';
+export const SCREEN_CHANGED = 'SCREEN_CHANGED';

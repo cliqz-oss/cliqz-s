@@ -4,7 +4,6 @@ import {
   View,
   TextInput,
   Text,
-  TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -15,12 +14,12 @@ import {
   goBack,
   goForward,
   openLink,
+  changeScreen,
 } from '../actions/index';
 import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
 import { parseURL } from '../cliqz';
-import {
-  DOMAIN_LIST_SCREEN,
-} from '../constants/screen-names';
+import Button from './Button';
+import HomeButton from './HomeButton';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -58,30 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     textDecorationLine: 'none',
   },
-  buttonContainer: {
-    flex: 0,
-    backgroundColor: '#444',
-    padding: 10,
-    marginRight: 7,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    flex: 1,
-  },
 });
-
-const Button = props => (
-  <TouchableOpacity
-    style={styles.buttonContainer}
-    onPress={props.onPress}
-  >
-    <Text style={[styles.buttonText, props.disabled ? ({ color: '#888' }) : null]}>
-      {props.title}
-    </Text>
-  </TouchableOpacity>
-);
 
 class UrlBar extends Component {
   onSubmit = () => {
@@ -96,15 +72,6 @@ class UrlBar extends Component {
     this.props.openLink(url);
   };
 
-  goToDomainDetails = () => {
-    if (this.input) {
-      this.input.blur();
-    }
-    this.props.navigator.resetTo({
-      screen: DOMAIN_LIST_SCREEN,
-    });
-  }
-
   renderCancelButton() {
     return (
       <TouchableHighlight
@@ -113,15 +80,6 @@ class UrlBar extends Component {
       >
         <Text style={{ color: 'white', marginRight: 7 }}>Cancel</Text>
       </TouchableHighlight>
-    );
-  }
-
-  renderHomeButton() {
-    return (
-      <Button
-        title='&#9632;'
-        onPress={this.goToDomainDetails}
-      />
     );
   }
 
@@ -154,7 +112,7 @@ class UrlBar extends Component {
               value={query}
             />
             {(!this.props.query && !this.props.url)
-                ? this.renderHomeButton()
+                ? <HomeButton />
                 : this.renderCancelButton()
             }
           </View>
@@ -201,13 +159,12 @@ const mapStateToProps = ({
   mode,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateUrlBar: (...args) => dispatch(updateUrlBar(...args)),
-  urlBarBlur: url => dispatch(urlBarBlur(url)),
-  urlBarQuery: (...args) => dispatch(urlBarQuery(...args)),
-  goBack: () => dispatch(goBack()),
-  goForward: () => dispatch(goForward()),
-  openLink: url => dispatch(openLink(url)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UrlBar);
+export default connect(mapStateToProps, {
+  updateUrlBar,
+  urlBarBlur,
+  urlBarQuery,
+  goBack,
+  goForward,
+  openLink,
+  changeScreen,
+})(UrlBar);

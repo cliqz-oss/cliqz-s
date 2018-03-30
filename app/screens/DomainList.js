@@ -11,7 +11,11 @@ import {
 import { ScreenVisibilityListener } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
-import { openLink, fetchDomains } from '../actions/index';
+import {
+  openLink,
+  fetchDomains,
+  changeScreen,
+} from '../actions/index';
 import {
   HOME_SCREEN,
   DOMAIN_LIST_SCREEN,
@@ -84,15 +88,11 @@ class Drawer extends PureComponent {
   }
 
   goToHome = () => {
-    this.props.navigator.resetTo({
-      screen: HOME_SCREEN,
-    });
+    this.props.changeScreen(HOME_SCREEN);
   };
 
   onPressItem = (url) => {
-    this.props.navigator.resetTo({
-      screen: DOMAIN_DETAILS_SCREEN,
-    });
+    this.props.changeScreen(DOMAIN_DETAILS_SCREEN);
   };
 
   renderItem = ({ item }) => (
@@ -134,4 +134,8 @@ const mapStateToProps = state => ({
   domains: state.domains,
 });
 
-export default connect(mapStateToProps, { openLink, fetchDomains })(Drawer);
+export default connect(mapStateToProps, {
+  openLink,
+  fetchDomains,
+  changeScreen,
+})(Drawer);

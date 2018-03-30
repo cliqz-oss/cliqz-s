@@ -11,6 +11,7 @@ import {
   GO_BACK,
   GO_FORWARD,
   BACK_FORWARD_RECEIVED,
+  SCREEN_CHANGED,
   SET_HISTORY,
 } from '../constants/action-types';
 
@@ -84,4 +85,9 @@ export const goForward = () => ({
 
 export const backForwardReceiver = () => ({
   type: BACK_FORWARD_RECEIVED,
+});
+
+export const changeScreen = (screen) => ({
+  type: SCREEN_CHANGED,
+  payload: screen,
 });
