@@ -17,6 +17,10 @@ import {
   changeScreen,
 } from '../actions/index';
 import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
+import {
+  BACKGROUND_COLOR_STYLE,
+  BOTTOM_BAR_HEIGHT_STYLE,
+} from '../constants/stylesheets';
 import { parseURL } from '../cliqz';
 import Button from './Button';
 import HomeButton from './HomeButton';
@@ -27,9 +31,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   urlbar: {
-    backgroundColor: '#444',
+    backgroundColor: BACKGROUND_COLOR_STYLE,
     flexDirection: 'row',
-    height: 50,
+    height: BOTTOM_BAR_HEIGHT_STYLE,
   },
   domain: {
     flex: 1,

@@ -15,6 +15,10 @@ import {
   DOMAIN_LIST_SCREEN,
   HOME_SCREEN,
 } from '../constants/screen-names';
+import {
+  BACKGROUND_COLOR_STYLE,
+  BOTTOM_BAR_HEIGHT_STYLE,
+} from '../constants/stylesheets';
 import Button from '../components/Button';
 import HomeButton from '../components/HomeButton';
 
@@ -36,7 +40,7 @@ const prepareMessages = (visits) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#444',
+    backgroundColor: BACKGROUND_COLOR_STYLE,
     flex: 1,
   },
   list: {
@@ -76,7 +80,7 @@ class DomainDetails extends PureComponent {
         </View>
 
         <View style={{
-          height: 50,
+          height: BOTTOM_BAR_HEIGHT_STYLE,
           flexDirection: 'row',
         }}>
           <Button

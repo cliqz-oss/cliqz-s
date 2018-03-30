@@ -15,16 +15,13 @@ import {
   openLink,
   backForwardReceiver,
 } from '../actions/index';
+import { BACKGROUND_COLOR_STYLE } from '../constants/stylesheets';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
   keyboardAvoidingView: {
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? 20 : 0,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: BACKGROUND_COLOR_STYLE,
   },
   modal: {
     position: 'absolute',
@@ -55,24 +52,20 @@ class Home extends Component {
       style={styles.keyboardAvoidingView}
       {...keyboardAvoidingViewOptions}
     >
-      <View
-        style={styles.container}
-      >
-        <Browser
-          url={this.props.url}
-          backForwardReceiver={this.props.backForwardReceiver}
-          updateWebView={this.props.updateWebView}
-          shouldGoBack={this.props.shouldGoBack}
-          shouldGoForward={this.props.shouldGoForward}
+      <Browser
+        url={this.props.url}
+        backForwardReceiver={this.props.backForwardReceiver}
+        updateWebView={this.props.updateWebView}
+        shouldGoBack={this.props.shouldGoBack}
+        shouldGoForward={this.props.shouldGoForward}
+      />
+      <View style={[styles.modal, this.modalHeight()]}>
+        <SearchResults
+          query={this.props.query}
+          openLink={this.props.openLink}
         />
-        <View style={[styles.modal, this.modalHeight()]}>
-          <SearchResults
-            query={this.props.query}
-            openLink={this.props.openLink}
-          />
-        </View>
-        <UrlBar navigator={this.props.navigator} />
       </View>
+      <UrlBar navigator={this.props.navigator} />
     </KeyboardAvoidingView>
     );
   }

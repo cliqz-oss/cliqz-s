@@ -13,28 +13,33 @@ import DomainDetails from './DomainDetails';
 // eslint-disable-next-line
 const fakeIcon = require('../../ios/CliqzS/Images.xcassets/AppIcon.appiconset/App_Icon-BETA@80-1.png');
 
+const navigatorStyle = {
+  navBarHidden: true,
+  tabBarHidden: true,
+};
+
 export const tabs = [
   {
     screen: HOME_SCREEN,
     icon: fakeIcon,
+    navigatorStyle,
   },
   {
     screen: DOMAIN_LIST_SCREEN,
     icon: fakeIcon,
+    navigatorStyle,
   },
   {
     screen: DOMAIN_DETAILS_SCREEN,
     icon: fakeIcon,
+    navigatorStyle,
   },
 ];
 
 const wrapper = (WrappedComponent) => {
   // eslint-disable-next-line
   const wrappedComponent = class extends Component {
-    static navigatorStyle = {
-      navBarHidden: true,
-      tabBarHidden: true,
-    };
+    static navigatorStyle = navigatorStyle;
 
     componentWillReceiveProps(nextProps) {
       if (this.currentScreen !== nextProps.screen) {
