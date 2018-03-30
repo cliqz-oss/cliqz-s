@@ -1,5 +1,6 @@
 import {
-  fetchHistory as getHistory,
+  fetchDomains as getDomains,
+  fetchMessages as getMessages,
   recordVisit,
 } from '../services/history';
 import {
@@ -11,7 +12,10 @@ import {
   GO_BACK,
   GO_FORWARD,
   BACK_FORWARD_RECEIVED,
+  SCREEN_CHANGED,
   SET_HISTORY,
+  SET_MESSAGES_ACTION,
+  OPEN_DOMAIN_ACTION,
 } from '../constants/action-types';
 
 const setHistory = payload => ({
@@ -19,8 +23,22 @@ const setHistory = payload => ({
   payload,
 });
 
-export const fetchHistory = () => async (dispatch) => {
-  const history = await getHistory();
+const setMessages = payload => ({
+  type: SET_MESSAGES_ACTION,
+  payload,
+});
+
+export const openDomain = domain => async (dispatch) => {
+  dispatch({
+    type: OPEN_DOMAIN_ACTION,
+  });
+
+  const messages = await getMessages(domain);
+  dispatch(setMessages(messages));
+};
+
+export const fetchDomains = () => async (dispatch) => {
+  const history = await getDomains();
   dispatch(setHistory(history));
 };
 
@@ -84,4 +102,9 @@ export const goForward = () => ({
 
 export const backForwardReceiver = () => ({
   type: BACK_FORWARD_RECEIVED,
+});
+
+export const changeScreen = screen => ({
+  type: SCREEN_CHANGED,
+  payload: screen,
 });

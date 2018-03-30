@@ -4,7 +4,6 @@ import {
   View,
   TextInput,
   Text,
-  TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -15,9 +14,12 @@ import {
   goBack,
   goForward,
   openLink,
+  changeScreen,
 } from '../actions/index';
 import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
 import { parseURL } from '../cliqz';
+import Button from './Button';
+import HomeButton from './HomeButton';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -55,30 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     textDecorationLine: 'none',
   },
-  buttonContainer: {
-    flex: 0,
-    backgroundColor: '#444',
-    padding: 10,
-    marginRight: 7,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    flex: 1,
-  },
 });
-
-const Button = props => (
-  <TouchableOpacity
-    style={styles.buttonContainer}
-    onPress={props.onPress}
-  >
-    <Text style={[styles.buttonText, props.disabled ? ({ color: '#888' }) : null]}>
-      {props.title}
-    </Text>
-  </TouchableOpacity>
-);
 
 class UrlBar extends Component {
   onSubmit = () => {
@@ -94,9 +73,6 @@ class UrlBar extends Component {
   };
 
   renderCancelButton() {
-    if (!this.props.query && !this.props.url) {
-      return null;
-    }
     return (
       <TouchableHighlight
         style={{ justifyContent: 'center' }}
@@ -128,34 +104,38 @@ class UrlBar extends Component {
               testID='UrlBar'
               placeholder='Search!'
               underlineColorAndroid='white'
-              autoFocus={true}
               selectTextOnFocus={true}
+              autoCorrect={false}
               onChangeText={this.props.urlBarQuery}
               onSubmitEditing={this.onSubmit}
               style={styles.input}
               value={query}
             />
-            {this.renderCancelButton()}
+            {(!this.props.query && !this.props.url)
+                ? <HomeButton />
+                : this.renderCancelButton()
+            }
           </View>
         }
         {mode === 'visit' &&
           <View style={styles.visitModeContainer}>
+            <Button
+              disabled={!canGoBack}
+              title='&#9664;'
+              onPress={goBackAction}
+            />
+            <Button
+              disabled={!canGoForward}
+              title='&#9654;'
+              onPress={goForwardAction}
+            />
             <TouchableHighlight
               style={styles.domain}
               onPress={() => this.props.updateUrlBar(this.props.url)}
             >
               <Text style={styles.domainText}>{pageTitle || url }</Text>
             </TouchableHighlight>
-            <Button
-              disabled={!canGoBack}
-              title={'<'}
-              onPress={goBackAction}
-            />
-            <Button
-              disabled={!canGoForward}
-              title={'>'}
-              onPress={goForwardAction}
-            />
+            <HomeButton />
           </View>
         }
       </View>
@@ -179,13 +159,12 @@ const mapStateToProps = ({
   mode,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateUrlBar: (...args) => dispatch(updateUrlBar(...args)),
-  urlBarBlur: url => dispatch(urlBarBlur(url)),
-  urlBarQuery: (...args) => dispatch(urlBarQuery(...args)),
-  goBack: () => dispatch(goBack()),
-  goForward: () => dispatch(goForward()),
-  openLink: url => dispatch(openLink(url)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UrlBar);
+export default connect(mapStateToProps, {
+  updateUrlBar,
+  urlBarBlur,
+  urlBarQuery,
+  goBack,
+  goForward,
+  openLink,
+  changeScreen,
+})(UrlBar);

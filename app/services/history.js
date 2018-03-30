@@ -52,13 +52,14 @@ INSERT OR IGNORE INTO ${TableVisits} (siteID, date, type, is_local) VALUES (
 
 const insertDomain = `INSERT OR IGNORE INTO ${TableDomains} (domain) VALUES (?)`;
 
-export async function fetchHistory() {
+export async function fetchDomains() {
   const history = await db.query(`
-    SELECT ${TableVisits}.date, ${TableHistory}.url, ${TableDomains}.domain
+    SELECT MAX(${TableVisits}.date) as date, ${TableHistory}.url, ${TableDomains}.domain
     FROM ${TableVisits}
     INNER JOIN ${TableHistory} ON ${TableHistory}.id = ${TableVisits}.siteID
     INNER JOIN ${TableDomains} ON ${TableDomains}.id = ${TableHistory}.domain_id
-    ORDER BY ${TableVisits}.date DESC
+    GROUP BY ${TableDomains}.domain
+    ORDER BY date DESC
     LIMIT 100
   `);
 
@@ -66,6 +67,25 @@ export async function fetchHistory() {
     domain: visit.domain,
     baseUrl: visit.url,
     lastVisisted: visit.date,
+  }));
+}
+
+export async function fetchMessages(domain) {
+  const history = await db.query(`
+    SELECT ${TableDomains}.domain, ${TableHistory}.url, ${TableHistory}.title, ${TableVisits}.date
+    FROM ${TableDomains}
+    INNER JOIN ${TableHistory} ON ${TableDomains}.id = ${TableHistory}.domain_id
+    INNER JOIN ${TableVisits} ON ${TableHistory}.id = ${TableVisits}.siteID
+    WHERE ${TableDomains}.domain = ?
+    ORDER BY ${TableVisits}.date DESC
+    LIMIT 100;
+  `, [domain]);
+
+  return history.map(visit => ({
+    domain: visit.domain,
+    url: visit.url,
+    title: visit.title,
+    visitedAt: visit.date,
   }));
 }
 

@@ -10,7 +10,13 @@ import {
 import { ScreenVisibilityListener } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import { Logo } from '../cliqz';
-import { openLink, fetchHistory } from '../actions/index';
+import {
+  openLink,
+  fetchDomains,
+  openDomain,
+} from '../actions/index';
+import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
+import HomeButton from '../components/HomeButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +39,7 @@ const styles = StyleSheet.create({
 
 class DrawerItem extends PureComponent {
   onPress = () => {
-    this.props.onPressItem(this.props.baseUrl);
+    this.props.onPressItem(this.props.domain);
   };
 
   render() {
@@ -61,24 +67,23 @@ class DrawerItem extends PureComponent {
 }
 
 class Drawer extends PureComponent {
+  static navigatorStyle = {
+    navBarHidden: true,
+  };
+
   constructor(props) {
     super(props);
     this.listener = new ScreenVisibilityListener({
       willAppear: ({ screen }) => {
-        if (screen === 'cliqzs.Drawer') {
-          this.props.fetchHistory();
+        if (screen === DOMAIN_LIST_SCREEN) {
+          this.props.fetchDomains();
         }
       },
     });
   }
 
-  onPressItem = (url) => {
-    this.props.openLink(url);
-    this.props.navigator.toggleDrawer({
-      side: 'left',
-      animated: true,
-      to: 'close',
-    });
+  onPressItem = (domain) => {
+    this.props.openDomain(domain);
   };
 
   renderItem = ({ item }) => (
@@ -105,6 +110,13 @@ class Drawer extends PureComponent {
           style={styles.list}
           testID='Drawer'
         />
+        <View style={{
+          height: 50,
+          flexDirection: 'row',
+        }}>
+          <View style={{ flex: 1 }} />
+          <HomeButton />
+        </View>
       </View>
     );
   }
@@ -114,4 +126,8 @@ const mapStateToProps = state => ({
   domains: state.domains,
 });
 
-export default connect(mapStateToProps, { openLink, fetchHistory })(Drawer);
+export default connect(mapStateToProps, {
+  openLink,
+  fetchDomains,
+  openDomain,
+})(Drawer);
