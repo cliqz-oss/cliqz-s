@@ -13,7 +13,7 @@ import { Logo } from '../cliqz';
 import {
   openLink,
   fetchDomains,
-  changeScreen,
+  openDomain,
 } from '../actions/index';
 import {
   HOME_SCREEN,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 class DrawerItem extends PureComponent {
   onPress = () => {
-    this.props.onPressItem(this.props.baseUrl);
+    this.props.onPressItem(this.props.domain);
   };
 
   render() {
@@ -87,8 +87,8 @@ class Drawer extends PureComponent {
     });
   }
 
-  onPressItem = (url) => {
-    this.props.changeScreen(DOMAIN_DETAILS_SCREEN);
+  onPressItem = domain => {
+    this.props.openDomain(domain);
   };
 
   renderItem = ({ item }) => (
@@ -134,5 +134,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   openLink,
   fetchDomains,
-  changeScreen,
+  openDomain,
 })(Drawer);

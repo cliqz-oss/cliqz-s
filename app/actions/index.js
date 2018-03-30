@@ -13,12 +13,43 @@ import {
   BACK_FORWARD_RECEIVED,
   SCREEN_CHANGED,
   SET_HISTORY,
+  SET_MESSAGES_ACTION,
+  OPEN_DOMAIN_ACTION,
 } from '../constants/action-types';
 
 const setHistory = payload => ({
   type: SET_HISTORY,
   payload,
 });
+
+const setMessages = payload => ({
+  type: SET_MESSAGES_ACTION,
+  payload,
+});
+
+export const openDomain = (domain) => async (dispatch) => {
+  dispatch({
+    type: OPEN_DOMAIN_ACTION,
+  });
+
+  const messages = [
+    {
+      _id: 1,
+      text: `
+      Cliqz - No compromize Browser \n
+      https://cliqz.com/
+      `,
+      url: `https://${domain}/`,
+      createdAt: new Date(),
+      user: {
+        _id: 2,
+        name: domain,
+      },
+    },
+  ];
+
+  dispatch(setMessages(messages));
+};
 
 export const fetchDomains = () => async (dispatch) => {
   const history = await getDomains();

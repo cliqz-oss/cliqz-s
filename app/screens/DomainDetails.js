@@ -5,10 +5,19 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import { changeScreen } from '../actions/index';
-import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
+import { Logo } from '../cliqz';
+import { GiftedChat } from 'react-native-gifted-chat'
+import {
+  changeScreen,
+  openLink,
+} from '../actions/index';
+import {
+  DOMAIN_LIST_SCREEN,
+  HOME_SCREEN,
+} from '../constants/screen-names';
 import Button from '../components/Button';
 import HomeButton from '../components/HomeButton';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -25,15 +34,29 @@ class DomainDetails extends PureComponent {
     navBarHidden: true,
   };
 
-  onPress = () => {
+  onBackButtonPress = () => {
     this.props.changeScreen(DOMAIN_LIST_SCREEN);
   };
 
+  handleUrlPress = (url) => {
+    this.props.changeScreen(HOME_SCREEN);
+    this.props.openLink(url);
+  };
+
   render() {
+    const mainUrl = this.props.messages[0].url;
     return (
       <View style={styles.container}>
         <View style={styles.list}>
-          <Text>TODO</Text>
+          <GiftedChat
+            messages={this.props.messages}
+            renderComposer={() => {}}
+            renderAvatar={message => <Logo url={mainUrl} />}
+            renderAvatarOnTop={true}
+            parsePatterns={(linkStyle) => [
+              {type: 'url', style: { color: 'rgb(26, 13, 171)', textDecorationLine: 'underline' }, onPress: this.handleUrlPress},
+            ]}
+          />
         </View>
 
         <View style={{
@@ -42,7 +65,7 @@ class DomainDetails extends PureComponent {
         }}>
           <Button
             title="&#9664;"
-            onPress={this.onPress}
+            onPress={this.onBackButtonPress}
           />
           <View style={{ flex: 1 }} />
           <HomeButton />
@@ -52,6 +75,11 @@ class DomainDetails extends PureComponent {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  messages: state.messages,
+});
 
-export default connect(mapStateToProps, { changeScreen })(DomainDetails);
+export default connect(mapStateToProps, {
+  changeScreen,
+  openLink,
+})(DomainDetails);

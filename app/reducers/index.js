@@ -7,6 +7,7 @@ import pageTitle from './pageTitle';
 import currentUrl from './currentUrl';
 import domains from './domains';
 import screen from './screen';
+import messages from './messages';
 
 export default combineReducers({
   mode,
@@ -17,5 +18,6 @@ export default combineReducers({
   currentUrl,
   domains,
   screen,
+  messages,
 });
 
