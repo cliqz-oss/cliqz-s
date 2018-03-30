@@ -6,6 +6,7 @@ import { startup } from './app/cliqz';
 import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
 import registerScreens, { tabs } from './app/screens/index';
+import { BACKGROUND_COLOR_STYLE } from './app/constants/stylesheets';
 
 // console.disableYellowBox = true;
 // eslint-disable-next-line
@@ -38,6 +39,8 @@ console.ignoredYellowBox = [
     appStyle: {
       tabBarHidden: true,
       statusBarHidden: true,
+      screenBackgroundColor: BACKGROUND_COLOR_STYLE,
+      statusBarTextColorScheme: 'light',
     },
     passProps: {},
     animationType: 'none',

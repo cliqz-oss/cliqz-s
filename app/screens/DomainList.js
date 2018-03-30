@@ -18,10 +18,14 @@ import {
 } from '../actions/index';
 import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
 import HomeButton from '../components/HomeButton';
+import {
+  BACKGROUND_COLOR_STYLE,
+  BOTTOM_BAR_HEIGHT_STYLE,
+} from '../constants/stylesheets';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#444',
+    backgroundColor: BACKGROUND_COLOR_STYLE,
     flex: 1,
   },
   list: {
@@ -108,7 +112,7 @@ class Drawer extends PureComponent {
           testID='Drawer'
         />
         <View style={{
-          height: 50,
+          height: BOTTOM_BAR_HEIGHT_STYLE,
           flexDirection: 'row',
         }}>
           <View style={{ flex: 1 }} />

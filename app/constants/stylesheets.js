@@ -1,0 +1,2 @@
+export const BACKGROUND_COLOR_STYLE = '#444';
+export const BOTTOM_BAR_HEIGHT_STYLE = 50;
