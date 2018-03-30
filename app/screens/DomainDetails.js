@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   View,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { Logo } from '../cliqz';
@@ -61,7 +62,7 @@ class DomainDetails extends PureComponent {
     const messages = prepareMessages(this.props.messages);
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.list}>
           <GiftedChat
             messages={messages}
@@ -85,7 +86,7 @@ class DomainDetails extends PureComponent {
           <View style={{ flex: 1 }} />
           <HomeButton />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

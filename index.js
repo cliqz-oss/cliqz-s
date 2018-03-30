@@ -37,9 +37,10 @@ console.ignoredYellowBox = [
     tabs,
     appStyle: {
       tabBarHidden: true,
+      statusBarHidden: true,
     },
     passProps: {},
-    animationType: 'slide-down',
+    animationType: 'none',
   });
 }());
 

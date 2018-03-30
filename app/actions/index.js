@@ -66,7 +66,7 @@ export const updateWebView = ({
     },
   });
 
-  if (isLoading) {
+  if (!isLoading) {
     recordVisit(currentUrl, pageTitle);
   }
 };
