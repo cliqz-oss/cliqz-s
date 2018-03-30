@@ -67,10 +67,6 @@ class DrawerItem extends PureComponent {
 }
 
 class Drawer extends PureComponent {
-  static navigatorStyle = {
-    navBarHidden: true,
-  };
-
   constructor(props) {
     super(props);
     this.listener = new ScreenVisibilityListener({
