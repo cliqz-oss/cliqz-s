@@ -17,7 +17,7 @@ export default combineReducers({
   pageTitle,
   currentUrl,
   domains,
-  screen,
   messages,
+  screen,
 });
 

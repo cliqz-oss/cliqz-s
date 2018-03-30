@@ -4,6 +4,7 @@ import {
   StyleSheet,
   FlatList,
   View,
+  SafeAreaView,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -97,7 +98,7 @@ class Drawer extends PureComponent {
 
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <FlatList
           data={this.props.domains}
           inverted
@@ -113,7 +114,7 @@ class Drawer extends PureComponent {
           <View style={{ flex: 1 }} />
           <HomeButton />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

@@ -33,6 +33,7 @@ const wrapper = (WrappedComponent) => {
   const wrappedComponent = class extends Component {
     static navigatorStyle = {
       navBarHidden: true,
+      tabBarHidden: true,
     };
 
     componentWillReceiveProps(nextProps) {

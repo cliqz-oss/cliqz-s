@@ -30,8 +30,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#444',
     flexDirection: 'row',
     height: 50,
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
   },
   domain: {
     flex: 1,
