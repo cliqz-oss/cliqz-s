@@ -33,7 +33,14 @@ export const openDomain = domain => async (dispatch) => {
     type: OPEN_DOMAIN_ACTION,
   });
 
-  const messages = await getMessages(domain);
+  let messages = [];
+
+  try {
+    messages = await getMessages(domain);
+  } catch (e) {
+    // TODO: report errors
+  }
+
   dispatch(setMessages(messages));
 };
 

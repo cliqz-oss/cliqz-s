@@ -44,10 +44,6 @@ const styles = StyleSheet.create({
 });
 
 class DomainDetails extends PureComponent {
-  static navigatorStyle = {
-    navBarHidden: true,
-  };
-
   onBackButtonPress = () => {
     this.props.changeScreen(DOMAIN_LIST_SCREEN);
   };
@@ -58,6 +54,9 @@ class DomainDetails extends PureComponent {
   };
 
   render() {
+    if (this.props.messages.length === 0) {
+      return null;
+    }
     const mainUrl = this.props.messages[0].url;
     const messages = prepareMessages(this.props.messages);
 

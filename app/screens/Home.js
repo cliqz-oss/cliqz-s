@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  WebView,
   Dimensions,
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import UrlBar from '../components/UrlBar';
+import Browser from '../components/Browser';
 import SearchResults from '../components/SearchResults';
 import {
   updateWebView,
@@ -37,30 +37,10 @@ const styles = StyleSheet.create({
 });
 
 class Home extends Component {
-  static navigatorStyle = {
-    navBarHidden: true,
-  };
-
   modalHeight() {
     return {
       height: this.props.mode === 'search' ? Dimensions.get('window').height : 0,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.webView) {
-      return;
-    }
-
-    if (nextProps.shouldGoBack) {
-      this.webView.goBack();
-      this.props.backForwardReceiver();
-    }
-
-    if (nextProps.shouldGoForward) {
-      this.webView.goForward();
-      this.props.backForwardReceiver();
-    }
   }
 
   render() {
@@ -78,16 +58,12 @@ class Home extends Component {
       <View
         style={styles.container}
       >
-        <WebView
-          ref={(el) => { this.webView = el; }}
-          source={{ uri: this.props.url }}
-          onNavigationStateChange={state => this.props.updateWebView({
-            pageTitle: state.title,
-            currentUrl: state.url,
-            webCanGoBack: state.canGoBack,
-            isLoading: state.loading,
-            webCanGoForward: state.canGoForward,
-          })}
+        <Browser
+          url={this.props.url}
+          backForwardReceiver={this.props.backForwardReceiver}
+          updateWebView={this.props.updateWebView}
+          shouldGoBack={this.props.shouldGoBack}
+          shouldGoForward={this.props.shouldGoForward}
         />
         <View style={[styles.modal, this.modalHeight()]}>
           <SearchResults
