@@ -18,6 +18,7 @@ import {
 } from '../actions/index';
 import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
 import {
+  FONT_COLOR_STYLE,
   BACKGROUND_COLOR_STYLE,
   BOTTOM_BAR_HEIGHT_STYLE,
 } from '../constants/stylesheets';
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   domainText: {
     flex: 1,
-    color: 'white',
+    color: FONT_COLOR_STYLE,
     fontSize: 17,
     paddingTop: 7,
     paddingLeft: 5,
@@ -80,7 +81,7 @@ class UrlBar extends Component {
         style={{ justifyContent: 'center' }}
         onPress={this.props.urlBarBlur}
       >
-        <Text style={{ color: 'white', marginRight: 7 }}>Cancel</Text>
+        <Text style={{ color: FONT_COLOR_STYLE, marginRight: 7 }}>Cancel</Text>
       </TouchableHighlight>
     );
   }
