@@ -38,7 +38,7 @@ console.ignoredYellowBox = [
     tabs,
     appStyle: {
       tabBarHidden: true,
-      statusBarHidden: false,
+      navBarTranslucent: true,
       drawUnderTabBar: true,
       screenBackgroundColor: BACKGROUND_COLOR_STYLE,
       statusBarTextColorScheme: 'light',

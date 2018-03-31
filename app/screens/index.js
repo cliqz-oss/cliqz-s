@@ -11,7 +11,7 @@ import DomainList from './DomainList';
 import DomainDetails from './DomainDetails';
 
 // eslint-disable-next-line
-const fakeIcon = require('../../ios/CliqzS/Images.xcassets/AppIcon.appiconset/App_Icon-BETA@80-1.png');
+const fakeIcon = require('../../assets/1x1-00000000.png');
 
 const navigatorStyle = {
   navBarHidden: true,
@@ -53,12 +53,6 @@ const wrapper = (WrappedComponent) => {
     }
 
     render() {
-      // Not sure why, but `tabBarHidden` does not work for first screen
-      this.props.navigator.toggleTabs({
-        to: 'hidden',
-        animated: false,
-      });
-
       this.currentScreen = this.props.screen;
       return <WrappedComponent {...this.props} />;
     }
