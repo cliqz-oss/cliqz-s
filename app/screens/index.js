@@ -53,6 +53,12 @@ const wrapper = (WrappedComponent) => {
     }
 
     render() {
+      // Not sure why, but `tabBarHidden` does not work for first screen
+      this.props.navigator.toggleTabs({
+        to: 'hidden',
+        animated: false,
+      });
+
       this.currentScreen = this.props.screen;
       return <WrappedComponent {...this.props} />;
     }

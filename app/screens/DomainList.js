@@ -19,6 +19,7 @@ import {
 import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
 import HomeButton from '../components/HomeButton';
 import {
+  FONT_COLOR_STYLE,
   BACKGROUND_COLOR_STYLE,
   BOTTOM_BAR_HEIGHT_STYLE,
 } from '../constants/stylesheets';
@@ -57,9 +58,9 @@ class DrawerItem extends PureComponent {
           url={this.props.baseUrl}
         />
         <View style={styles.rowText}>
-          <Text style={{ color: 'white' }}>{this.props.domain}</Text>
+          <Text style={{ color: FONT_COLOR_STYLE }}>{this.props.domain}</Text>
           <Moment
-            style={{ color: 'white' }}
+            style={{ color: FONT_COLOR_STYLE }}
             element={Text}
             fromNow
           >

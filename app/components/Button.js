@@ -4,7 +4,10 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import { BACKGROUND_COLOR_STYLE } from '../constants/stylesheets';
+import {
+  BACKGROUND_COLOR_STYLE,
+  FONT_COLOR_STYLE,
+} from '../constants/stylesheets';
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -14,7 +17,7 @@ const styles = StyleSheet.create({
     marginRight: 7,
   },
   buttonText: {
-    color: '#fff',
+    color: FONT_COLOR_STYLE,
     fontSize: 20,
     fontWeight: 'bold',
     flex: 1,
