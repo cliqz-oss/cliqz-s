@@ -16,6 +16,8 @@ const fakeIcon = require('../../ios/CliqzS/Images.xcassets/AppIcon.appiconset/Ap
 const navigatorStyle = {
   navBarHidden: true,
   tabBarHidden: true,
+  drawUnderTabBar: true,
+  statusBarTextColorScheme: 'light',
 };
 
 export const tabs = [
