@@ -66,7 +66,7 @@ export async function fetchDomains() {
   return history.map(visit => ({
     domain: visit.domain,
     baseUrl: visit.url,
-    lastVisisted: visit.date,
+    lastVisisted: Number(visit.date),
   }));
 }
 
@@ -89,12 +89,12 @@ export async function fetchMessages(domain) {
   }));
 }
 
-const updateSite = (url, title) => {
+const updateSite = (url, title, timestamp) => {
   const host = parseURL(url).hostname;
   const update = `
     UPDATE ${TableHistory} SET title = ?, local_modified = ?, should_upload = 1, domain_id =
       (SELECT id FROM ${TableDomains} where domain = ?) WHERE url = ?`;
-  return db.command(update, [title, Date.now() * 1000, host, url]);
+  return db.command(update, [title, timestamp, host, url]);
 };
 
 const generateGUID = () => {
@@ -106,7 +106,7 @@ const generateGUID = () => {
   return [s4(), s4(), '-', s4(), '-', s4(), '-', s4(), '-', s4(), s4(), s4()].join('');
 };
 
-const insertSite = async (url, title) => {
+const insertSite = async (url, title, timestamp) => {
   const host = parseURL(url).hostname;
 
   try {
@@ -115,32 +115,32 @@ const insertSite = async (url, title) => {
     // domain may be created already
   }
 
-  const insertArgs = [generateGUID(), url, title, Date.now() * 1000, host];
+  const insertArgs = [generateGUID(), url, title, timestamp, host];
   const historyId = await db.command(insertHistory, insertArgs);
   return historyId;
 };
 
-const addLocalVisitForExistingSite = (url) => {
-  const realDate = Date.now() * 1000;
-  const insertArgs = [url, realDate, 0];
+const addLocalVisitForExistingSite = (url, timestamp) => {
+  const insertArgs = [url, timestamp, 0];
   return db.command(insertVisit, insertArgs);
 };
 
-export async function recordVisit(url, title) {
+export async function recordVisit(url, title, timestamp) {
+  // Not sure if that's best place to have such logic
   if (url === 'about:blank') {
     return Promise.resolve();
   }
 
   try {
-    const response = await updateSite(url, title);
+    const response = await updateSite(url, title, timestamp);
     if (response.rowsAffected === 0) {
       throw new Error('Not updated');
     }
   } catch (e) {
-    await insertSite(url, title);
+    await insertSite(url, title, timestamp);
   }
 
-  return addLocalVisitForExistingSite(url);
+  return addLocalVisitForExistingSite(url, timestamp);
 }
 
 export function initialize() {

@@ -90,13 +90,13 @@ class UrlBar extends Component {
     const {
       query,
       url,
-      webView,
       pageTitle,
       goBack: goBackAction,
       goForward: goForwardAction,
       mode,
+      canGoBack,
+      canGoForward,
     } = this.props;
-    const { canGoBack, canGoForward } = webView;
 
     return (
       <View style={styles.urlbar}>
@@ -109,6 +109,7 @@ class UrlBar extends Component {
               underlineColorAndroid='white'
               selectTextOnFocus={true}
               autoCorrect={false}
+              autoFocus={true}
               onChangeText={this.props.urlBarQuery}
               onSubmitEditing={this.onSubmit}
               style={styles.input}
@@ -148,19 +149,27 @@ class UrlBar extends Component {
 
 const mapStateToProps = ({
   query,
-  url,
-  currentUrl,
-  pageTitle,
-  webView,
   mode,
-}) => ({
-  query,
-  url,
-  currentUrl,
-  pageTitle,
-  webView,
-  mode,
-});
+  tabs,
+}) => {
+  const selectedTab = tabs.find(tab => tab.selected);
+
+  if (!selectedTab) {
+    return {
+      query,
+      mode,
+    };
+  }
+
+  return {
+    query,
+    mode,
+    url: selectedTab.currentUrl,
+    pageTitle: selectedTab.title,
+    canGoBack: selectedTab.canGoBack,
+    canGoForward: selectedTab.canGoForward,
+  };
+};
 
 export default connect(mapStateToProps, {
   updateUrlBar,

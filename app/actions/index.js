@@ -16,6 +16,7 @@ import {
   SET_HISTORY,
   SET_MESSAGES_ACTION,
   OPEN_DOMAIN_ACTION,
+  SWITCH_TAB_ACTION,
 } from '../constants/action-types';
 
 const setHistory = payload => ({
@@ -56,6 +57,8 @@ export const updateWebView = ({
   webCanGoForward,
   isLoading,
 }) => async (dispatch) => {
+  const timestamp = Date.now() * 1000;
+
   dispatch({
     type: UPDATE_WEBVIEW,
     payload: {
@@ -63,11 +66,12 @@ export const updateWebView = ({
       currentUrl,
       webCanGoBack,
       webCanGoForward,
+      timestamp,
     },
   });
 
   if (!isLoading) {
-    recordVisit(currentUrl, pageTitle);
+    recordVisit(currentUrl, pageTitle, timestamp);
   }
 };
 
@@ -114,4 +118,9 @@ export const backForwardReceiver = () => ({
 export const changeScreen = screen => ({
   type: SCREEN_CHANGED,
   payload: screen,
+});
+
+export const switchTab = visitId => ({
+  type: SWITCH_TAB_ACTION,
+  payload: visitId,
 });

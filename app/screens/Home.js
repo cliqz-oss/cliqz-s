@@ -5,6 +5,7 @@ import {
   Dimensions,
   Platform,
   KeyboardAvoidingView,
+  View,
 } from 'react-native';
 import { connect } from 'react-redux';
 import UrlBar from '../components/UrlBar';
@@ -31,14 +32,32 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  tabsContainer: {
+    flex: 1,
+  },
 });
 
 class Home extends Component {
-  modalHeight() {
+  _modalHeight() {
     return {
       height: this.props.mode === 'search' ? Dimensions.get('window').height : 0,
     };
   }
+
+  _renderTab = tab => (
+    <View
+      key={tab.id}
+      style={{ flex: tab.selected ? 1 : 0, height: tab.selected ? undefined : 0 }}
+    >
+      <Browser
+        url={tab.url}
+        backForwardReceiver={this.props.backForwardReceiver}
+        updateWebView={this.props.updateWebView}
+        shouldGoBack={tab.shouldGoBack}
+        shouldGoForward={tab.shouldGoForward}
+      />
+    </View>
+  );
 
   render() {
     const keyboardAvoidingViewOptions = {};
@@ -52,20 +71,16 @@ class Home extends Component {
       style={styles.keyboardAvoidingView}
       {...keyboardAvoidingViewOptions}
     >
-      <Browser
-        url={this.props.url}
-        backForwardReceiver={this.props.backForwardReceiver}
-        updateWebView={this.props.updateWebView}
-        shouldGoBack={this.props.shouldGoBack}
-        shouldGoForward={this.props.shouldGoForward}
-      />
-      <SafeAreaView style={[styles.modal, this.modalHeight()]}>
+      <View style={styles.tabsContainer}>
+        {this.props.tabs.map(this._renderTab)}
+      </View>
+      <SafeAreaView style={[styles.modal, this._modalHeight()]}>
         <SearchResults
           query={this.props.query}
           openLink={this.props.openLink}
         />
       </SafeAreaView>
-      <UrlBar navigator={this.props.navigator} />
+      <UrlBar />
     </KeyboardAvoidingView>
     );
   }
@@ -73,21 +88,16 @@ class Home extends Component {
 
 const mapStateToProps = ({
   query,
-  url,
   mode,
-  webView,
+  tabs,
 }) => ({
   query,
   mode,
-  url,
-  shouldGoBack: webView.shouldGoBack,
-  shouldGoForward: webView.shouldGoForward,
+  tabs,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateWebView: (...args) => dispatch(updateWebView(...args)),
-  openLink: url => dispatch(openLink(url)),
-  backForwardReceiver: () => dispatch(backForwardReceiver()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, {
+  updateWebView,
+  openLink,
+  backForwardReceiver,
+})(Home);
