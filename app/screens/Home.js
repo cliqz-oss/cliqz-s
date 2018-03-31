@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View,
+  SafeAreaView,
   Dimensions,
   Platform,
   KeyboardAvoidingView,
@@ -59,12 +59,12 @@ class Home extends Component {
         shouldGoBack={this.props.shouldGoBack}
         shouldGoForward={this.props.shouldGoForward}
       />
-      <View style={[styles.modal, this.modalHeight()]}>
+      <SafeAreaView style={[styles.modal, this.modalHeight()]}>
         <SearchResults
           query={this.props.query}
           openLink={this.props.openLink}
         />
-      </View>
+      </SafeAreaView>
       <UrlBar navigator={this.props.navigator} />
     </KeyboardAvoidingView>
     );

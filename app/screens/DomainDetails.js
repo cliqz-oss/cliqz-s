@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { Logo } from '../cliqz';
@@ -46,6 +47,13 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
   },
+  url: {
+    color: 'rgb(26, 13, 171)',
+    textDecorationLine: 'underline',
+  },
+  spacer: {
+    flex: 1,
+  },
 });
 
 class DomainDetails extends PureComponent {
@@ -70,11 +78,14 @@ class DomainDetails extends PureComponent {
         <View style={styles.list}>
           <GiftedChat
             messages={messages}
-            renderComposer={() => {}}
+            renderInputToolbar={() => null}
+            renderComposer={() => null}
+            renderLoading={() => <ActivityIndicator size="large" color="#ffffff" style={{ flex: 1 }} />}
+            minInputToolbarHeight={0}
             renderAvatar={() => <Logo url={mainUrl} />}
             renderAvatarOnTop={true}
             parsePatterns={() => [
-              { type: 'url', style: { color: 'rgb(26, 13, 171)', textDecorationLine: 'underline' }, onPress: this.handleUrlPress },
+              { type: 'url', style: styles.url, onPress: this.handleUrlPress },
             ]}
           />
         </View>
@@ -87,7 +98,7 @@ class DomainDetails extends PureComponent {
             title="&#9664;"
             onPress={this.onBackButtonPress}
           />
-          <View style={{ flex: 1 }} />
+          <View style={styles.spacer} />
           <HomeButton />
         </View>
       </SafeAreaView>
