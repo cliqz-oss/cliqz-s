@@ -133,7 +133,7 @@ class Drawer extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const openedDomains = state.tabs.map(tab => parseURL(tab.url).hostname);
+  const openedDomains = state.tabs.map(tab => parseURL(tab.currentUrl).hostname);
   return {
     domains: state.domains.map(domain => ({
       ...domain,
