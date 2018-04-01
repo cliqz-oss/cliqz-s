@@ -43,6 +43,11 @@ export default function tabs(state = [], action) {
     BACK_FORWARD_RECEIVED,
   ].includes(action.type)) {
     const selectedTabIndex = state.findIndex(tab => tab.selected);
+
+    if (selectedTabIndex === -1) {
+      return state;
+    }
+
     const selectedTab = state[selectedTabIndex];
     let propsToUpdate = {};
 
