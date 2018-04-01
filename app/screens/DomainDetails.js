@@ -11,6 +11,7 @@ import { Logo } from '../cliqz';
 import {
   changeScreen,
   openLink,
+  switchTab,
 } from '../actions/index';
 import {
   DOMAIN_LIST_SCREEN,
@@ -30,13 +31,25 @@ const prepareMessages = (visits) => {
 
   return visits
     .filter(visit => !!visit.title)
-    .map(visit => ({
-      _id: visit.visitedAt,
-      text: `${visit.title}\n${visit.url}`,
-      url: visit.url,
-      createdAt: new Date(visit.visitedAt / 1000),
-      user,
-    }));
+    .map((visit) => {
+      const textParts = [
+        visit.title,
+        visit.url,
+      ];
+
+      if (visit.hasActiveTab) {
+        const tabUrl = `tab://${visit.visitedAt}/`;
+        textParts.push(`\n${tabUrl}`);
+      }
+
+      return {
+        _id: visit.visitedAt,
+        text: textParts.join('\n'),
+        url: visit.url,
+        createdAt: new Date(visit.visitedAt / 1000),
+        user,
+      };
+    });
 };
 
 const styles = StyleSheet.create({
@@ -66,6 +79,11 @@ class DomainDetails extends PureComponent {
     this.props.openLink(url);
   };
 
+  switchTab = (url) => {
+    const visitId = Number(url.split('/')[2]);
+    this.props.switchTab(visitId);
+  };
+
   render() {
     if (this.props.messages.length === 0) {
       return null;
@@ -86,6 +104,7 @@ class DomainDetails extends PureComponent {
             renderAvatarOnTop={true}
             parsePatterns={() => [
               { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+              { pattern: /tab:\/\/\d*\//, style: styles.url, onPress: this.switchTab },
             ]}
           />
         </View>
@@ -106,11 +125,18 @@ class DomainDetails extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  messages: state.messages,
-});
+const mapStateToProps = (state) => {
+  const openedTabVisitIds = state.tabs.map(tab => tab.visitId);
+  return {
+    messages: state.messages.map(message => ({
+      ...message,
+      hasActiveTab: openedTabVisitIds.includes(message.visitedAt),
+    })),
+  };
+};
 
 export default connect(mapStateToProps, {
   changeScreen,
   openLink,
+  switchTab,
 })(DomainDetails);

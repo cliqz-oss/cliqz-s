@@ -10,9 +10,11 @@ import {
 } from 'react-native';
 import { ScreenVisibilityListener } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import { Logo } from '../cliqz';
 import {
-  openLink,
+  Logo,
+  parseURL,
+} from '../cliqz';
+import {
   fetchDomains,
   openDomain,
 } from '../actions/index';
@@ -23,6 +25,8 @@ import {
   BACKGROUND_COLOR_STYLE,
   BOTTOM_BAR_HEIGHT_STYLE,
 } from '../constants/stylesheets';
+
+const itemWithTabsBackgroundColor = '#31325b';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,9 +53,12 @@ class DrawerItem extends PureComponent {
   };
 
   render() {
+    const additionalStyle = {
+      backgroundColor: this.props.isActive ? itemWithTabsBackgroundColor : undefined,
+    };
     return (
       <TouchableOpacity
-        style={styles.row}
+        style={[styles.row, additionalStyle]}
         onPress={this.onPress}
       >
         <Logo
@@ -88,12 +95,13 @@ class Drawer extends PureComponent {
     this.props.openDomain(domain);
   };
 
-  renderItem = ({ item }) => (
+  _renderItem = ({ item }) => (
     <DrawerItem
       lastVisisted={item.lastVisisted}
       domain={item.domain}
       baseUrl={item.baseUrl}
       onPressItem={this.onPressItem}
+      isActive={item.isActive}
     />
   );
 
@@ -107,7 +115,7 @@ class Drawer extends PureComponent {
         <FlatList
           data={this.props.domains}
           inverted
-          renderItem={this.renderItem}
+          renderItem={this._renderItem}
           keyExtractor={item => item.lastVisisted.toString()}
           style={styles.list}
           testID='Drawer'
@@ -124,12 +132,17 @@ class Drawer extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  domains: state.domains,
-});
+const mapStateToProps = (state) => {
+  const openedDomains = state.tabs.map(tab => parseURL(tab.url).hostname);
+  return {
+    domains: state.domains.map(domain => ({
+      ...domain,
+      isActive: openedDomains.includes(domain.domain),
+    })),
+  };
+};
 
 export default connect(mapStateToProps, {
-  openLink,
   fetchDomains,
   openDomain,
 })(Drawer);

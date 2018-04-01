@@ -6,8 +6,8 @@ export default class Browser extends Component {
     this.props.updateWebView({
       pageTitle: state.title,
       currentUrl: state.url,
-      webCanGoBack: state.canGoBack,
       isLoading: state.loading,
+      webCanGoBack: state.canGoBack,
       webCanGoForward: state.canGoForward,
     });
   };

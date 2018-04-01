@@ -1,6 +1,7 @@
 import {
   SCREEN_CHANGED,
   OPEN_DOMAIN_ACTION,
+  SWITCH_TAB_ACTION,
 } from '../constants/action-types';
 import {
   HOME_SCREEN,
@@ -14,6 +15,10 @@ export default function screen(state = HOME_SCREEN, action) {
 
   if (action.type === OPEN_DOMAIN_ACTION) {
     return DOMAIN_DETAILS_SCREEN;
+  }
+
+  if (action.type === SWITCH_TAB_ACTION) {
+    return HOME_SCREEN;
   }
 
   return state;
