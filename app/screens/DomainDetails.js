@@ -30,7 +30,6 @@ const prepareMessages = (visits) => {
   };
 
   return visits
-    .filter(visit => !!visit.title)
     .map((visit) => {
       const textParts = [
         visit.title,
