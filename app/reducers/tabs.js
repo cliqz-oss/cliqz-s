@@ -17,6 +17,7 @@ export default function tabs(state = [], action) {
       })),
       {
         url: action.payload.url,
+        currentUrl: action.payload.url,
         selected: true,
         id: Date.now(),
         shouldGoBack: false,
