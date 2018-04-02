@@ -24,7 +24,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Button(props) {
+interface IButtonProps {
+  disabled: boolean;
+  title: string;
+  onPress: () => {};
+}
+
+export default function Button(props: IButtonProps) {
   return (
     <TouchableOpacity
       style={styles.buttonContainer}
