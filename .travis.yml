@@ -52,4 +52,4 @@ matrix:
       install:
         - npm install
       script:
-        - npm run eslint
+        - npm run lint
