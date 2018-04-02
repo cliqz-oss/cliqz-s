@@ -19,6 +19,13 @@
   "rules" : {
     "arrow-body-style": "warn",
     "react/prop-types": 0,
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "import/extensions": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": true,
+      "eslint-import-resolver-typescript": true
+    }
   }
 }

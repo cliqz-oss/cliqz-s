@@ -2,6 +2,12 @@ const getPolyfills = require('react-native/rn-get-polyfills');
 
 // From https://github.com/webpack/node-libs-browser and https://github.com/parshap/node-libs-react-native
 module.exports = {
+  getTransformModulePath() {
+    return require.resolve('react-native-typescript-transformer')
+  },
+  getSourceExts() {
+    return ['ts', 'tsx'];
+  },
   extraNodeModules: {
     fs: require.resolve('./_empty'),
     stream: require.resolve('stream-browserify'),
