@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   urlbar: {
+    borderTopColor: '#222',
+    borderTopWidth: 0.5,
     backgroundColor: BACKGROUND_COLOR_STYLE,
     flexDirection: 'row',
     height: BOTTOM_BAR_HEIGHT_STYLE,
@@ -44,9 +46,11 @@ const styles = StyleSheet.create({
   domainText: {
     flex: 1,
     color: FONT_COLOR_STYLE,
+    textAlign: 'center',
     fontSize: 17,
     paddingTop: 7,
     paddingLeft: 5,
+    paddingRight: 65,
   },
   input: {
     flex: 1,
@@ -90,7 +94,6 @@ class UrlBar extends Component {
     const {
       query,
       url,
-      pageTitle,
       goBack: goBackAction,
       goForward: goForwardAction,
       mode,
@@ -137,7 +140,7 @@ class UrlBar extends Component {
               style={styles.domain}
               onPress={() => this.props.updateUrlBar(this.props.url)}
             >
-              <Text style={styles.domainText}>{pageTitle || url }</Text>
+              <Text style={styles.domainText}>{parseURL(url).hostname}</Text>
             </TouchableHighlight>
             <HomeButton />
           </View>
@@ -165,7 +168,6 @@ const mapStateToProps = ({
     query,
     mode,
     url: selectedTab.currentUrl,
-    pageTitle: selectedTab.title,
     canGoBack: selectedTab.canGoBack,
     canGoForward: selectedTab.canGoForward,
   };
