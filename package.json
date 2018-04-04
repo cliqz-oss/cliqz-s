@@ -59,6 +59,7 @@
     "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "16.0.0-alpha.12",
     "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.8.0",
     "typescript": "^2.8.1"
   },
   "jest": {
