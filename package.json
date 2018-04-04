@@ -20,7 +20,7 @@
     "path-browserify": "0.0.0",
     "pouchdb-adapter-react-native-sqlite": "1.0.3",
     "pouchdb-react-native": "6.3.4",
-    "react": "^16.0.0",
+    "react": "^16.3.0",
     "react-moment": "^0.7.0",
     "react-native": "^0.53.0",
     "react-native-collapsible": "0.8.1",
@@ -42,8 +42,9 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@types/react": "^16.1.0",
-    "@types/react-native": "^0.52.22",
+    "@types/react": "^16.3.0",
+    "@types/react-native": "^0.52.2",
+    "@types/react-redux": "^5.0.15",
     "babel-eslint": "^8.2.2",
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "2.0.0",

@@ -1,8 +1,21 @@
-import React, { Component } from 'react';
-import { WebView } from 'react-native';
+import * as React from 'react';
+import {
+  WebView,
+  NavState,
+} from 'react-native';
 
-export default class Browser extends Component {
-  onNavigationStateChange = (state) => {
+interface IBrowserProps {
+  updateWebView: ({}) => {};
+  shouldGoBack: boolean;
+  shouldGoForward: boolean;
+  backForwardReceiver: () => {};
+  url: string;
+}
+
+export default class Browser extends React.Component <IBrowserProps> {
+  webView?: WebView;
+
+  onNavigationStateChange = (state: NavState) => {
     this.props.updateWebView({
       pageTitle: state.title,
       currentUrl: state.url,
@@ -10,9 +23,9 @@ export default class Browser extends Component {
       webCanGoBack: state.canGoBack,
       webCanGoForward: state.canGoForward,
     });
-  };
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IBrowserProps) {
     if (!this.webView) {
       return;
     }
@@ -28,7 +41,7 @@ export default class Browser extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: IBrowserProps) {
     if (this.props.url !== nextProps.url) {
       return true;
     }
@@ -38,7 +51,7 @@ export default class Browser extends Component {
   render() {
     return (
       <WebView
-        ref={(el) => { this.webView = el; }}
+        ref={(el: any) => { this.webView = el; }}
         source={{ uri: this.props.url }}
         onNavigationStateChange={this.onNavigationStateChange}
       />
