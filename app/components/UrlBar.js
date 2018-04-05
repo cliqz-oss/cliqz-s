@@ -21,7 +21,7 @@ import {
   FONT_COLOR_STYLE,
   BACKGROUND_COLOR_STYLE,
   BOTTOM_BAR_HEIGHT_STYLE,
-} from '../constants/stylesheets';
+} from '../constants/styles';
 import { parseURL } from '../cliqz';
 import Button from './Button';
 import HomeButton from './HomeButton';

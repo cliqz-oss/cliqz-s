@@ -4,7 +4,7 @@ import { changeScreen } from '../actions/index';
 import {
   DOMAIN_LIST_SCREEN,
   HOME_SCREEN,
-} from '../constants/screen-names';
+} from '../constants/screens';
 import Button from './Button';
 
 interface IHomeButtonProps {

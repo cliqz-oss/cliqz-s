@@ -6,7 +6,7 @@ import { startup } from './app/cliqz';
 import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
 import registerScreens, { tabs } from './app/screens/index';
-import { BACKGROUND_COLOR_STYLE } from './app/constants/stylesheets';
+import { BACKGROUND_COLOR_STYLE } from './app/constants/styles';
 
 // console.disableYellowBox = true;
 // eslint-disable-next-line

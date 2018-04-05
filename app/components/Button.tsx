@@ -7,7 +7,7 @@ import {
 import {
   BACKGROUND_COLOR_STYLE,
   FONT_COLOR_STYLE,
-} from '../constants/stylesheets';
+} from '../constants/styles';
 
 const styles = StyleSheet.create({
   buttonContainer: {

@@ -16,7 +16,7 @@ import {
   openLink,
   backForwardReceiver,
 } from '../actions/index';
-import { BACKGROUND_COLOR_STYLE } from '../constants/stylesheets';
+import { BACKGROUND_COLOR_STYLE } from '../constants/styles';
 
 const styles = StyleSheet.create({
   keyboardAvoidingView: {

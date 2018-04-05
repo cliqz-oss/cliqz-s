@@ -16,11 +16,11 @@ import {
 import {
   DOMAIN_LIST_SCREEN,
   HOME_SCREEN,
-} from '../constants/screen-names';
+} from '../constants/screens';
 import {
   BACKGROUND_COLOR_STYLE,
   BOTTOM_BAR_HEIGHT_STYLE,
-} from '../constants/stylesheets';
+} from '../constants/styles';
 import Button from '../components/Button';
 import HomeButton from '../components/HomeButton';
 
