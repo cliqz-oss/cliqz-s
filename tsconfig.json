@@ -5,7 +5,10 @@
     "noEmit": true,
     "moduleResolution": "node",
     "strict": true,
-    "alwaysStrict": false
+    "alwaysStrict": false,
+    "lib": [
+      "es2017"
+    ]
   },
   "exclude": [
     "node_modules"

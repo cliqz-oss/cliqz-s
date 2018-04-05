@@ -18,13 +18,13 @@ import {
   fetchDomains,
   openDomain,
 } from '../actions/index';
-import { DOMAIN_LIST_SCREEN } from '../constants/screen-names';
+import { DOMAIN_LIST_SCREEN } from '../constants/screens';
 import HomeButton from '../components/HomeButton';
 import {
   FONT_COLOR_STYLE,
   BACKGROUND_COLOR_STYLE,
   BOTTOM_BAR_HEIGHT_STYLE,
-} from '../constants/stylesheets';
+} from '../constants/styles';
 
 const itemWithTabsBackgroundColor = '#31325b';
 

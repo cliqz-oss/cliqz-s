@@ -1,15 +1,32 @@
 import {
-  OPEN_LINK,
-  UPDATE_WEBVIEW,
-  URLBAR_QUERY,
-  GO_BACK,
-  GO_FORWARD,
-  BACK_FORWARD_RECEIVED,
+  OPEN_LINK_ACTION,
+  UPDATE_WEBVIEW_ACTION,
+  URLBAR_QUERY_ACTION,
+  GO_BACK_ACTION,
+  GO_FORWARD_ACTION,
+  BACK_FORWARD_RECEIVED_ACTION,
   SWITCH_TAB_ACTION,
-} from '../constants/action-types';
+} from '../constants/actions';
 
-export default function tabs(state = [], action) {
-  if (action.type === OPEN_LINK) {
+type Tab = {
+  url: string,
+  currentUrl: string,
+  selected: boolean,
+  id: number,
+  shouldGoBack: boolean,
+  shouldGoForward: boolean,
+  visitId: number,
+};
+
+type TabsAction = {
+  type: OPEN_LINK_ACTION | UPDATE_WEBVIEW_ACTION | URLBAR_QUERY_ACTION |
+    GO_BACK_ACTION | GO_FORWARD_ACTION | BACK_FORWARD_RECEIVED_ACTION |
+    SWITCH_TAB_ACTION,
+  payload: any,
+};
+
+export default function tabs(state: Tab[] = [], action: TabsAction) {
+  if (action.type === OPEN_LINK_ACTION) {
     return [
       ...state.map(tab => ({
         ...tab,
@@ -37,11 +54,11 @@ export default function tabs(state = [], action) {
 
   // Those actions update tab state
   if ([
-    UPDATE_WEBVIEW,
-    URLBAR_QUERY,
-    GO_BACK,
-    GO_FORWARD,
-    BACK_FORWARD_RECEIVED,
+    UPDATE_WEBVIEW_ACTION,
+    URLBAR_QUERY_ACTION,
+    GO_BACK_ACTION,
+    GO_FORWARD_ACTION,
+    BACK_FORWARD_RECEIVED_ACTION,
   ].includes(action.type)) {
     const selectedTabIndex = state.findIndex(tab => tab.selected);
 
@@ -52,7 +69,7 @@ export default function tabs(state = [], action) {
     const selectedTab = state[selectedTabIndex];
     let propsToUpdate = {};
 
-    if (action.type === UPDATE_WEBVIEW) {
+    if (action.type === UPDATE_WEBVIEW_ACTION) {
       propsToUpdate = {
         canGoBack: action.payload.webCanGoBack,
         canGoForward: action.payload.webCanGoForward,
@@ -62,26 +79,26 @@ export default function tabs(state = [], action) {
       };
     }
 
-    if (action.type === URLBAR_QUERY) {
+    if (action.type === URLBAR_QUERY_ACTION) {
       propsToUpdate = {
         canGoBack: false,
         canGoForward: false,
       };
     }
 
-    if (action.type === GO_BACK) {
+    if (action.type === GO_BACK_ACTION) {
       propsToUpdate = {
         shouldGoBack: true,
       };
     }
 
-    if (action.type === GO_FORWARD) {
+    if (action.type === GO_FORWARD_ACTION) {
       propsToUpdate = {
         shouldGoForward: true,
       };
     }
 
-    if (action.type === BACK_FORWARD_RECEIVED) {
+    if (action.type === BACK_FORWARD_RECEIVED_ACTION) {
       propsToUpdate = {
         shouldGoBack: false,
         shouldGoForward: false,
