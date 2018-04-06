@@ -1,19 +1,25 @@
-import SQLite from '@cliqz-oss/react-native-sqlite-2';
+import reactNativeSqlite2, { IDB, ITransation } from '@cliqz-oss/react-native-sqlite-2';
 
 export default class DB {
+  db: IDB;
+
   constructor() {
-    this.db = SQLite.openDatabase('history.db', '1.0', '', 1);
+    this.db = reactNativeSqlite2.openDatabase('history.db', '1.0', '', 1);
   }
 
-  execTransaction(transaction) {
+  execTransaction(transaction: (txn: ITransation) => void) {
     return new Promise((resolve, reject) => {
-      this.db.transaction((txn) => {
-        transaction(txn);
-      }, reject, resolve);
+      this.db.transaction(
+        (txn: ITransation) => {
+          transaction(txn);
+        },
+        reject,
+        resolve,
+      );
     });
   }
 
-  query(sql, params = []) {
+  query(sql: string, params = []) {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn) => {
         txn.executeSql(
@@ -33,7 +39,7 @@ export default class DB {
     });
   }
 
-  command(sql, params = []) {
+  command(sql: string, params = []) {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn) => {
         txn.executeSql(
@@ -41,12 +47,13 @@ export default class DB {
           params,
           (tx, res) => {
             if (res.insertId === -1) {
-              reject(new Error({
+              const error = new Error(JSON.stringify({
                 sql,
                 params,
                 tx,
                 res,
               }));
+              reject(error);
               return;
             }
             resolve({
