@@ -1,13 +1,11 @@
 import {
-  ActionsTypes,
-  SetHistoryAction,
+  ActionTypes,
+  TypeKeys,
 } from '../constants/actions';
 
-type DomainsAction = SetHistoryAction;
-
-export default function domains(state = [], action: DomainsAction) {
+export default function domains(state = [], action: ActionTypes) {
   switch (action.type) {
-    case ActionsTypes.SET_HISTORY_ACTION:
+    case TypeKeys.SET_HISTORY_ACTION:
       return action.payload;
     default:
       return state;

@@ -5,41 +5,40 @@ import {
   recordVisit,
 } from '../services/history';
 import {
-  UPDATE_WEBVIEW_ACTION,
-  UPDATE_URLBAR_ACTION,
-  URLBAR_QUERY_ACTION,
-  URLBAR_BLUR_ACTION,
-  OPEN_LINK_ACTION,
-  GO_BACK_ACTION,
-  GO_FORWARD_ACTION,
-  BACK_FORWARD_RECEIVED_ACTION,
-  SCREEN_CHANGE_ACTION,
-  SET_MESSAGES_ACTION,
-  OPEN_DOMAIN_ACTION,
-  SWITCH_TAB_ACTION,
-  ActionsTypes,
+  TypeKeys,
+  BackForwardReceivedAction,
+  GoBackAction,
+  GoForwardAction,
+  OpenDomainAction,
+  OpenLinkAction,
+  ScreenChangeAction,
   SetHistoryAction,
+  SetMessagesAction,
+  SwitchTabAction,
+  UpdateUrlbarAction,
+  UpdateWebviewAction,
+  UrlbarBlurAction,
+  UrlbarQueryAction,
 } from '../constants/actions';
 import { State } from '../reducers/index';
 import { History } from '../models/history';
-
-type Message = {
-
-};
+import { Message } from '../models/message';
 
 const setHistory = (payload: History[]): SetHistoryAction => ({
   payload,
-  type: ActionsTypes.SET_HISTORY_ACTION,
+  type: TypeKeys.SET_HISTORY_ACTION,
 });
 
-const setMessages = (payload: Message[]) => ({
+const setMessages = (payload: Message[]): SetMessagesAction => ({
   payload,
-  type: SET_MESSAGES_ACTION,
+  type: TypeKeys.SET_MESSAGES_ACTION,
 });
 
-export const openDomain = (domain: string) => async (dispatch: Dispatch<any>) => {
+export const openDomain = (
+  domain: string,
+) => async (dispatch: Dispatch<any>): Promise<SetMessagesAction> => {
   dispatch({
-    type: OPEN_DOMAIN_ACTION,
+    type: TypeKeys.OPEN_DOMAIN_ACTION,
   });
 
   let messages: Message[] = [];
@@ -50,31 +49,35 @@ export const openDomain = (domain: string) => async (dispatch: Dispatch<any>) =>
     // TODO: report errors
   }
 
-  dispatch(setMessages(messages));
+  return dispatch(setMessages(messages));
 };
 
-export const fetchDomains = () => async (dispatch: Dispatch<any>) => {
+export const fetchDomains = () => async (dispatch: Dispatch<any>): Promise<SetHistoryAction> => {
   const history = await getDomains();
-  dispatch(setHistory(history));
+  return dispatch(setHistory(history));
 };
+
+interface IWebViewState {
+  pageTitle?: string;
+  currentUrl?: string;
+  webCanGoBack?: boolean;
+  webCanGoForward?: boolean;
+  isLoading?: boolean;
+}
+
+export type updateWebView = (params: IWebViewState) => void;
 
 export const updateWebView = ({
-  pageTitle,
-  currentUrl,
+  pageTitle = '',
+  currentUrl = '',
   webCanGoBack,
   webCanGoForward,
   isLoading,
-}: {
-  pageTitle: string,
-  currentUrl: string,
-  webCanGoBack: boolean,
-  webCanGoForward: boolean,
-  isLoading: boolean,
-}) => async (dispatch: Dispatch<any>) => {
+}: IWebViewState) => async (dispatch: Dispatch<any>) => {
   const timestamp = Date.now() * 1000;
 
   dispatch({
-    type: UPDATE_WEBVIEW_ACTION,
+    type: TypeKeys.UPDATE_WEBVIEW_ACTION,
     payload: {
       pageTitle,
       currentUrl,
@@ -89,52 +92,54 @@ export const updateWebView = ({
   }
 };
 
-export const urlBarBlur = (url: string) => ({
-  type: URLBAR_BLUR_ACTION,
+export const urlBarBlur = (url: string): UrlbarBlurAction => ({
+  type: TypeKeys.URLBAR_BLUR_ACTION,
   payload: {
     mode: url ? 'visit' : 'search',
   },
 });
 
-export const urlBarQuery = (query: string) => ({
-  type: URLBAR_QUERY_ACTION,
+export const urlBarQuery = (query: string): UrlbarQueryAction => ({
+  type: TypeKeys.URLBAR_QUERY_ACTION,
   payload: {
     query,
   },
 });
 
-export const updateUrlBar = (query: string) => ({
-  type: UPDATE_URLBAR_ACTION,
+export const updateUrlBar = (query: string): UpdateUrlbarAction => ({
+  type: TypeKeys.UPDATE_URLBAR_ACTION,
   payload: {
     query,
   },
 });
 
-export const openLink = (url: string) => ({
-  type: OPEN_LINK_ACTION,
+export const openLink = (url: string): OpenLinkAction => ({
+  type: TypeKeys.OPEN_LINK_ACTION,
   payload: {
     url,
   },
 });
 
-export const goBack = () => ({
-  type: GO_BACK_ACTION,
+export const goBack = (): GoBackAction => ({
+  type: TypeKeys.GO_BACK_ACTION,
 });
 
-export const goForward = () => ({
-  type: GO_FORWARD_ACTION,
+export const goForward = (): GoForwardAction => ({
+  type: TypeKeys.GO_FORWARD_ACTION,
 });
 
-export const backForwardReceiver = () => ({
-  type: BACK_FORWARD_RECEIVED_ACTION,
+export type backForwardReceiver = () => BackForwardReceivedAction;
+
+export const backForwardReceiver = (): BackForwardReceivedAction => ({
+  type: TypeKeys.BACK_FORWARD_RECEIVED_ACTION,
 });
 
-export const changeScreen = (screen: string) => ({
-  type: SCREEN_CHANGE_ACTION,
+export const changeScreen = (screen: string): ScreenChangeAction => ({
+  type: TypeKeys.SCREEN_CHANGE_ACTION,
   payload: screen,
 });
 
-export const switchTab = (visitId: number) => ({
-  type: SWITCH_TAB_ACTION,
+export const switchTab = (visitId: number): SwitchTabAction => ({
+  type: TypeKeys.SWITCH_TAB_ACTION,
   payload: visitId,
 });

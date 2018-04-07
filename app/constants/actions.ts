@@ -1,47 +1,115 @@
 import { History } from '../models/history';
+import { Message } from '../models/message';
 
-export type UPDATE_WEBVIEW_ACTION = 'UPDATE_WEBVIEW_ACTION';
-export const UPDATE_WEBVIEW_ACTION: UPDATE_WEBVIEW_ACTION = 'UPDATE_WEBVIEW_ACTION';
-
-export type OPEN_LINK_ACTION = 'OPEN_LINK_ACTION';
-export const OPEN_LINK_ACTION: OPEN_LINK_ACTION = 'OPEN_LINK_ACTION';
-
-export type URLBAR_BLUR_ACTION = 'URLBAR_BLUR_ACTION';
-export const URLBAR_BLUR_ACTION: URLBAR_BLUR_ACTION = 'URLBAR_BLUR_ACTION';
-
-export type URLBAR_QUERY_ACTION = 'URLBAR_QUERY_ACTION';
-export const URLBAR_QUERY_ACTION: URLBAR_QUERY_ACTION = 'URLBAR_QUERY_ACTION';
-
-export type UPDATE_URLBAR_ACTION = 'UPDATE_URLBAR_ACTION';
-export const UPDATE_URLBAR_ACTION: UPDATE_URLBAR_ACTION = 'UPDATE_URLBAR_ACTION';
-
-export type GO_BACK_ACTION = 'GO_BACK_ACTION';
-export const GO_BACK_ACTION: GO_BACK_ACTION = 'GO_BACK_ACTION';
-
-export type GO_FORWARD_ACTION = 'GO_FORWARD_ACTION';
-export const GO_FORWARD_ACTION: GO_FORWARD_ACTION = 'GO_FORWARD_ACTION';
-
-export type BACK_FORWARD_RECEIVED_ACTION = 'BACK_FORWARD_RECEIVED_ACTION';
-export const BACK_FORWARD_RECEIVED_ACTION: BACK_FORWARD_RECEIVED_ACTION =
-  'BACK_FORWARD_RECEIVED_ACTION';
-
-export type SET_MESSAGES_ACTION = 'SET_MESSAGES_ACTION';
-export const SET_MESSAGES_ACTION: SET_MESSAGES_ACTION = 'SET_MESSAGES_ACTION';
-
-export type SCREEN_CHANGE_ACTION = 'SCREEN_CHANGE_ACTION';
-export const SCREEN_CHANGE_ACTION: SCREEN_CHANGE_ACTION = 'SCREEN_CHANGE_ACTION';
-
-export type OPEN_DOMAIN_ACTION = 'OPEN_DOMAIN_ACTION';
-export const OPEN_DOMAIN_ACTION: OPEN_DOMAIN_ACTION = 'OPEN_DOMAIN_ACTION';
-
-export type SWITCH_TAB_ACTION = 'SWITCH_TAB_ACTION';
-export const SWITCH_TAB_ACTION: SWITCH_TAB_ACTION = 'SWITCH_TAB_ACTION';
-
-export enum ActionsTypes {
+export enum TypeKeys {
+  BACK_FORWARD_RECEIVED_ACTION = 'BACK_FORWARD_RECEIVED_ACTION',
+  GO_BACK_ACTION = 'GO_BACK_ACTION',
+  GO_FORWARD_ACTION = 'GO_FORWARD_ACTION',
+  OPEN_DOMAIN_ACTION = 'OPEN_DOMAIN_ACTION',
+  OPEN_LINK_ACTION = 'OPEN_LINK_ACTION',
+  SCREEN_CHANGE_ACTION = 'SCREEN_CHANGE_ACTION',
   SET_HISTORY_ACTION = 'SET_HISTORY_ACTION',
+  SET_MESSAGES_ACTION = 'SET_MESSAGES_ACTION',
+  SWITCH_TAB_ACTION = 'SWITCH_TAB_ACTION',
+  UPDATE_URLBAR_ACTION = 'UPDATE_URLBAR_ACTION',
+  UPDATE_WEBVIEW_ACTION = 'UPDATE_WEBVIEW_ACTION',
+  URLBAR_BLUR_ACTION = 'URLBAR_BLUR_ACTION',
+  URLBAR_QUERY_ACTION = 'URLBAR_QUERY_ACTION',
+  OTHER_ACTION = '__any_other_action_type__',
+}
+
+export interface BackForwardReceivedAction {
+  type: TypeKeys.BACK_FORWARD_RECEIVED_ACTION;
+}
+
+export interface GoBackAction {
+  type: TypeKeys.GO_BACK_ACTION;
+}
+
+export interface GoForwardAction {
+  type: TypeKeys.GO_FORWARD_ACTION;
 }
 
 export interface SetHistoryAction {
-  type: ActionsTypes.SET_HISTORY_ACTION;
+  type: TypeKeys.SET_HISTORY_ACTION;
   payload: History[];
 }
+
+export interface SetMessagesAction {
+  type: TypeKeys.SET_MESSAGES_ACTION;
+  payload: Message[];
+}
+
+export interface OpenDomainAction {
+  type: TypeKeys.OPEN_DOMAIN_ACTION;
+}
+
+export interface OpenLinkAction {
+  type: TypeKeys.OPEN_LINK_ACTION;
+  payload: {
+    url: string;
+  };
+}
+
+export interface ScreenChangeAction {
+  type: TypeKeys.SCREEN_CHANGE_ACTION;
+  payload: string;
+}
+
+export interface UpdateUrlbarAction {
+  type: TypeKeys.UPDATE_URLBAR_ACTION;
+  payload: {
+    query: string;
+  };
+}
+
+export interface UpdateWebviewAction {
+  type: TypeKeys.UPDATE_WEBVIEW_ACTION;
+  payload: {
+    webCanGoBack: boolean;
+    webCanGoForward: boolean;
+    pageTitle: string;
+    currentUrl: string;
+    timestamp: number;
+    isLoading: boolean;
+  };
+}
+
+export interface UrlbarBlurAction {
+  type: TypeKeys.URLBAR_BLUR_ACTION;
+  payload: {
+    mode: string;
+  };
+}
+
+export interface UrlbarQueryAction {
+  type: TypeKeys.URLBAR_QUERY_ACTION;
+  payload: {
+    query: string;
+  };
+}
+
+export interface SwitchTabAction {
+  type: TypeKeys.SWITCH_TAB_ACTION;
+  payload: number;
+}
+
+export interface OtherAction {
+  type: TypeKeys.OTHER_ACTION;
+}
+
+export type ActionTypes =
+  | BackForwardReceivedAction
+  | GoBackAction
+  | GoForwardAction
+  | OpenDomainAction
+  | OpenLinkAction
+  | ScreenChangeAction
+  | SetHistoryAction
+  | SetMessagesAction
+  | SwitchTabAction
+  | UpdateUrlbarAction
+  | UpdateWebviewAction
+  | UrlbarBlurAction
+  | UrlbarQueryAction
+  | OtherAction;

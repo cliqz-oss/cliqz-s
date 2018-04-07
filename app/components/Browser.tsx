@@ -3,12 +3,16 @@ import {
   WebView,
   NavState,
 } from 'react-native';
+import {
+  updateWebView,
+  backForwardReceiver,
+} from '../actions/index';
 
 interface IBrowserProps {
-  updateWebView: ({}) => {};
+  updateWebView: updateWebView;
   shouldGoBack: boolean;
   shouldGoForward: boolean;
-  backForwardReceiver: () => {};
+  backForwardReceiver: backForwardReceiver;
   url: string;
 }
 
