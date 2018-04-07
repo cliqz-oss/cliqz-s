@@ -6,7 +6,16 @@ import screen from './screen';
 import messages from './messages';
 import tabs from './tabs';
 
-export default combineReducers({
+export type State = {
+  mode: any,
+  query: any,
+  domains: any,
+  messages: any,
+  screen: any,
+  tabs: any,
+};
+
+export default combineReducers<State>({
   mode,
   query,
   domains,
