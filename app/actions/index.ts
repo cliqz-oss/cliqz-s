@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import {
   fetchDomains as getDomains,
   fetchMessages as getMessages,
@@ -12,29 +13,38 @@ import {
   GO_BACK_ACTION,
   GO_FORWARD_ACTION,
   BACK_FORWARD_RECEIVED_ACTION,
-  SCREEN_CHANGED_ACTION,
+  SCREEN_CHANGE_ACTION,
   SET_HISTORY_ACTION,
   SET_MESSAGES_ACTION,
   OPEN_DOMAIN_ACTION,
   SWITCH_TAB_ACTION,
 } from '../constants/actions';
+import { State } from '../reducers/index';
 
-const setHistory = payload => ({
+type Message = {
+
+};
+
+type History = {
+
+};
+
+const setHistory = (payload: History[]) => ({
+  payload,
   type: SET_HISTORY_ACTION,
-  payload,
 });
 
-const setMessages = payload => ({
+const setMessages = (payload: Message[]) => ({
+  payload,
   type: SET_MESSAGES_ACTION,
-  payload,
 });
 
-export const openDomain = domain => async (dispatch) => {
+export const openDomain = (domain: string) => async (dispatch: Dispatch<any>) => {
   dispatch({
     type: OPEN_DOMAIN_ACTION,
   });
 
-  let messages = [];
+  let messages: Message[] = [];
 
   try {
     messages = await getMessages(domain);
@@ -45,7 +55,7 @@ export const openDomain = domain => async (dispatch) => {
   dispatch(setMessages(messages));
 };
 
-export const fetchDomains = () => async (dispatch) => {
+export const fetchDomains = () => async (dispatch: Dispatch<any>) => {
   const history = await getDomains();
   dispatch(setHistory(history));
 };
@@ -56,7 +66,13 @@ export const updateWebView = ({
   webCanGoBack,
   webCanGoForward,
   isLoading,
-}) => async (dispatch) => {
+}: {
+  pageTitle: string,
+  currentUrl: string,
+  webCanGoBack: boolean,
+  webCanGoForward: boolean,
+  isLoading: boolean,
+}) => async (dispatch: Dispatch<any>) => {
   const timestamp = Date.now() * 1000;
 
   dispatch({
@@ -75,28 +91,28 @@ export const updateWebView = ({
   }
 };
 
-export const urlBarBlur = url => ({
+export const urlBarBlur = (url: string) => ({
   type: URLBAR_BLUR_ACTION,
   payload: {
     mode: url ? 'visit' : 'search',
   },
 });
 
-export const urlBarQuery = query => ({
+export const urlBarQuery = (query: string) => ({
   type: URLBAR_QUERY_ACTION,
   payload: {
     query,
   },
 });
 
-export const updateUrlBar = query => ({
+export const updateUrlBar = (query: string) => ({
   type: UPDATE_URLBAR_ACTION,
   payload: {
     query,
   },
 });
 
-export const openLink = url => ({
+export const openLink = (url: string) => ({
   type: OPEN_LINK_ACTION,
   payload: {
     url,
@@ -115,12 +131,12 @@ export const backForwardReceiver = () => ({
   type: BACK_FORWARD_RECEIVED_ACTION,
 });
 
-export const changeScreen = screen => ({
-  type: SCREEN_CHANGED_ACTION,
+export const changeScreen = (screen: string) => ({
+  type: SCREEN_CHANGE_ACTION,
   payload: screen,
 });
 
-export const switchTab = visitId => ({
+export const switchTab = (visitId: number) => ({
   type: SWITCH_TAB_ACTION,
   payload: visitId,
 });
