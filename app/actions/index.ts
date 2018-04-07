@@ -14,24 +14,22 @@ import {
   GO_FORWARD_ACTION,
   BACK_FORWARD_RECEIVED_ACTION,
   SCREEN_CHANGE_ACTION,
-  SET_HISTORY_ACTION,
   SET_MESSAGES_ACTION,
   OPEN_DOMAIN_ACTION,
   SWITCH_TAB_ACTION,
+  ActionsTypes,
+  SetHistoryAction,
 } from '../constants/actions';
 import { State } from '../reducers/index';
+import { History } from '../models/history';
 
 type Message = {
 
 };
 
-type History = {
-
-};
-
-const setHistory = (payload: History[]) => ({
+const setHistory = (payload: History[]): SetHistoryAction => ({
   payload,
-  type: SET_HISTORY_ACTION,
+  type: ActionsTypes.SET_HISTORY_ACTION,
 });
 
 const setMessages = (payload: Message[]) => ({
