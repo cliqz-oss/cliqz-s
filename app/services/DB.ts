@@ -19,7 +19,7 @@ export default class DB {
     });
   }
 
-  query(sql: string, params = []) {
+  query(sql: string, params: any[] = []): Promise<any[]> {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn) => {
         txn.executeSql(
@@ -39,7 +39,7 @@ export default class DB {
     });
   }
 
-  command(sql: string, params = []) {
+  command(sql: string, params: any[] = []): Promise<{ rowsAffected: number, insertId: number }> {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn) => {
         txn.executeSql(

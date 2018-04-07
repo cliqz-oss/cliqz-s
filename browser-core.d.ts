@@ -20,6 +20,10 @@ declare module 'browser-core/build/modules/core/kord/inject' {
   export default inject;
 }
 
+type ParsedUrl = {
+  hostname: string;
+};
+
 declare module 'browser-core/build/modules/core/url-info' {
-  export const parseURL: (url: string) => {};
+  export const parseURL: (url: string) => ParsedUrl;
 }

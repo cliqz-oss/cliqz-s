@@ -3,8 +3,8 @@ declare module '@cliqz-oss/react-native-sqlite-2' {
     executeSql: (
       sql: string,
       params: string[],
-      successCb: (tx: any, result: any) => void,
-      errorCb: (reason?: any) => void,
+      successCb?: (tx: any, result: any) => void,
+      errorCb?: (reason?: any) => void,
     ) => void;
   }
 
