@@ -1,11 +1,6 @@
 import {
-  OPEN_LINK_ACTION,
-  UPDATE_WEBVIEW_ACTION,
-  URLBAR_QUERY_ACTION,
-  GO_BACK_ACTION,
-  GO_FORWARD_ACTION,
-  BACK_FORWARD_RECEIVED_ACTION,
-  SWITCH_TAB_ACTION,
+  ActionTypes,
+  TypeKeys,
 } from '../constants/actions';
 
 type Tab = {
@@ -18,15 +13,8 @@ type Tab = {
   visitId: number,
 };
 
-type TabsAction = {
-  type: OPEN_LINK_ACTION | UPDATE_WEBVIEW_ACTION | URLBAR_QUERY_ACTION |
-    GO_BACK_ACTION | GO_FORWARD_ACTION | BACK_FORWARD_RECEIVED_ACTION |
-    SWITCH_TAB_ACTION,
-  payload: any,
-};
-
-export default function tabs(state: Tab[] = [], action: TabsAction) {
-  if (action.type === OPEN_LINK_ACTION) {
+export default function tabs(state: Tab[] = [], action: ActionTypes) {
+  if (action.type === TypeKeys.OPEN_LINK_ACTION) {
     return [
       ...state.map(tab => ({
         ...tab,
@@ -43,7 +31,7 @@ export default function tabs(state: Tab[] = [], action: TabsAction) {
     ];
   }
 
-  if (action.type === SWITCH_TAB_ACTION) {
+  if (action.type === TypeKeys.SWITCH_TAB_ACTION) {
     return [
       ...state.map(tab => ({
         ...tab,
@@ -54,11 +42,11 @@ export default function tabs(state: Tab[] = [], action: TabsAction) {
 
   // Those actions update tab state
   if ([
-    UPDATE_WEBVIEW_ACTION,
-    URLBAR_QUERY_ACTION,
-    GO_BACK_ACTION,
-    GO_FORWARD_ACTION,
-    BACK_FORWARD_RECEIVED_ACTION,
+    TypeKeys.UPDATE_WEBVIEW_ACTION,
+    TypeKeys.URLBAR_QUERY_ACTION,
+    TypeKeys.GO_BACK_ACTION,
+    TypeKeys.GO_FORWARD_ACTION,
+    TypeKeys.BACK_FORWARD_RECEIVED_ACTION,
   ].includes(action.type)) {
     const selectedTabIndex = state.findIndex(tab => tab.selected);
 
@@ -69,7 +57,7 @@ export default function tabs(state: Tab[] = [], action: TabsAction) {
     const selectedTab = state[selectedTabIndex];
     let propsToUpdate = {};
 
-    if (action.type === UPDATE_WEBVIEW_ACTION) {
+    if (action.type === TypeKeys.UPDATE_WEBVIEW_ACTION) {
       propsToUpdate = {
         canGoBack: action.payload.webCanGoBack,
         canGoForward: action.payload.webCanGoForward,
@@ -79,26 +67,26 @@ export default function tabs(state: Tab[] = [], action: TabsAction) {
       };
     }
 
-    if (action.type === URLBAR_QUERY_ACTION) {
+    if (action.type === TypeKeys.URLBAR_QUERY_ACTION) {
       propsToUpdate = {
         canGoBack: false,
         canGoForward: false,
       };
     }
 
-    if (action.type === GO_BACK_ACTION) {
+    if (action.type === TypeKeys.GO_BACK_ACTION) {
       propsToUpdate = {
         shouldGoBack: true,
       };
     }
 
-    if (action.type === GO_FORWARD_ACTION) {
+    if (action.type === TypeKeys.GO_FORWARD_ACTION) {
       propsToUpdate = {
         shouldGoForward: true,
       };
     }
 
-    if (action.type === BACK_FORWARD_RECEIVED_ACTION) {
+    if (action.type === TypeKeys.BACK_FORWARD_RECEIVED_ACTION) {
       propsToUpdate = {
         shouldGoBack: false,
         shouldGoForward: false,
