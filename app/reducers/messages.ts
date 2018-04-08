@@ -2,8 +2,11 @@ import {
   ActionTypes,
   TypeKeys,
 } from '../constants/actions';
+import { Message } from '../models/message';
 
-export default function messages(state = [], action: ActionTypes) {
+export const initialState: Message[] = [];
+
+export default function messages(state = initialState, action: ActionTypes): Message[] {
   switch (action.type) {
     case TypeKeys.OPEN_DOMAIN_ACTION:
       return [];

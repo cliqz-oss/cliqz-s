@@ -3,7 +3,9 @@ import {
   TypeKeys,
 } from '../constants/actions';
 
-export default function mode(state = 'search', action: ActionTypes) {
+export const initialState: string = 'search';
+
+export default function mode(state = initialState, action: ActionTypes) {
   switch (action.type) {
     case TypeKeys.URLBAR_BLUR_ACTION:
       return action.payload.mode;

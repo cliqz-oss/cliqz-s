@@ -3,7 +3,9 @@ import {
   TypeKeys,
 } from '../constants/actions';
 
-export default function query(state = '', action: ActionTypes) {
+export const initialState: string = '';
+
+export default function query(state = initialState, action: ActionTypes) {
   switch (action.type) {
     case TypeKeys.UPDATE_URLBAR_ACTION:
       return action.payload.query;
