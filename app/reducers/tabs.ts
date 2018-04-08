@@ -2,18 +2,11 @@ import {
   ActionTypes,
   TypeKeys,
 } from '../constants/actions';
+import { Tab } from '../models/tab';
 
-type Tab = {
-  url: string,
-  currentUrl: string,
-  selected: boolean,
-  id: number,
-  shouldGoBack: boolean,
-  shouldGoForward: boolean,
-  visitId: number,
-};
+export const initialState: Tab[] = [];
 
-export default function tabs(state: Tab[] = [], action: ActionTypes) {
+export default function tabs(state: Tab[] = initialState, action: ActionTypes): Tab[] {
   if (action.type === TypeKeys.OPEN_LINK_ACTION) {
     return [
       ...state.map(tab => ({

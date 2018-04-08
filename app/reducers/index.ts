@@ -5,17 +5,9 @@ import domains from './domains';
 import screen from './screen';
 import messages from './messages';
 import tabs from './tabs';
+import { AppState } from '../app-state';
 
-export type State = {
-  mode: any,
-  query: any,
-  domains: any,
-  messages: any,
-  screen: any,
-  tabs: any,
-};
-
-export default combineReducers<State>({
+export default combineReducers<AppState>({
   mode,
   query,
   domains,
@@ -23,4 +15,3 @@ export default combineReducers<State>({
   screen,
   tabs,
 });
-

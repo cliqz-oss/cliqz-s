@@ -7,7 +7,9 @@ import {
   DOMAIN_DETAILS_SCREEN,
 } from '../constants/screens';
 
-export default function screen(state = HOME_SCREEN, action: ActionTypes) {
+export const initialState = HOME_SCREEN;
+
+export default function screen(state = initialState, action: ActionTypes) {
   switch (action.type) {
     case TypeKeys.SCREEN_CHANGE_ACTION:
       return action.payload || HOME_SCREEN;

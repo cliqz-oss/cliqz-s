@@ -20,7 +20,7 @@ import {
   UrlbarBlurAction,
   UrlbarQueryAction,
 } from '../constants/actions';
-import { State } from '../reducers/index';
+import { AppState } from '../app-state';
 import { History } from '../models/history';
 import { Message } from '../models/message';
 
