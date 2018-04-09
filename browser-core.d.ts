@@ -1,22 +1,42 @@
+
 declare module 'browser-core' {
-  export const startup: () => Promise<any>;
+  export const startup: Promise<any>;
 }
 
 declare module 'browser-core/build/modules/mobile-cards/components/CardList' {
-  export default class {}
+  import * as React from 'react';
+  interface ICardListProps {
+    result: any;
+    openLink: (url: string) => void;
+  }
+  export default class extends React.Component<ICardListProps> {
+  }
 }
 
 declare module 'browser-core/build/modules/mobile-cards/components/partials/Icon' {
-  export default class {}
+  import * as React from 'react';
+  interface IIconProps {
+    url: string;
+  }
+  export default class extends React.Component<IIconProps> { }
 }
 
 declare module 'browser-core/build/modules/core/events' {
-  type events = {};
+  type subscription = {
+    unsubscribe: () => void;
+  };
+  type Events = {
+    subscribe: (name: string, cb: (param: any) => void) => subscription;
+  };
+  const events: Events;
   export default events;
 }
 
 declare module 'browser-core/build/modules/core/kord/inject' {
-  type inject = () => {};
+  type Inject = {
+    module: (name: string) => {};
+  };
+  const inject: Inject;
   export default inject;
 }
 
