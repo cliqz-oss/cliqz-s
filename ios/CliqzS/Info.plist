@@ -47,5 +47,7 @@
 	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+  <key>Privacy - Location Always Usage Description</key>
+  <string>This application requires location services to work</string>
 </dict>
 </plist>
