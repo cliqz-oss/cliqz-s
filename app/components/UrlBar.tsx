@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import {
   StyleSheet,
   View,
@@ -14,7 +14,6 @@ import {
   goBack,
   goForward,
   openLink,
-  changeScreen,
 } from '../actions/index';
 import DEFAULT_SEARCH_ENGINE_URL from '../constants/urls';
 import {
@@ -25,6 +24,7 @@ import {
 import { parseURL } from '../cliqz';
 import Button from './Button';
 import HomeButton from './HomeButton';
+import { AppState } from '../app-state';
 
 const styles = StyleSheet.create({
   visitModeContainer: {
@@ -66,7 +66,23 @@ const styles = StyleSheet.create({
   },
 });
 
-class UrlBar extends Component {
+interface IUrlBarProps {
+  query: string;
+  openLink: (url: string) => any;
+  urlBarBlur: () => any;
+  urlBarQuery: (query: string) => any;
+  updateUrlBar: (query: string) => any;
+  url: string;
+  goBack: () => any;
+  goForward: () => any;
+  mode: string;
+  canGoBack: boolean;
+  canGoForward: boolean;
+}
+
+class UrlBar extends React.Component<IUrlBarProps> {
+  input: any;
+
   onSubmit = () => {
     const { query } = this.props;
     let url = query;
@@ -77,7 +93,7 @@ class UrlBar extends Component {
     }
 
     this.props.openLink(url);
-  };
+  }
 
   renderCancelButton() {
     return (
@@ -107,9 +123,9 @@ class UrlBar extends Component {
           <View style={styles.visitModeContainer}>
             <TextInput
               ref={(el) => { this.input = el; }}
-              testID='UrlBar'
-              placeholder='Search!'
-              underlineColorAndroid='white'
+              testID="UrlBar"
+              placeholder="Search!"
+              underlineColorAndroid="white"
               selectTextOnFocus={true}
               autoCorrect={false}
               autoFocus={true}
@@ -128,12 +144,12 @@ class UrlBar extends Component {
           <View style={styles.visitModeContainer}>
             <Button
               disabled={!canGoBack}
-              title='&#9664;'
+              title="&#9664;"
               onPress={goBackAction}
             />
             <Button
               disabled={!canGoForward}
-              title='&#9654;'
+              title="&#9654;"
               onPress={goForwardAction}
             />
             <TouchableHighlight
@@ -154,7 +170,7 @@ const mapStateToProps = ({
   query,
   mode,
   tabs,
-}) => {
+}: AppState) => {
   const selectedTab = tabs.find(tab => tab.selected);
 
   if (!selectedTab) {
@@ -180,5 +196,4 @@ export default connect(mapStateToProps, {
   goBack,
   goForward,
   openLink,
-  changeScreen,
 })(UrlBar);
