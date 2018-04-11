@@ -6,4 +6,6 @@ export type Tab = {
   shouldGoBack: boolean,
   shouldGoForward: boolean,
   visitId?: number,
+  canGoBack?: boolean,
+  canGoForward?: boolean,
 };
