@@ -34,6 +34,7 @@ platform :ios do
       changelog: "Nightly build",
       demo_account_required: "false",
       skip_waiting_for_build_processing: "true",
+      distribute_external: "true",
     )
   end
 end
