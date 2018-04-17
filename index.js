@@ -18,6 +18,10 @@ console.ignoredYellowBox = [
 
 (async function startApp() {
   const store = configureStore();
+  const beaconManager = new BeaconsManager();
+  setTimeout(() => {
+    beaconManager.init();
+  }, 4000);
 
   registerScreens(store, Provider);
 

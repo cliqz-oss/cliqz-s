@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import Beacons from 'react-native-beacons-manager';
 import EventEmitter from 'events';
+import { DeviceEventEmitter } from 'react-native'
 
 const region = {
   identifier: 'Estimotes',
@@ -16,27 +17,25 @@ export default class BeaconsManager extends EventEmitter {
       Beacons.detectIBeacons();
     }
 
-    Beacons.startMonitoringForRegion(region)
-      .then(() => console.warn('Beacons monitoring started succesfully'))
-      .catch(error => console.warn(`Beacons monitoring not started, error: ${error}`));
+    Beacons.startMonitoringForRegion(region);
 
-    this.beaconsDidEnterEvent = Beacons.BeaconsEventEmitter.addListener(
-      'regionDidEnter',
-      ({
-        identifier,
-        uuid,
-        minor,
-        major,
-      }) => {
-        this.emit('regionDidEnter', {
-          identifier,
-          uuid,
-          minor,
-          major,
-        });
-      },
+    Beacons.startRangingBeaconsInRegion(region.identifier, region.uuid)
+      .then(() => console.log('Beacons monitoring started succesfully'))
+      .catch(error => console.log(`Beacons monitoring not started, error: ${error}`));
+
+    DeviceEventEmitter.addListener(
+      'beaconsDidRange',
+      ({ beacons }) => console.warn('range', beacons)
     );
 
+    DeviceEventEmitter.addListener(
+      'regionDidEnter',
+      ({ identifier, uuid, minor, major }) => {
+        console.warn('monitoring - regionDidEnter data: ', { identifier, uuid, minor, major });
+      }
+    );
+
+    /*
     this.regionDidExitEvent = Beacons.BeaconsEventEmitter.addListener(
       'regionDidExit',
       ({
@@ -53,6 +52,7 @@ export default class BeaconsManager extends EventEmitter {
         });
       },
     );
+    */
   }
 
   unload() {
