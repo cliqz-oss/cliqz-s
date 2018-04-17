@@ -7,6 +7,7 @@ import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
 import registerScreens, { tabs } from './app/screens/index';
 import { BACKGROUND_COLOR_STYLE } from './app/constants/styles';
+import BeaconsManager from './app/services/beacons-manager';
 
 // console.disableYellowBox = true;
 // eslint-disable-next-line

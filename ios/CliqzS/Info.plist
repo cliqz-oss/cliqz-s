@@ -47,5 +47,7 @@
 	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>This application requires location services to work</string>
 </dict>
 </plist>

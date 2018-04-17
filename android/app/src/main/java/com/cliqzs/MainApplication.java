@@ -3,6 +3,7 @@ package com.cliqzs;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.mackentoch.beaconsandroid.BeaconsAndroidPackage;
 import dog.craftz.sqlite_2.RNSqlite2Package;
 import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
@@ -28,7 +29,8 @@ public class MainApplication extends NavigationApplication implements ReactAppli
              // eg. new VectorIconsPackage()
              new RNSqlite2Package(),
              new RNFSPackage(),
-             new CliqzSPackage()
+             new CliqzSPackage(),
+             new BeaconsAndroidPackage()
          );
      }
 
