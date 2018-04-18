@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 interface IUrlBarProps {
   query: string;
   openLink: (url: string) => any;
-  urlBarBlur: () => any;
+  urlBarBlur: typeof urlBarBlur;
   urlBarQuery: (query: string) => any;
   updateUrlBar: (query: string) => any;
   url: string;
@@ -95,11 +95,16 @@ class UrlBar extends React.Component<IUrlBarProps> {
     this.props.openLink(url);
   }
 
+  onCancel = () => {
+    this.input.blur();
+    this.props.urlBarBlur(this.props.url);
+  }
+
   renderCancelButton() {
     return (
       <TouchableHighlight
         style={{ justifyContent: 'center' }}
-        onPress={this.props.urlBarBlur}
+        onPress={this.onCancel}
       >
         <Text style={{ color: FONT_COLOR_STYLE, marginRight: 7 }}>Cancel</Text>
       </TouchableHighlight>
