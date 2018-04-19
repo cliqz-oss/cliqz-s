@@ -35,6 +35,7 @@ platform :ios do
       demo_account_required: "false",
       skip_waiting_for_build_processing: "false",
       distribute_external: "true",
+      groups: ["Cliqz Testers"],
     )
   end
 end
