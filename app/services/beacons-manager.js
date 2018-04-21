@@ -1,7 +1,7 @@
-import { Platform } from 'react-native';
+import { Platform, DeviceEventEmitter } from 'react-native';
 import Beacons from 'react-native-beacons-manager';
 import EventEmitter from 'events';
-import { DeviceEventEmitter } from 'react-native'
+import { recordBeaconsInRange } from '../actions/index';
 
 const region = {
   identifier: 'Estimotes',
@@ -9,6 +9,15 @@ const region = {
 };
 
 export default class BeaconsManager extends EventEmitter {
+  constructor(dispatch) {
+    super();
+    this.dispatch = dispatch;
+  }
+
+  beaconsDidRange = ({ beacons }) => {
+    this.dispatch(recordBeaconsInRange(beacons));
+  }
+
   init() {
     if (Platform.os === 'ios') {
       Beacons.requestAlwaysAuthorization();
@@ -19,46 +28,12 @@ export default class BeaconsManager extends EventEmitter {
 
     Beacons.startMonitoringForRegion(region);
 
-    Beacons.startRangingBeaconsInRegion(region.identifier, region.uuid)
-      .then(() => console.log('Beacons monitoring started succesfully'))
-      .catch(error => console.log(`Beacons monitoring not started, error: ${error}`));
+    Beacons.startRangingBeaconsInRegion(region.identifier, region.uuid);
 
-    DeviceEventEmitter.addListener(
-      'beaconsDidRange',
-      ({ beacons }) => console.warn('range', beacons)
-    );
-
-    DeviceEventEmitter.addListener(
-      'regionDidEnter',
-      ({ identifier, uuid, minor, major }) => {
-        console.warn('monitoring - regionDidEnter data: ', { identifier, uuid, minor, major });
-      }
-    );
-
-    /*
-    this.regionDidExitEvent = Beacons.BeaconsEventEmitter.addListener(
-      'regionDidExit',
-      ({
-        identifier,
-        uuid,
-        minor,
-        major,
-      }) => {
-        this.emit('regionDidExit', {
-          identifier,
-          uuid,
-          minor,
-          major,
-        });
-      },
-    );
-    */
+    DeviceEventEmitter.addListener('beaconsDidRange', this.beaconsDidRange);
   }
 
   unload() {
-    /*
-    this.regionDidEnterEvent.remove();
-    this.regionDidExitEvent.remove();
-    */
+    DeviceEventEmitter.removeListener('beaconsDidRange', this.beaconsDidRange);
   }
 }

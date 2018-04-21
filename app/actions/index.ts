@@ -4,9 +4,11 @@ import {
   fetchMessages as getMessages,
   recordVisit,
 } from '../services/history';
+import { Beacon } from '../models/beacon';
 import {
   TypeKeys,
   BackForwardReceivedAction,
+  BeaconsInRange,
   GoBackAction,
   GoForwardAction,
   OpenDomainAction,
@@ -142,4 +144,9 @@ export const changeScreen = (screen: string): ScreenChangeAction => ({
 export const switchTab = (visitId: number): SwitchTabAction => ({
   type: TypeKeys.SWITCH_TAB_ACTION,
   payload: visitId,
+});
+
+export const recordBeaconsInRange = (beacons: Beacon[]): BeaconsInRange => ({
+  type: TypeKeys.BEACONS_IN_RANGE,
+  payload: beacons,
 });

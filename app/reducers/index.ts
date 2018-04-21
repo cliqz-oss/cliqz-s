@@ -5,6 +5,7 @@ import domains from './domains';
 import screen from './screen';
 import messages from './messages';
 import tabs from './tabs';
+import beacons from './beacons';
 import { AppState } from '../app-state';
 
 export default combineReducers<AppState>({
@@ -14,4 +15,5 @@ export default combineReducers<AppState>({
   messages,
   screen,
   tabs,
+  beacons,
 });

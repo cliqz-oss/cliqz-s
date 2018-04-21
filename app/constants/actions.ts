@@ -1,5 +1,6 @@
 import { History } from '../models/history';
 import { Message } from '../models/message';
+import { Beacon } from '../models/beacon';
 
 export enum TypeKeys {
   BACK_FORWARD_RECEIVED_ACTION,
@@ -15,6 +16,7 @@ export enum TypeKeys {
   UPDATE_WEBVIEW_ACTION,
   URLBAR_BLUR_ACTION,
   URLBAR_QUERY_ACTION,
+  BEACONS_IN_RANGE,
   OTHER_ACTION,
 }
 
@@ -92,6 +94,11 @@ export interface UrlbarQueryAction {
 export interface SwitchTabAction {
   type: TypeKeys.SWITCH_TAB_ACTION;
   payload: number;
+}
+
+export interface BeaconsInRange {
+  type: TypeKeys.BEACONS_IN_RANGE;
+  payload: Beacon[];
 }
 
 export interface OtherAction {

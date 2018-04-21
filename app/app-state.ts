@@ -4,6 +4,7 @@ import { initialState as queryInitialState } from './reducers/query';
 import { initialState as messagesInitialState } from './reducers/messages';
 import { initialState as screenInitialState } from './reducers/screen';
 import { initialState as tabsInitialState } from './reducers/tabs';
+import { initialState as beaconsInitialState } from './reducers/beacons';
 
 export type AppState = {
   mode: typeof modeInitialState,
@@ -12,5 +13,6 @@ export type AppState = {
   messages: typeof messagesInitialState,
   screen: typeof screenInitialState,
   tabs: typeof tabsInitialState,
+  beacons: typeof beaconsInitialState,
 };
 
