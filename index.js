@@ -19,7 +19,11 @@ console.ignoredYellowBox = [
 (async function startApp() {
   const store = configureStore();
   const beaconManager = new BeaconsManager(store.dispatch);
-  beaconManager.init();
+
+  // delay scanning for beacons as it seems to slow down the app startup
+  setTimeout(() => {
+    beaconManager.init();
+  }, 5000);
 
   registerScreens(store, Provider);
 

@@ -8,6 +8,8 @@ export const initialState: Beacon[] = [];
 
 export default function mode(state = initialState, action: ActionTypes) {
   switch (action.type) {
+    case TypeKeys.BEACONS_IN_RANGE:
+      return action.payload;
     default:
       return state;
   }

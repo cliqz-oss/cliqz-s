@@ -1,5 +1,8 @@
 export type Beacon = {
-  uuid: number,
+  uuid: string,
+  proximity: string,
+  distance: number,
+  rssi: number,
   major: number,
-  minur: number,
+  minor: number,
 };

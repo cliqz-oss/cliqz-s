@@ -27,6 +27,7 @@ import {
   BOTTOM_BAR_HEIGHT_STYLE,
 } from '../constants/styles';
 import { History } from '../models/history';
+import { Beacon } from '../models/beacon';
 import { Tab } from '../models/tab';
 import { AppState } from '../app-state';
 
@@ -51,6 +52,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     justifyContent: 'center',
+  },
+  beaconsText: {
+    flex: 1,
+    color: FONT_COLOR_STYLE,
+    textAlign: 'center',
+    paddingTop: 15,
+    paddingLeft: 12,
   },
 });
 
@@ -103,6 +111,7 @@ interface IDrawerProps {
   fetchDomains: () => any;
   openDomain: (domain: string) => any;
   domains: Domain[];
+  beacons: Beacon[];
 }
 
 class Drawer extends React.PureComponent<IDrawerProps> {
@@ -152,7 +161,13 @@ class Drawer extends React.PureComponent<IDrawerProps> {
           height: BOTTOM_BAR_HEIGHT_STYLE,
           flexDirection: 'row',
         }}>
-          <View style={{ flex: 1 }} />
+          <View style={{ flex: 1 }}>
+            {(this.props.beacons.length > 0) &&
+              <Text style={styles.beaconsText}>
+              Beacons in range: {this.props.beacons.length}
+              </Text>
+            }
+          </View>
           <HomeButton />
         </View>
       </SafeAreaView>
@@ -163,6 +178,7 @@ class Drawer extends React.PureComponent<IDrawerProps> {
 const mapStateToProps = (state: AppState) => {
   const openedDomains = state.tabs.map(tab => parseURL(tab.currentUrl).hostname);
   return {
+    beacons: state.beacons,
     domains: state.domains.map(domain => ({
       ...domain,
       isActive: openedDomains.includes(domain.domain),

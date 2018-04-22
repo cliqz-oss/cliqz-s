@@ -107,6 +107,7 @@ export interface OtherAction {
 
 export type ActionTypes =
   | BackForwardReceivedAction
+  | BeaconsInRange
   | GoBackAction
   | GoForwardAction
   | OpenDomainAction
