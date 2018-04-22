@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.cliqzs"
-        minSdkVersion 26
+        minSdkVersion 25
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -55,6 +55,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-beacons-manager')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:26.0.2"
     compile "com.facebook.react:react-native:+"  // From node_modules

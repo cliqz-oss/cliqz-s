@@ -22,6 +22,7 @@
     "pouchdb-react-native": "6.3.4",
     "react": "^16.3.0",
     "react-native": "^0.53.0",
+    "react-native-beacons-manager": "^1.0.7",
     "react-native-collapsible": "0.8.1",
     "react-native-device-info": "0.10.2",
     "react-native-fs": "2.8.1",

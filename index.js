@@ -7,6 +7,7 @@ import configureStore from './app/store';
 import { initialize as startHistoryService } from './app/services/history';
 import registerScreens, { tabs } from './app/screens/index';
 import { BACKGROUND_COLOR_STYLE } from './app/constants/styles';
+import BeaconsManager from './app/services/beacons-manager';
 
 // console.disableYellowBox = true;
 // eslint-disable-next-line
@@ -17,6 +18,12 @@ console.ignoredYellowBox = [
 
 (async function startApp() {
   const store = configureStore();
+  const beaconManager = new BeaconsManager(store.dispatch);
+
+  // delay scanning for beacons as it seems to slow down the app startup
+  setTimeout(() => {
+    beaconManager.init();
+  }, 5000);
 
   registerScreens(store, Provider);
 
