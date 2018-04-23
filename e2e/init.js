@@ -9,6 +9,11 @@ jest.setTimeout(120000 * 2);
 
 beforeAll(async () => {
   await detox.init(config);
+  await device.launchApp({
+    permissions: {
+      location: 'inuse',
+    },
+  });
 });
 
 afterAll(async () => {

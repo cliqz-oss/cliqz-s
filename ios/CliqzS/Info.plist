@@ -48,6 +48,12 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
   <key>NSLocationAlwaysUsageDescription</key>
-  <string>This application requires location services to work</string>
+  <string>Application detects nearby beacons</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Application detects nearby beacons</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Application detects nearby beacons</string>
+  <key>NSLocationUsageDescription</key>
+  <string>Application detects nearby beacons</string>
 </dict>
 </plist>
