@@ -19,16 +19,14 @@ export default class BeaconsManager extends EventEmitter {
   }
 
   init() {
-    if (Platform.os === 'ios') {
+    if (Platform.OS === 'ios') {
       Beacons.requestAlwaysAuthorization();
       Beacons.startUpdatingLocation();
+      Beacons.startRangingBeaconsInRegion(region);
     } else {
       Beacons.detectIBeacons();
+      Beacons.startRangingBeaconsInRegion(region.identifier, region.uuid);
     }
-
-    Beacons.startMonitoringForRegion(region);
-
-    Beacons.startRangingBeaconsInRegion(region.identifier, region.uuid);
 
     DeviceEventEmitter.addListener('beaconsDidRange', this.beaconsDidRange);
   }
