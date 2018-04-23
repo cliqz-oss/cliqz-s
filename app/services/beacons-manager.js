@@ -20,7 +20,7 @@ export default class BeaconsManager extends EventEmitter {
 
   init() {
     if (Platform.OS === 'ios') {
-      Beacons.requestAlwaysAuthorization();
+      Beacons.requestWhenInUseAuthorization();
       Beacons.startUpdatingLocation();
       Beacons.startRangingBeaconsInRegion(region);
     } else {
