@@ -5,10 +5,12 @@ import {
   HOME_SCREEN,
   DOMAIN_LIST_SCREEN,
   DOMAIN_DETAILS_SCREEN,
+  BEACONS_LIST_SCREEN,
 } from '../constants/screens';
 import Home from './Home';
 import DomainList from './DomainList';
 import DomainDetails from './DomainDetails';
+import BeaconsList from './BeaconsList';
 
 // eslint-disable-next-line
 const fakeIcon = require('../../assets/1x1-00000000.png');
@@ -33,6 +35,11 @@ export const tabs = [
   },
   {
     screen: DOMAIN_DETAILS_SCREEN,
+    icon: fakeIcon,
+    navigatorStyle,
+  },
+  {
+    screen: BEACONS_LIST_SCREEN,
     icon: fakeIcon,
     navigatorStyle,
   },
@@ -71,4 +78,5 @@ export default function registerScreens(store, Provider) {
   register(HOME_SCREEN, Home);
   register(DOMAIN_LIST_SCREEN, DomainList);
   register(DOMAIN_DETAILS_SCREEN, DomainDetails);
+  register(BEACONS_LIST_SCREEN, BeaconsList);
 }

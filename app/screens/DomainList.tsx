@@ -18,8 +18,12 @@ import {
 import {
   fetchDomains,
   openDomain,
+  changeScreen,
 } from '../actions/index';
-import { DOMAIN_LIST_SCREEN } from '../constants/screens';
+import {
+  DOMAIN_LIST_SCREEN,
+  BEACONS_LIST_SCREEN,
+} from '../constants/screens';
 import HomeButton from '../components/HomeButton';
 import {
   FONT_COLOR_STYLE,
@@ -110,6 +114,7 @@ interface Domain extends History {
 interface IDrawerProps {
   fetchDomains: () => any;
   openDomain: (domain: string) => any;
+  changeScreen: (screen: string) => any;
   domains: Domain[];
   beacons: Beacon[];
 }
@@ -162,8 +167,11 @@ class Drawer extends React.PureComponent<IDrawerProps> {
           flexDirection: 'row',
         }}>
           <View style={{ flex: 1 }}>
-            {(this.props.beacons.length > 0) &&
-              <Text style={styles.beaconsText}>
+            {(this.props.beacons) &&
+              <Text
+                style={styles.beaconsText}
+                onPress={() => this.props.changeScreen(BEACONS_LIST_SCREEN)}
+              >
               Beacons in range: {this.props.beacons.length}
               </Text>
             }
@@ -189,4 +197,5 @@ const mapStateToProps = (state: AppState) => {
 export default connect(mapStateToProps, {
   fetchDomains,
   openDomain,
+  changeScreen,
 })(Drawer);
