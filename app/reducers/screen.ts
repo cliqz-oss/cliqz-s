@@ -5,6 +5,7 @@ import {
 import {
   HOME_SCREEN,
   DOMAIN_DETAILS_SCREEN,
+  BEACONS_LIST_SCREEN,
 } from '../constants/screens';
 
 export const initialState = HOME_SCREEN;
