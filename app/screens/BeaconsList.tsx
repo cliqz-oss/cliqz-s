@@ -4,8 +4,10 @@ import {
   View,
   SafeAreaView,
   Text,
-  Image,
+  FlatList,
+  Dimensions,
 } from 'react-native';
+import Image from 'react-native-scalable-image';
 import {
   FONT_COLOR_STYLE,
   BACKGROUND_COLOR_STYLE,
@@ -20,21 +22,14 @@ import { connect } from 'react-redux';
 import { AppState } from '../app-state';
 
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
   image: {
-    flex: 1,
-    maxHeight: 120,
-    margin: 20,
+    marginTop: 20,
   },
 });
 
-const MINOR_IMAGE_MAP = {
-  1: require('../../assets/cliqz.png'),
-};
+const MAJOR_IMAGE_MAP: Map<number, string> = new Map();
+MAJOR_IMAGE_MAP.set(18170, require('../../assets/coffee-dark.png'));
+MAJOR_IMAGE_MAP.set(54505, require('../../assets/sheraton-dark.png'));
 
 interface IBeaconListProps {
   changeScreen: (screen: string) => any;
@@ -42,16 +37,26 @@ interface IBeaconListProps {
 }
 
 class BeaconList extends React.Component<IBeaconListProps> {
+  renderItem({ item }: { item: Beacon }) {
+    return (
+      <Image
+        width={Dimensions.get('window').width}
+        style={styles.image}
+        source={MAJOR_IMAGE_MAP.get(item.major)}
+      />
+    );
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.list}>
-          <Image
-            style={styles.image}
-            resizeMode="cover"
-            source={MINOR_IMAGE_MAP[1]}
-          />
-        </View>
+        <FlatList
+          data={this.props.beacons}
+          inverted
+          renderItem={this.renderItem}
+          keyExtractor={item => item.major.toString()}
+          testID="Drawer"
+        />
         <View style={{
           height: BOTTOM_BAR_HEIGHT_STYLE,
           flexDirection: 'row',
@@ -72,7 +77,9 @@ class BeaconList extends React.Component<IBeaconListProps> {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    beacons: state.beacons,
+    beacons: state.beacons.filter(
+      beacon => MAJOR_IMAGE_MAP.has(beacon.major),
+    ),
   };
 };
 
