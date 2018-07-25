@@ -17,10 +17,13 @@ android {
 
     defaultConfig {
         applicationId "com.cliqzs"
-        minSdkVersion 25
+        minSdkVersion 22
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        testBuildType System.getProperty('testBuildType', 'debug')  //this will later be used to control the test apk build type
+        missingDimensionStrategy "minReactNative", "minReactNative46" //read note
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -33,8 +36,26 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+
+    signingConfigs {
+        debug {
+            storeFile file('../debug.keystore')
+            storePassword 'android'
+            keyAlias 'debug'
+            keyPassword 'android'
+        }
+        // CI builds
+        release {
+            storeFile file('../debug.keystore')
+            storePassword 'android'
+            keyAlias 'debug'
+            keyPassword 'android'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -57,11 +78,15 @@ android {
 dependencies {
     compile project(':react-native-beacons-manager')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:26.0.2"
+    compile "com.android.support:appcompat-v7:26.1.0"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-sqlite-2')
     compile project(':react-native-fs')
     compile project(':react-native-navigation')
+    androidTestImplementation(project(path: ":detox"))
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
 }
 
 task copyDownloadableDepsToLibs(type: Copy) {
